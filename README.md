@@ -1,6 +1,5 @@
 # SYNC
 # System for Networked Clubs
-# AIT Pune Club Management
 
 A modern, full-stack **Club Management Portal** for  
 **Army Institute of Technology (AIT), Pune**, built using **React + Vite**, **Node.js + Express**, and optional **Three.js** for interactive visuals.
