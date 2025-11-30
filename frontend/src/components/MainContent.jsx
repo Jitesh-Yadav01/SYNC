@@ -53,7 +53,7 @@ export default function MainContent(){
     <main className="main">
       <div className="page-head">
         <div>
-          <h1 className="section-title title-dark"> Club Management </h1><br/>
+          <h1 className="section-title title-dark"> SYNC </h1><br/>
           <h1 className="section-title title-dark"> AIT Pune</h1>
           <p>Explore student-run clubs that help you build, learn and grow.</p>
         </div>
