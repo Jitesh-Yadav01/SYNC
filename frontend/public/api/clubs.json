@@ -5,10 +5,9 @@
     "desc": "Encouraging students to contribute to open source projects and learn collaborative software development.",
     "focusAreas": [
       "Open source contribution workflows",
-      "Version control & collaboration (Git/GitHub)",
-      "Documentation, testing and CI"
+      "Contribution (Git/Github)"
     ],
-    "activities": [
+    "Activities": [
       "INNERVE",
       "FSOC",
       "Graphica",
@@ -27,16 +26,13 @@
       "Cloud and architecture",
       "Developer tooling and best practices"
     ],
-    "activities": [
+    "Activities": [
       "Frontend Jams",
       "Backend Jams",
       "FSOC",
       "Enliven",
-      "FSOC",
       "Google Cloud Workshop",
-      "Android Development Session",
-      "Tech Talks",
-      "Developer Meetups"
+      "Android Development Session"
     ],
     "who": "FE,SE"
   },
@@ -49,7 +45,7 @@
       "Problem-solving strategies",
       "Contest practice and timing"
     ],
-    "activities": [
+    "Activities": [
       "CODEFT 4.0",
       "CRACK 5.1",
       "CRACK 5.2",
