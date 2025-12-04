@@ -4,16 +4,16 @@
     "name": "OSS Club (Open Source Software Club)",
     "desc": "Encouraging students to contribute to open source projects and learn collaborative software development.",
     "focusAreas": [
-      "Open source contribution workflows",
-      "Contribution (Git/Github)"
+    "■ Open source contribution workflows",
+    "■ Contribution (Git/Github)"
     ],
-    "Activities": [
-      "INNERVE",
-      "FSOC",
-      "Graphica",
-      "Spark",
-      "Internal SIH",
-      "Replica"
+    "activities": [
+    "● INNERVE",
+    "● FSOC",
+    "● Graphica",
+    "● Spark",
+    "● Internal SIH",
+    "● Replica"
     ],
     "who": "FE,SE"
   },
@@ -22,17 +22,17 @@
     "name": "GDG AIT Pune (Google Developer Group)",
     "desc": "Community-driven developer group focused on practical developer skills and technology learning.",
     "focusAreas": [
-      "Web & mobile development",
-      "Cloud and architecture",
-      "Developer tooling and best practices"
+    "■ Web & mobile development",
+    "■ Cloud and architecture",
+    "■ Developer tooling and best practices"
     ],
-    "Activities": [
-      "Frontend Jams",
-      "Backend Jams",
-      "FSOC",
-      "Enliven",
-      "Google Cloud Workshop",
-      "Android Development Session"
+    "activities": [
+    "● Frontend Jams",
+    "● Backend Jams",
+    "● FSOC",
+    "● Enliven",
+    "● Google Cloud Workshop",
+    "● Android Development Session"
     ],
     "who": "FE,SE"
   },
@@ -41,15 +41,15 @@
     "name": "CP Club (Competitive Programming Club)",
     "desc": "Focused training and practice for programming contests and technical interviews.",
     "focusAreas": [
-      "Data structures & algorithms",
-      "Problem-solving strategies",
-      "Contest practice and timing"
+    "■ Data structures & algorithms",
+    "■ Problem-solving strategies",
+    "■ Contest practice and timing"
     ],
-    "Activities": [
-      "CODEFT 4.0",
-      "CRACK 5.1",
-      "CRACK 5.2",
-      "KICKSTARTER"
+    "activities": [
+    "● CODEFT 4.0",
+    "● CRACK 5.1",
+    "● CRACK 5.2",
+    "● KICKSTARTER"
     ],
     "who": "FE,SE"
   }
