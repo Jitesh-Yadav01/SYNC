@@ -140,6 +140,27 @@
   filter: brightness(1.06);
 }
 
+.know-btn {
+  margin-top: auto;
+  padding: 12px 18px;
+  background: rgb(243, 55, 55);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.know-btn:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 10px 26px rgba(15, 98, 254, 0.22);
+  filter: brightness(1.06);
+}
 
 .clubs-page {
   position: relative;

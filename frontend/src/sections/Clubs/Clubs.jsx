@@ -4,8 +4,6 @@ import ClubCard from '../../components/ClubCard'
 import ApplicationForm from '../../components/ApplicationForm'
 import './club.css'
 
-
-
 export default function MainContent(){
   const [selectedClub, setSelectedClub] = useState(null)
   
@@ -63,6 +61,7 @@ export default function MainContent(){
   return (
     <main className="main">
       <section className="clubs-page" id="clubs" aria-label="Clubs list">
+        <h2 className='text-center text-4xl font-bold'>Explore <span className="text-red-600">Clubs.</span></h2>
         <div className="cards">
           {clubs.map(c => (
             <ClubCard key={c.abbr} {...c} onApply={handleApply} />

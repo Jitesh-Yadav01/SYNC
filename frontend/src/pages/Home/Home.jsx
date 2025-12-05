@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import Loader from '../../components/Loader/Loader'
 import './Home.css'
-import Logocollections from "../../assets/clublogos/clublogos.svg"
-import Synclogo from "../../assets/clublogos/synclogo.svg"
+import Logocollections from "../../assets/clublogos.svg"
+import Synclogo from "../../assets/synclogo.svg"
 
 export default function Home() {
 	/*

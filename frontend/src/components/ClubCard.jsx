@@ -1,20 +1,15 @@
-import React from 'react'
-import clubLogos from "../assets/clublogos"
+import React, { useState } from 'react'
 import '../sections/Clubs/club.css'
+import KnowMore from './KnowMore'
 
-export default function ClubCard({ abbr, name, desc, focusAreas = [], activities = [], who, keywords = [], events = [], onApply }) {
+export default function ClubCard({ abbr, name, img, desc, focusAreas = [], activities = [], who, keywords = [], events = [], onApply }) {
+  const [showKnow, setShowKnow] = useState(false)
+  const knowMore = () => setShowKnow(true)
+
   return (
     <article className="club" aria-labelledby={`${abbr}-title`}>
       <div className="top">
-        {abbr === 'OSS' ? (
-          <img src={clubLogos.oss} alt={`${name} logo`} className="club-logo" />
-        ) : abbr === 'CP' ? (
-          <img src={clubLogos.cp} alt={`${name} logo`} className="club-logo" />
-        ) : abbr === 'GDG' ? (
-          <img src={clubLogos.googleDevelopers} alt={`${name} logo`} className="club-logo" />
-        ) : (
-          <span className="badge">{abbr}</span>
-        )}
+        <img src={img} alt={`${name} logo`} className="club-logo" />
         <h3 id={`${abbr}-title`} className="section-title title-violet">{name}</h3>
       </div>
 
@@ -70,6 +65,8 @@ export default function ClubCard({ abbr, name, desc, focusAreas = [], activities
       <button className="apply-btn" onClick={() => onApply(abbr, name)}>
         Click Here to Apply
       </button>
+      <button className='know-btn' onClick={()=>knowMore()}>Know More</button>
+      <KnowMore open={showKnow} onClose={()=>setShowKnow(false)} club={{abbr,name,img,desc,focusAreas,activities,who,keywords,events}} />
     </article>
   )
 }

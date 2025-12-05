@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=BBH+Sans+Bartle&family=BBH+Sans+Hegarty&family=Boldonse&family=Science+Gothic:wght@100..900&family=Stack+Sans+Notch:wght@200..700&display=swap');
 @import "tailwindcss";
-
+@plugin 'tailwindcss-animate';
+@import "tw-animate-css";
 /* Prevent unwanted horizontal scroll and make media responsive */
 *, *::before, *::after {
   box-sizing: border-box;
@@ -72,5 +73,3 @@ body {
   padding-bottom: 120px; 
   flex: 1 1 auto; 
 }
-
-
