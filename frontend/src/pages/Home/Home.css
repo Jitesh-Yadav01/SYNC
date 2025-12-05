@@ -8,6 +8,10 @@
 
 }
 
+.syncLogoDiv{
+    display: none;
+}
+
 
 .gray-hero{
      color: #5b6a7a;
@@ -46,27 +50,60 @@
 @media (max-width: 900px) {
 
 .clubCollection{
-    display: none;
-}
+width: 100vw;
+object-fit: none;
 
+
+}
+.clubCollectionDiv{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
 .hero-div{
     background-image: "./assets/clblogos/clublogos.svg";
     margin:auto
 }
 .hero{
+    font-size: 44px;
+    line-height: 50px;
     width: 80vw;
     margin: auto;
     text-align: center;
 
 }
 .line1,.line2{
-    font-size: 16px;
+    font-size: 14px;
     text-align: center;
+}
+.line2{
+    font-size: 18px;
+    padding: 10px;
 }
 .hero-btn-div{
     justify-content: center;
+    margin: 10px 0;
+    
+}
+.hero-btn{
+    font-size: 18px;
+    margin: 10px 0 10px 0;
+    scale: 0.8;
+    padding: 8px 10px;
 }
 
+
+.page-head{
+    flex-direction: column;
 }
 
+.secondary-hero-div{
+    padding: 7px;
+}
+.syncLogoDiv{
+    display: flex;
+    justify-content: center;
+}
+}
 
