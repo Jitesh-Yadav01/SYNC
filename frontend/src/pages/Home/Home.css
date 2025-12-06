@@ -50,6 +50,7 @@
 .clubCollection{
 width: 100vw;
 object-fit: none;
+display: none;
 
 
 }
