@@ -3,10 +3,10 @@ import "./Dashboard.css";
 
 /* ---------- demo data (replace with real API data later) ---------- */
 const notifications = [
-  { id: 1, title: "GDSC", body: "notification by gdsc\njo bhi ho" },
-  { id: 2, title: "GDSC", body: "notification by gdsc\njo bhi ho" },
-  { id: 3, title: "GDSC", body: "notification by gdsc\njo bhi ho" },
-  { id: 4, title: "GDSC", body: "notification by gdsc\njo bhi ho" },
+  { id: 1, title: "GDSC", body: "notification by gdsc\n" },
+  { id: 2, title: "GDSC", body: "notification by gdsc\n" },
+  { id: 3, title: "GDSC", body: "notification by gdsc\n" },
+  { id: 4, title: "GDSC", body: "notification by gdsc\n" },
 ];
 
 const taskList = [
