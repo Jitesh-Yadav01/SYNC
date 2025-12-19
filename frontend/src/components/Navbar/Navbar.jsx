@@ -29,7 +29,7 @@ export default function Navbar(){
       {isMobile && (
         <>
         <div className="nav-right">
-          <button className='btn-primary absolute right-15 mt-4' onClick={()=>navigate("/login")}>Login</button>
+          <button className='btn-primary absolute right-15 mt-0.1' onClick={()=>navigate("/login")}>Login</button>
           <Hamburger open={open} onClick={handleHamburger} />
         </div>
         </>

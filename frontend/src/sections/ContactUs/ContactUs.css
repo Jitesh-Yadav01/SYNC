@@ -10,7 +10,7 @@
   background-position: center;
   background-repeat: no-repeat;
   background-blend-mode: overlay;
-  border: 10px solid #0f2a70;
+  border-right: 10px solid #0f2a70;
   border-top: none;
   border-bottom: 10px solid #0f2a70;
   margin-top: 0;

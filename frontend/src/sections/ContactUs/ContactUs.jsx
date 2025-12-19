@@ -7,7 +7,7 @@ export default function ContactUs() {
   const [showForm, setShowForm] = useState(false)
 
   if (showForm) {
-    return <ApplicationForm clubName="AIT Pune" abbr="AIT" onClose={() => setShowForm(false)} />
+    return <ApplicationForm clubName="SYNC AIT Pune" abbr="SYNC" onClose={() => setShowForm(false)} />
   }
 
   return (

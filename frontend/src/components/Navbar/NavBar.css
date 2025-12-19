@@ -28,7 +28,7 @@
 .nav-right {
   position: absolute;
   right: 36px;
-  top: 0;
+  top: 12px;
   height: 100%;
   display: none;
   align-items: center;

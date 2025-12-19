@@ -7,6 +7,7 @@ export default function ApplicationForm({ clubName, abbr, onClose }) {
     email: '',
     branch: '',
     division: '',
+    positionYear: '',
     registrationNumber: '',
     phoneNumber: '',
     priority: '',
@@ -88,9 +89,7 @@ export default function ApplicationForm({ clubName, abbr, onClose }) {
                   <option value="ARE">Automatiive and Robotics Engineering</option>
                 </select>
               </div>
-            </div>
 
-            <div className="form-row">
               <div className="form-group">
                 <label>Division <span className="required">*</span></label>
                 <select
@@ -102,6 +101,22 @@ export default function ApplicationForm({ clubName, abbr, onClose }) {
                   <option value="">Select Your Division</option>
                   <option value="A">A</option>
                   <option value="B">B</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="form-row">
+              <div className="form-group">
+                <label>Position/Year <span className="required">*</span></label>
+                <select
+                  name="positionYear"
+                  value={formData.positionYear}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="">Select Your Position/Year</option>
+                  <option value="FE">FE</option>
+                  <option value="SE">SE</option>
                 </select>
               </div>
 
