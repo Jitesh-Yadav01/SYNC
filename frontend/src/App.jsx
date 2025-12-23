@@ -13,17 +13,18 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const routing = useRoutes([...publicRoutes, ...protectedRoutes]);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
+  // No timer till final deployment. 
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     setIsLoading(false);
+  //   }, 2000);
 
-    return () => clearTimeout(timer);
-  }, []);
+  //   return () => clearTimeout(timer);
+  // }, []);
 
-  if (isLoading) {
-    return <Loader />;
-  }
+  // if (isLoading) {
+  //   return <Loader />;
+  // }
 
   return (
     <div className="app">
@@ -32,15 +33,6 @@ export default function App() {
       <div className="site-container">
         <main className="main">
           {routing}
-
-          {/* Task Table Section */}
-          <div className="outer-container">
-            <h2 className="title">Task Management</h2>
-            <hr />
-            <div className="card">
-              <TaskTable />
-            </div>
-          </div>
         </main>
       </div>
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { useLocation, Navigate } from 'react-router-dom';
 import Sidebar from '../../components/SideBar/sidebar';
 import Dashboard from '../../components/SideBar/dashboard';
-
+import TaskTable from '@/components/TaskTable';
 const SePanel = () => {
   const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = React.useState(false);
@@ -46,6 +46,14 @@ const SePanel = () => {
         {/* Main content */}
         <div className="flex-1 bg-[var(--panel)] rounded-[var(--radius)] shadow-[var(--shadow)] border border-[var(--border)] p-4 md:p-6 overflow-y-auto">
           <Dashboard />
+          {/* Task Table Section */}
+          <div className="outer-container">
+            <h2 className="title">Task Management</h2>
+            <hr />
+            <div className="card">
+              <TaskTable />
+            </div>
+          </div>
         </div>
       </div>
     </>
