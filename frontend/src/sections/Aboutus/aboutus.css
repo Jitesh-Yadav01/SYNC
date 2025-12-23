@@ -8,7 +8,6 @@
   margin-right: calc(50% - 50vw);
   position: relative;
   width: 100vw;
-  min-height: 100vh;
   overflow: hidden;
   border-bottom: 10px solid #0f2a70;
 }
