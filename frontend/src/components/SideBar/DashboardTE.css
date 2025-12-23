@@ -1,0 +1,65 @@
+.dashboard-root {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  overflow-y: visible;
+  padding-right: 10px;
+}
+
+/* Scrollbar */
+.dashboard-root::-webkit-scrollbar {
+  width: 6px;
+}
+.dashboard-root::-webkit-scrollbar-thumb {
+  background: #bdbdbd;
+  border-radius: 10px;
+}
+
+/* Section card */
+.dashboard-section {
+  border-radius: 18px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.dashboard-section--grey {
+  background: #eeeeee;
+}
+
+.dashboard-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.dashboard-divider {
+  height: 3px;
+  background: #9f9f9f;
+  border-radius: 2px;
+  margin-top: 12px;
+  margin-bottom: 22px;
+}
+
+/* Dates & ToDo Row */
+
+.dash-bottom-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.dash-bottom-row > * {
+  min-width: 0;
+}
+
+
+@media (max-width: 1031px) {
+  .dash-bottom-row {
+    grid-template-columns: 1fr;
+  }
+}
