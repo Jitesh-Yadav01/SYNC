@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Building2, Users, FileText, ClipboardList, CalendarDays, RefreshCw, Code2, Terminal, GitBranch } from 'lucide-react';
+import { toast } from 'react-toastify';
+import { Building2, Users, FileText, ClipboardList, CalendarDays, RefreshCw, Code2, Terminal, GitBranch, FileBarChart, Download, Loader2 } from 'lucide-react';
 import AdminCalendar from './AdminCalendar';
 import UserSearchBar from './UserSearchBar';
+import { generateIqacPdf } from './generateIqacPdf';
 
 const API = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
 
@@ -17,6 +19,12 @@ export default function SuperOverview({ admin, onNavigate }) {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
+    // ── IQAC Reports state ────────────────────────────────────────
+    const [iqacClubSlug, setIqacClubSlug] = useState('');
+    const [iqacLoading, setIqacLoading] = useState(false);
+    const [iqacData, setIqacData] = useState(null);
+    const [pdfGenerating, setPdfGenerating] = useState(false);
 
     const fetchDashboard = async () => {
         setLoading(true);
@@ -84,7 +92,7 @@ export default function SuperOverview({ admin, onNavigate }) {
                     </h1>
 
                     <p style={{ fontSize: '1rem', color: '#374151', lineHeight: 1.7, maxWidth: '440px', marginBottom: '1.5rem' }}>
-                        Oversee every club, monitor institute-wide activity, and generate IQAC reports — all from a single console.
+                        Oversee every club, monitor institute-wide activity, and generate reports — all from a single console.
                     </p>
 
                     <div className="flex items-center gap-3 flex-wrap">
@@ -149,6 +157,116 @@ export default function SuperOverview({ admin, onNavigate }) {
                         </div>
                     </div>
                 ))}
+            </div>
+
+            {/* ── Club's IQAC Reports ──────────────────────────── */}
+            <div className="mt-8">
+                <div className="flex items-center gap-3 mb-4">
+                    <div className="h-10 w-10 rounded-lg bg-blue-600/10 flex items-center justify-center">
+                        <FileBarChart className="h-5 w-5 text-blue-600" />
+                    </div>
+                    <div>
+                        <h2 className="text-lg font-bold text-gray-900">Club's IQAC Reports</h2>
+                        <p className="text-xs text-gray-500">Select a club to preview and download IQAC PDF</p>
+                    </div>
+                </div>
+
+                <div className="rounded-2xl border border-gray-200 bg-white p-5">
+                    <div className="flex flex-col sm:flex-row gap-3 mb-4">
+                        <select
+                            value={iqacClubSlug}
+                            onChange={(e) => { setIqacClubSlug(e.target.value); setIqacData(null); }}
+                            className="flex-1 rounded-lg border border-gray-300 px-3 py-2.5 text-sm bg-white outline-none focus:ring-2 focus:ring-blue-500"
+                        >
+                            <option value="">Select a club...</option>
+                            {(data?.clubs || []).map((c) => (
+                                <option key={c._id} value={c.slug}>{c.name}</option>
+                            ))}
+                        </select>
+                        <button
+                            onClick={async () => {
+                                if (!iqacClubSlug) { toast.error('Select a club first'); return; }
+                                setIqacLoading(true);
+                                setIqacData(null);
+                                try {
+                                    const res = await axios.get(`${API}/api/superadmin/club-iqac-data`, {
+                                        params: { slug: iqacClubSlug },
+                                        withCredentials: true,
+                                    });
+                                    if (res.data?.success) setIqacData(res.data);
+                                    else toast.error(res.data?.message || 'Failed');
+                                } catch (err) {
+                                    toast.error('Failed to load IQAC data');
+                                } finally {
+                                    setIqacLoading(false);
+                                }
+                            }}
+                            disabled={!iqacClubSlug || iqacLoading}
+                            className="inline-flex items-center gap-2 rounded-lg bg-gray-900 px-5 py-2.5 text-sm font-bold text-white hover:bg-gray-800 disabled:opacity-50"
+                        >
+                            {iqacLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <FileBarChart className="h-4 w-4" />}
+                            Load Events
+                        </button>
+                    </div>
+
+                    {iqacData && (
+                        <div className="mt-3">
+                            <div className="flex items-center justify-between mb-3">
+                                <div>
+                                    <span className="text-sm font-bold text-gray-900">{iqacData.clubName}</span>
+                                    <span className="text-xs text-gray-500 ml-2">· {iqacData.events?.length || 0} event{(iqacData.events?.length || 0) === 1 ? '' : 's'} · Budget: ₹{Number(iqacData.clubBudget || 0).toLocaleString('en-IN')}</span>
+                                </div>
+                                <button
+                                    onClick={async () => {
+                                        setPdfGenerating(true);
+                                        try {
+                                            await generateIqacPdf({
+                                                clubName: iqacData.clubName,
+                                                clubBudget: iqacData.clubBudget,
+                                                faculty: iqacData.faculty,
+                                                secretaries: iqacData.secretaries,
+                                                events: iqacData.events,
+                                            });
+                                            toast.success('PDF downloaded!');
+                                        } catch { toast.error('PDF generation failed'); }
+                                        finally { setPdfGenerating(false); }
+                                    }}
+                                    disabled={pdfGenerating || !iqacData.events?.length}
+                                    className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-bold text-white hover:bg-blue-700 disabled:opacity-50 transition-colors"
+                                >
+                                    {pdfGenerating ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4" />}
+                                    Download IQAC PDF
+                                </button>
+                            </div>
+                            {iqacData.events?.length ? (
+                                <div className="overflow-x-auto">
+                                    <table className="w-full text-sm">
+                                        <thead>
+                                            <tr className="text-left text-[11px] font-semibold text-gray-400 uppercase tracking-widest border-b border-gray-200">
+                                                <th className="py-2 pr-4 w-10">#</th>
+                                                <th className="py-2 pr-4">Title</th>
+                                                <th className="py-2 pr-4">Year</th>
+                                                <th className="py-2 pr-4">Type</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {iqacData.events.map((evt, i) => (
+                                                <tr key={evt._id} className="border-b border-gray-100 last:border-0 hover:bg-gray-50">
+                                                    <td className="py-2 pr-4 text-gray-500">{i + 1}</td>
+                                                    <td className="py-2 pr-4 font-medium text-gray-900">{evt.title}</td>
+                                                    <td className="py-2 pr-4 text-gray-600">{evt.academicYear || '—'}</td>
+                                                    <td className="py-2 pr-4 text-gray-600">{evt.eventType || '—'}</td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            ) : (
+                                <div className="text-center py-6 text-gray-400 text-sm">No IQAC events found for this club.</div>
+                            )}
+                        </div>
+                    )}
+                </div>
             </div>
 
             {/* Full-year event calendar */}

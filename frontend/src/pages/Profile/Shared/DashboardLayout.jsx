@@ -8,7 +8,8 @@ import SharedMyClubs from './SharedMyClubs';
 import AvailableForms from './AvailableForms';
 import MyForms from '@/pages/Forms/MyForms';
 import Dashboard from '@/pages/response/Dashboard';
-import { LayoutDashboard, Users, LogOut, Menu, FileText, X, ChevronRight, Building, ClipboardList } from 'lucide-react';
+import ManageIqacEvents from './ManageIqacEvents';
+import { LayoutDashboard, Users, LogOut, Menu, FileText, X, ChevronRight, Building, ClipboardList, FileBarChart } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/context/AuthContext';
 import axios from 'axios';
@@ -76,6 +77,7 @@ export default function SharedDashboardLayout({ children }) {
             case 'my-clubs': return <SharedMyClubs />;
             case 'manage-forms': return <MyForms />;
             case 'responses': return <Dashboard viewerRole={role === 'Admin' ? 'admin' : 'member'} isEmbedded={true} />;
+            case 'iqac-events': return <ManageIqacEvents />;
             default: return role === 'Admin' ? <SharedOverview /> : <SharedMyClubs />;
         }
     };
@@ -219,6 +221,27 @@ export default function SharedDashboardLayout({ children }) {
                                         activeTab === 'responses' ? "text-blue-600" : "text-gray-400 group-hover:text-gray-600"
                                     )} />
                                     Responses
+                                </button>
+                                <button
+                                    onClick={() => {
+                                        setActiveTab('iqac-events');
+                                        setIsSidebarOpen(false);
+                                    }}
+                                    className={cn(
+                                        "w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 group relative overflow-hidden",
+                                        activeTab === 'iqac-events'
+                                            ? "bg-blue-50 text-blue-700 shadow-sm"
+                                            : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+                                    )}
+                                >
+                                    {activeTab === 'iqac-events' && (
+                                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-blue-600 rounded-r-full" />
+                                    )}
+                                    <FileBarChart className={cn(
+                                        "h-5 w-5 transition-colors",
+                                        activeTab === 'iqac-events' ? "text-blue-600" : "text-gray-400 group-hover:text-gray-600"
+                                    )} />
+                                    IQAC Reports
                                 </button>
                             </>
                         )}

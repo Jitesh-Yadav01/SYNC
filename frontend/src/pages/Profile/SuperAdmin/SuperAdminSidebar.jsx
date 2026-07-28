@@ -7,7 +7,7 @@ const ROLE_LABEL = { director: 'Director', principal: 'Principal', jd: 'Joint Di
 const SUPERADMIN_TABS = [
     { id: 'overview', label: 'Overview', icon: LayoutDashboard },
     { id: 'clubs', label: 'Manage Clubs', icon: Building2 },
-    { id: 'reports', label: 'IQAC Reports', icon: FileBarChart },
+    { id: 'reports', label: 'Generate Report', icon: FileBarChart },
 ];
 
 export default function SuperAdminSidebar({

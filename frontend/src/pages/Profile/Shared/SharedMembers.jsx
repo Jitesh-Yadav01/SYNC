@@ -76,6 +76,9 @@ export default function SharedMembers() {
     };
 
     const handleRemoveSecretary = async (email) => {
+        if (!window.confirm(`Are you sure you want to remove secretary ${email}?`)) {
+            return;
+        }
         setRemovingSecEmail(email);
         try {
             const res = await axios.post(
@@ -347,7 +350,11 @@ export default function SharedMembers() {
                                     {canManageMembers && (
                                         <td className="px-6 py-4 text-right">
                                             <button
-                                                onClick={() => removeMember(member)}
+                                                onClick={() => {
+                                                    if (window.confirm(`Are you sure you want to remove ${member.name || member.email}?`)) {
+                                                        removeMember(member);
+                                                    }
+                                                }}
                                                 className="px-3 py-1.5 text-xs font-medium text-red-600 bg-red-50 hover:bg-red-100 rounded-md transition-colors inline-flex items-center gap-1.5 border border-red-100"
                                             >
                                                 <Trash2 className="h-3.5 w-3.5" />

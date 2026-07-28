@@ -130,7 +130,7 @@ export default function IqacReports() {
                     <FileBarChart className="h-5 w-5 text-white" />
                 </div>
                 <div>
-                    <h1 className="text-2xl font-extrabold tracking-tight text-gray-900">IQAC Reports</h1>
+                    <h1 className="text-2xl font-extrabold tracking-tight text-gray-900">Generate Report</h1>
                     <p className="text-sm text-gray-500">Generate per-club and institute-wide activity reports</p>
                 </div>
             </div>

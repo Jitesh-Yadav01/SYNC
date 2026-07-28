@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useProfile } from './ProfileContext';
 import { useAuth } from '@/context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import { Users, Trophy, ClipboardList, Code2, Terminal, GitBranch } from 'lucide-react';
+import { Users, Trophy, ClipboardList, Code2, Terminal, GitBranch, IndianRupee, Edit2, Check, X } from 'lucide-react';
 import { toast } from 'react-toastify';
+import axios from 'axios';
 
 function getGreeting() {
     const h = new Date().getHours();
@@ -21,6 +22,10 @@ export default function SharedOverview() {
 
     const [totalResponses, setTotalResponses] = useState(0);
     const [loadingResponses, setLoadingResponses] = useState(false);
+    
+    const [budget, setBudget] = useState(0);
+    const [isEditingBudget, setIsEditingBudget] = useState(false);
+    const [editBudgetValue, setEditBudgetValue] = useState('');
 
     const activeMembers = members.filter(m => m.status === 'Active').length;
     const unreadCount = notifications.filter(n => !n.isRead).length;
@@ -29,6 +34,25 @@ export default function SharedOverview() {
     const founder = '/founder.png';
 
     const currentClubName = activeClub?.name || user?.club?.name || '';
+    
+    useEffect(() => {
+        if (!currentClubName) return;
+        
+        const fetchBudget = async () => {
+            try {
+                const res = await axios.get(`${API}/api/admin/get-budget`, { 
+                    params: { club: currentClubName },
+                    withCredentials: true 
+                });
+                if (res.data.success) {
+                    setBudget(res.data.clubBudget || 0);
+                }
+            } catch (err) {
+                console.error("Failed to fetch budget", err);
+            }
+        };
+        fetchBudget();
+    }, [currentClubName]);
 
     useEffect(() => {
         if (!currentClubName || role === 'Applicant') return;
@@ -68,7 +92,33 @@ export default function SharedOverview() {
         { icon: Users, label: 'Active Members', value: activeMembers },
         { icon: Trophy, label: 'Notifications', value: unreadCount },
         { icon: ClipboardList, label: 'Total Responses', value: loadingResponses ? '...' : totalResponses },
+        ...(role === 'Admin' ? [{ icon: IndianRupee, label: 'Club Budget', value: `₹${budget}`, isBudget: true }] : []),
     ];
+
+    const handleUpdateBudget = async () => {
+        const numVal = Number(editBudgetValue);
+        if (isNaN(numVal) || numVal < 0) {
+            toast.error("Please enter a valid budget");
+            return;
+        }
+        
+        if (!window.confirm(`Are you sure you want to update the club budget to ₹${numVal}?`)) {
+            return;
+        }
+
+        try {
+            const res = await axios.put(`${API}/api/admin/update-budget`, { clubBudget: numVal }, { withCredentials: true });
+            if (res.data.success) {
+                toast.success('Budget updated!');
+                setBudget(numVal);
+                setIsEditingBudget(false);
+            } else {
+                toast.error(res.data.message);
+            }
+        } catch (err) {
+            toast.error(err.response?.data?.message || 'Failed to update budget');
+        }
+    };
 
     const floatingIcons = [
         { icon: Code2, top: '10%', left: '-22px' },
@@ -235,7 +285,7 @@ export default function SharedOverview() {
                     gap: '0',
                 }}
             >
-                {stats.map(({ icon: Icon, label, value }, i) => (
+                {stats.map(({ icon: Icon, label, value, isBudget }, i) => (
                     <div
                         key={i}
                         style={{
@@ -251,7 +301,36 @@ export default function SharedOverview() {
                             <Icon style={{ width: '18px', height: '18px', color: '#111827' }} />
                         </div>
                         <div>
-                            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '1.5rem', fontWeight: 900, color: '#111827', lineHeight: 1 }}>{value}</div>
+                            {isBudget && isEditingBudget ? (
+                                <div className="flex items-center gap-2">
+                                    <span className="text-sm font-bold text-gray-900">₹</span>
+                                    <input 
+                                        type="number" 
+                                        value={editBudgetValue}
+                                        onChange={(e) => setEditBudgetValue(e.target.value)}
+                                        className="w-20 px-1 py-0.5 text-sm font-bold border border-gray-300 rounded focus:ring-1 focus:ring-blue-500 font-mono text-gray-900"
+                                        autoFocus
+                                    />
+                                    <button onClick={handleUpdateBudget} className="p-1.5 text-white bg-green-600 hover:bg-green-700 rounded-md shadow-sm transition-colors flex items-center justify-center">
+                                        <Check className="w-4 h-4 stroke-[3]" />
+                                    </button>
+                                    <button onClick={() => setIsEditingBudget(false)} className="p-1.5 text-white bg-red-600 hover:bg-red-700 rounded-md shadow-sm transition-colors flex items-center justify-center">
+                                        <X className="w-4 h-4 stroke-[3]" />
+                                    </button>
+                                </div>
+                            ) : (
+                                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '1.5rem', fontWeight: 900, color: '#111827', lineHeight: 1, display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                    {value}
+                                    {isBudget && role === 'Admin' && (
+                                        <button 
+                                            onClick={() => { setEditBudgetValue(budget.toString()); setIsEditingBudget(true); }}
+                                            className="text-gray-400 hover:text-blue-600 transition-colors"
+                                        >
+                                            <Edit2 className="w-4 h-4" />
+                                        </button>
+                                    )}
+                                </div>
+                            )}
                             <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.7rem', color: '#4b5563', marginTop: '4px', letterSpacing: '0.05em', textTransform: 'uppercase' }}>{label}</div>
                         </div>
                     </div>

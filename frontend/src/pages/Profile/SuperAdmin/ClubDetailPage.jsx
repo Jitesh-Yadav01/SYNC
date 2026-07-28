@@ -2,7 +2,8 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate, Navigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { ArrowLeft, Building2, Users, GraduationCap, UserCog, Search, Loader2 } from 'lucide-react';
+import { ArrowLeft, Building2, Users, GraduationCap, UserCog, Search, Loader2, FileBarChart, Download } from 'lucide-react';
+import { generateIqacPdf } from './generateIqacPdf';
 import useSuperAdminAccess from '@/hooks/useSuperAdminAccess';
 import useDebouncedValue from '@/hooks/useDebouncedValue';
 import { useAuth } from '@/context/AuthContext';
@@ -30,6 +31,10 @@ export default function ClubDetailPage() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [isDesktopCollapsed, setIsDesktopCollapsed] = useState(false);
     const [selectedMember, setSelectedMember] = useState(null);
+
+    const [iqacData, setIqacData] = useState(null);
+    const [iqacLoading, setIqacLoading] = useState(false);
+    const [pdfGenerating, setPdfGenerating] = useState(false);
 
     const scrollSentinelRef = useRef(null);
 
@@ -87,6 +92,48 @@ export default function ClubDetailPage() {
         };
         fetchDetail();
     }, [slug, status]);
+
+    // Fetch IQAC data when club loads
+    useEffect(() => {
+        if (status !== 'ok' || !slug) return;
+        const fetchIqac = async () => {
+            setIqacLoading(true);
+            try {
+                const res = await axios.get(`${API}/api/superadmin/club-iqac-data`, {
+                    params: { slug },
+                    withCredentials: true,
+                });
+                if (res.data?.success) {
+                    setIqacData(res.data);
+                }
+            } catch (err) {
+                console.error('Failed to fetch IQAC data', err);
+            } finally {
+                setIqacLoading(false);
+            }
+        };
+        fetchIqac();
+    }, [slug, status]);
+
+    const handleDownloadIqacPdf = async () => {
+        if (!iqacData) return;
+        setPdfGenerating(true);
+        try {
+            await generateIqacPdf({
+                clubName: iqacData.clubName,
+                clubBudget: iqacData.clubBudget,
+                faculty: iqacData.faculty,
+                secretaries: iqacData.secretaries,
+                events: iqacData.events,
+            });
+            toast.success('IQAC Report PDF downloaded!');
+        } catch (err) {
+            toast.error('Failed to generate IQAC PDF');
+            console.error(err);
+        } finally {
+            setPdfGenerating(false);
+        }
+    };
 
     const debouncedSearch = useDebouncedValue(search, 1000);
 
@@ -239,6 +286,71 @@ export default function ClubDetailPage() {
                                     ) : <p className="text-sm text-gray-400">None assigned</p>}
                                 </div>
                             </div>
+                        </div>
+
+                        {/* ── Club's IQAC Reports ───────────────────── */}
+                        <div className="rounded-2xl border border-gray-200 bg-white p-6 mb-6">
+                            <div className="flex items-center justify-between mb-5">
+                                <div className="flex items-center gap-3">
+                                    <div className="h-10 w-10 rounded-lg bg-blue-600/10 flex items-center justify-center">
+                                        <FileBarChart className="h-5 w-5 text-blue-600" />
+                                    </div>
+                                    <div>
+                                        <h2 className="text-lg font-bold text-gray-900">Club's IQAC Reports</h2>
+                                        <p className="text-xs text-gray-500">Events recorded by this club for IQAC reporting</p>
+                                    </div>
+                                </div>
+                                <button
+                                    onClick={handleDownloadIqacPdf}
+                                    disabled={pdfGenerating || iqacLoading || !iqacData?.events?.length}
+                                    className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-bold text-white hover:bg-blue-700 disabled:opacity-50 transition-colors"
+                                >
+                                    {pdfGenerating ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4" />}
+                                    Download IQAC PDF
+                                </button>
+                            </div>
+
+                            {iqacLoading ? (
+                                <div className="flex flex-col items-center justify-center py-8 text-gray-400">
+                                    <Loader2 className="h-6 w-6 animate-spin mb-2" />
+                                    <p className="text-sm">Loading IQAC events...</p>
+                                </div>
+                            ) : iqacData?.events?.length ? (
+                                <div className="overflow-x-auto">
+                                    <table className="w-full text-sm">
+                                        <thead>
+                                            <tr className="text-left text-[11px] font-semibold text-gray-400 uppercase tracking-widest border-b border-gray-200">
+                                                <th className="py-2 pr-4 w-10">#</th>
+                                                <th className="py-2 pr-4">Title</th>
+                                                <th className="py-2 pr-4">Academic Year</th>
+                                                <th className="py-2 pr-4">Type</th>
+                                                <th className="py-2 pr-4">Date Range</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {iqacData.events.map((evt, i) => (
+                                                <tr key={evt._id} className="border-b border-gray-100 last:border-0 hover:bg-gray-50 transition-colors">
+                                                    <td className="py-2.5 pr-4 text-gray-500 font-medium">{i + 1}</td>
+                                                    <td className="py-2.5 pr-4 font-medium text-gray-900">{evt.title}</td>
+                                                    <td className="py-2.5 pr-4 text-gray-600">{evt.academicYear || '—'}</td>
+                                                    <td className="py-2.5 pr-4 text-gray-600">{evt.eventType || '—'}</td>
+                                                    <td className="py-2.5 pr-4 text-gray-600">
+                                                        {evt.startDate !== 'Nil' ? evt.startDate : '—'}
+                                                        {evt.endDate !== 'Nil' ? ` → ${evt.endDate}` : ''}
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                    <p className="text-right text-xs text-gray-400 mt-3">
+                                        {iqacData.events.length} event{iqacData.events.length === 1 ? '' : 's'} · Budget: ₹{Number(iqacData.clubBudget || 0).toLocaleString('en-IN')}
+                                    </p>
+                                </div>
+                            ) : (
+                                <div className="text-center py-8 text-gray-400 text-sm border border-dashed border-gray-300 rounded-xl bg-gray-50">
+                                    No IQAC events recorded for this club yet.
+                                </div>
+                            )}
                         </div>
 
                         <div className="rounded-2xl border border-gray-200 bg-white p-6">
