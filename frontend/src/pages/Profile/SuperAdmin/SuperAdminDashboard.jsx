@@ -8,7 +8,7 @@ import ManageClubs from './ManageClubs';
 import IqacReports from './IqacReports';
 import SuperAdminSidebar, { SuperAdminMobileHeader, SuperAdminExpandButton } from './SuperAdminSidebar';
 
-const UnassignedStudents = React.lazy(() => import('./UnassignedStudents'));
+const Students = React.lazy(() => import('./Students'));
 
 const API = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
 
@@ -56,7 +56,7 @@ export default function SuperAdminDashboard({ admin }) {
         switch (activeTab) {
             case 'overview': return <SuperOverview admin={admin} onNavigate={setActiveTab} />;
             case 'clubs': return <ManageClubs />;
-            case 'unassigned': 
+            case 'students': 
                 return (
                     <React.Suspense fallback={
                         <div className="flex flex-col items-center justify-center min-h-[400px] text-gray-400 font-mono">
@@ -64,7 +64,7 @@ export default function SuperAdminDashboard({ admin }) {
                             <p className="text-sm">Loading...</p>
                         </div>
                     }>
-                        <UnassignedStudents />
+                        <Students />
                     </React.Suspense>
                 );
             case 'reports': return <IqacReports />;
