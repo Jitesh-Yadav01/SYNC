@@ -1,5 +1,5 @@
 import React from 'react';
-import { LayoutDashboard, Building2, FileBarChart, LogOut, Menu, X, ChevronRight, ShieldCheck } from 'lucide-react';
+import { LayoutDashboard, Building2, FileBarChart, LogOut, Menu, X, ChevronRight, ShieldCheck, Users } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const ROLE_LABEL = { director: 'Director', principal: 'Principal', jd: 'Joint Director' };
@@ -7,6 +7,7 @@ const ROLE_LABEL = { director: 'Director', principal: 'Principal', jd: 'Joint Di
 const SUPERADMIN_TABS = [
     { id: 'overview', label: 'Overview', icon: LayoutDashboard },
     { id: 'clubs', label: 'Manage Clubs', icon: Building2 },
+    { id: 'unassigned', label: 'Unassigned Students', icon: Users },
     { id: 'reports', label: 'Generate Report', icon: FileBarChart },
 ];
 
