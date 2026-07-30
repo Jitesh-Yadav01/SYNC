@@ -15,11 +15,15 @@ function loadImage(src) {
 /**
  * ── IQAC Report PDF ─────────────────────────────────────────────────
  *
- * Replicates the GDG PDF structure:
- * PAGE 1  – Cover/summary: AIT logo, club name, vision/mission, budget,
- *           faculty, secretaries, and a numbered table of all events
- * PAGE 2+ – One page per event with a key-value table (like the GDG
- *           "Event: FE Induction" pages) followed by a description section.
+ * Replicates the GDG reference PDF structure exactly:
+ *
+ * PAGE 1  – Cover/summary: AIT header, club name, vision/mission,
+ *           faculty in-charges, secretaries, budget, numbered event list
+ * PAGE 2+ – Per-event pages with a two-column "Required Field / Information"
+ *           table, followed by Objectives (●) and "Overview of the Event"
+ *
+ * Styling: Times New Roman, all-black text, simple black 1pt grid borders,
+ *          no colored fills or headers.
  *
  * @param {Object} opts
  * @param {string}   opts.clubName
@@ -39,37 +43,63 @@ export async function generateIqacPdf(opts) {
         academicYear = '',
     } = opts;
 
-    const doc = new jsPDF({ unit: 'pt', format: 'a4' });
-    const W = doc.internal.pageSize.getWidth();   // ~595
-    const H = doc.internal.pageSize.getHeight();   // ~842
-    const MX = 40;  // horizontal margin
-    const usable = W - MX * 2;
+    const doc = new jsPDF({ unit: 'pt', format: 'letter' }); // 612 × 792 like original
+    const W = doc.internal.pageSize.getWidth();
+    const H = doc.internal.pageSize.getHeight();
+    const MX = 65;   // horizontal margin matching original
+    const MR = W - 65;
+    const usable = MR - MX; // ~482
 
-    // ── Colours ──────────────────────────────────────────────────────
-    const DARK  = [17, 24, 39];
-    const BLUE  = [29, 78, 216];
-    const GRAY  = [75, 85, 99];
-    const LGRAY = [245, 246, 248];
+    // ── All-black styling (matches original) ─────────────────────────
+    const BLACK = [0, 0, 0];
 
-    // ── Reusable helpers ─────────────────────────────────────────────
-    const center = W / 2;
+    const setBlack = () => doc.setTextColor(0, 0, 0);
 
-    const setColor = (c) => doc.setTextColor(c[0], c[1], c[2]);
-
-    /** Draw a full-width 1px line at y */
-    const drawLine = (y, color = [200, 200, 200]) => {
-        doc.setDrawColor(color[0], color[1], color[2]);
-        doc.setLineWidth(0.5);
-        doc.line(MX, y, W - MX, y);
+    /** Draw a full-width 1px black line at y */
+    const drawLine = (y) => {
+        doc.setDrawColor(0, 0, 0);
+        doc.setLineWidth(1);
+        doc.line(MX, y, MR, y);
     };
 
     /** Ensure we don't write past the page. Returns new y (on same or new page). */
-    const safeY = (y, needed = 60) => {
+    const safeY = (y, needed = 20) => {
         if (y + needed > H - 50) {
             doc.addPage();
-            return 40;
+            return 50;
         }
         return y;
+    };
+
+    // Common table style matching the original: black 1pt borders, no fills
+    const tableDefaults = {
+        styles: {
+            font: 'times',
+            fontSize: 11,
+            textColor: BLACK,
+            cellPadding: { top: 4, bottom: 4, left: 6, right: 6 },
+            lineColor: BLACK,
+            lineWidth: 1,
+            overflow: 'linebreak',
+            valign: 'top',
+        },
+        headStyles: {
+            fillColor: false,
+            textColor: BLACK,
+            fontStyle: 'bold',
+            lineColor: BLACK,
+            lineWidth: 1,
+        },
+        bodyStyles: {
+            fillColor: false,
+        },
+        alternateRowStyles: {
+            fillColor: false,
+        },
+        margin: { left: MX, right: W - MR },
+        theme: 'grid',
+        tableLineColor: BLACK,
+        tableLineWidth: 1,
     };
 
     // ── Load logo ────────────────────────────────────────────────────
@@ -85,113 +115,146 @@ export async function generateIqacPdf(opts) {
     if (logo && logo.naturalWidth) {
         const h = 64;
         const w = (logo.naturalWidth / logo.naturalHeight) * h;
-        try { doc.addImage(logo, 'JPEG', center - w / 2, y, w, h); } catch (_) {}
+        try { doc.addImage(logo, 'JPEG', W / 2 - w / 2, y, w, h); } catch (_) {}
         y += h + 14;
     } else {
         y += 10;
     }
 
-    // Main title
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(16);
-    setColor(DARK);
-    doc.text('Army Institute of Technology, Pune', center, y, { align: 'center' });
-    y += 22;
-
-    // Sub-title – "REPORT FOR AY 20XX-XX"
-    doc.setFontSize(12);
-    setColor(BLUE);
-    const ayLabel = academicYear || (events[0]?.academicYear ?? '');
-    doc.text(`REPORT FOR AY ${ayLabel}`, center, y, { align: 'center' });
+    // College name
+    doc.setFont('times', 'bold');
+    doc.setFontSize(14);
+    setBlack();
+    doc.text('Army Institute of Technology, Pune', W / 2, y, { align: 'center' });
     y += 24;
 
-    drawLine(y);
-    y += 14;
+    // "REPORT FOR AY ..."
+    doc.setFont('times', 'bold');
+    doc.setFontSize(12);
+    setBlack();
+    const ayLabel = academicYear || (events[0]?.academicYear ?? '');
+    doc.text(`REPORT FOR AY ${ayLabel}`, W / 2, y, { align: 'center' });
+    y += 18;
 
     // Club name
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(14);
-    setColor(DARK);
-    doc.text(clubName, center, y, { align: 'center' });
-    y += 26;
+    doc.setFont('times', 'bold');
+    doc.setFontSize(12);
+    setBlack();
+    doc.text(clubName, W / 2, y, { align: 'center' });
+    y += 22;
 
-    // ── Vision / Mission (optional static) ───────────────────────────
-    // We don't have club-specific vision/mission in the DB, so we skip these
-    // and go straight to the info section like in the GDG PDF.
+    // ── Vision / Mission ─────────────────────────────────────────────
+    doc.setFont('times', 'bold');
+    doc.setFontSize(11);
+    doc.text('VISION', MX, y);
+    y += 14;
+    doc.setFont('times', 'normal');
+    doc.setFontSize(11);
+    const visionText = opts.vision || 'To be an important part of the Government\'s dream of a 5 trillion economy, by contributing through startups of AIT students.';
+    const visionLines = doc.splitTextToSize(visionText, usable);
+    visionLines.forEach((line) => {
+        doc.text(line, MX, y);
+        y += 13;
+    });
+    y += 6;
 
-    // ── Faculty in-charges ───────────────────────────────────────────
-    if (faculty.length) {
-        doc.setFont('helvetica', 'bold');
-        doc.setFontSize(10);
-        setColor(DARK);
-        doc.text('Name of faculty in-charges', MX, y);
-        y += 14;
-        doc.setFont('helvetica', 'normal');
-        doc.setFontSize(9);
-        setColor(GRAY);
-        faculty.forEach((f, i) => {
-            y = safeY(y, 14);
-            doc.text(`${i + 1}.  ${f}`, MX + 10, y);
-            y += 13;
-        });
-        y += 6;
-    }
+    doc.setFont('times', 'bold');
+    doc.text('MISSION', MX, y);
+    y += 14;
+    doc.setFont('times', 'normal');
+    const missionText = opts.mission || 'To build an ecosystem to identify, nurture innovation and entrepreneurship skills amongst students and to generate successful commercial enterprise contributing towards significant job creations.';
+    const missionLines = doc.splitTextToSize(missionText, usable);
+    missionLines.forEach((line) => {
+        doc.text(line, MX, y);
+        y += 13;
+    });
+    y += 14;
 
-    // ── Student secretaries ──────────────────────────────────────────
-    if (secretaries.length) {
-        y = safeY(y, 40);
-        doc.setFont('helvetica', 'bold');
-        doc.setFontSize(10);
-        setColor(DARK);
-        doc.text('Name of Student Secretaries', MX, y);
-        y += 14;
-        doc.setFont('helvetica', 'normal');
-        doc.setFontSize(9);
-        setColor(GRAY);
-        secretaries.forEach((s, i) => {
-            y = safeY(y, 14);
-            doc.text(`${i + 1}.  ${s}`, MX + 10, y);
-            y += 13;
-        });
-        y += 6;
-    }
+    // ── Faculty in-charges (table) ───────────────────────────────────
+    y = safeY(y, 60);
+    doc.setFont('times', 'bold');
+    doc.setFontSize(11);
+    doc.text('Name of faculty in-charges', MX, y);
+    y += 6;
+
+    const facultyBody = faculty.length
+        ? faculty.map((f, i) => [String(i + 1), f])
+        : [['1', '']];
+
+    autoTable(doc, {
+        startY: y,
+        body: facultyBody,
+        ...tableDefaults,
+        columnStyles: {
+            0: { cellWidth: 40, halign: 'center' },
+        },
+    });
+    y = doc.lastAutoTable.finalY + 10;
+
+    // ── Student Secretaries (table) ──────────────────────────────────
+    y = safeY(y, 60);
+    doc.setFont('times', 'bold');
+    doc.setFontSize(11);
+    setBlack();
+    doc.text('Name of Student Secretaries', MX, y);
+    y += 6;
+
+    const secBody = secretaries.length
+        ? secretaries.map((s, i) => [String(i + 1), s])
+        : [['1', '']];
+
+    autoTable(doc, {
+        startY: y,
+        body: secBody,
+        ...tableDefaults,
+        columnStyles: {
+            0: { cellWidth: 40, halign: 'center' },
+        },
+    });
+    y = doc.lastAutoTable.finalY + 10;
 
     // ── Budget ───────────────────────────────────────────────────────
-    y = safeY(y, 30);
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(10);
-    setColor(DARK);
-    doc.text('Budget Allocated', MX, y);
-    doc.setFont('helvetica', 'normal');
-    doc.text(`Rs ${Number(clubBudget).toLocaleString('en-IN')}`, MX + 150, y);
-    y += 22;
+    y = safeY(y, 40);
+    autoTable(doc, {
+        startY: y,
+        body: [
+            ['Budget Allocated\nby Institute', `Rs ${Number(clubBudget).toLocaleString('en-IN')}`],
+            ['Sponsorship received', ''],
+        ],
+        ...tableDefaults,
+        columnStyles: {
+            0: { cellWidth: usable / 2, fontStyle: 'bold' },
+        },
+    });
+    y = doc.lastAutoTable.finalY + 14;
 
     // ── Events summary table ─────────────────────────────────────────
     y = safeY(y, 60);
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(10);
-    setColor(DARK);
+    doc.setFont('times', 'bold');
+    doc.setFontSize(11);
+    setBlack();
     doc.text('Name of activities/events conducted', MX, y);
-    y += 10;
+    y += 6;
 
+    const summaryHead = [['Sr No.', 'Name of activity', 'Type\n(Inter college/ Intra\ncollege)']];
     const summaryBody = events.map((e, i) => [
-        String(i + 1),
+        `${i + 1}.`,
         e.title || 'Untitled',
         e.eventType || '—',
     ]);
 
     autoTable(doc, {
         startY: y,
-        head: [['Sr No.', 'Name of activity', 'Type']],
+        head: summaryHead,
         body: summaryBody.length ? summaryBody : [['—', 'No events recorded', '']],
-        styles: { font: 'helvetica', fontSize: 8.5, cellPadding: 4, overflow: 'linebreak', lineColor: [200, 200, 200], lineWidth: 0.5 },
-        headStyles: { fillColor: DARK, textColor: 255, fontStyle: 'bold' },
-        alternateRowStyles: { fillColor: LGRAY },
-        margin: { left: MX, right: MX },
-        theme: 'grid',
+        ...tableDefaults,
+        headStyles: {
+            ...tableDefaults.headStyles,
+            fillColor: false,
+        },
         columnStyles: {
-            0: { cellWidth: 45, halign: 'center' },
-            2: { cellWidth: 120 },
+            0: { cellWidth: 50, halign: 'center' },
+            2: { cellWidth: 140 },
         },
     });
 
@@ -201,122 +264,113 @@ export async function generateIqacPdf(opts) {
 
     events.forEach((evt) => {
         doc.addPage();
-        let ey = 36;
+        let ey = 40;
 
-        // ── Event title bar ──────────────────────────────────────────
-        doc.setFont('helvetica', 'bold');
-        doc.setFontSize(13);
-        setColor(BLUE);
-        doc.text(`EVENT: ${(evt.title || 'Untitled').toUpperCase()}`, center, ey, { align: 'center' });
-        ey += 18;
+        // ── Event title ──────────────────────────────────────────────
+        doc.setFont('times', 'bold');
+        doc.setFontSize(15);
+        setBlack();
+        const titleText = `EVENT: ${(evt.title || 'Untitled').toUpperCase()}`;
+        doc.text(titleText, W / 2, ey, { align: 'center' });
+        ey += 22;
 
-        drawLine(ey);
-        ey += 14;
-
-        // ── Key-value details table (mirrors GDG format) ─────────────
-        const rows = [];
+        // ── Main details table (two-column: Required Field | Information) ──
+        const detailRows = [];
 
         const addRow = (label, value) => {
-            if (value !== undefined && value !== null && value !== '' && value !== 'Nil') {
-                rows.push([label, String(value)]);
-            }
+            detailRows.push([label, value !== undefined && value !== null && value !== '' && value !== 'Nil' ? String(value) : 'Nil']);
         };
 
         addRow('Academic Year', evt.academicYear);
-        addRow('Program/Activity Name', evt.title);
-        addRow('Event Type', evt.eventType);
-        addRow('Theme', evt.theme);
+        addRow('Program/Activity/Name', evt.title);
+
+        // Event type row with the full label from reference
+        addRow('Select one of the Program Types\n(Workshop/ FDP/Seminar/conference/\nintercollege event/ intra-college event/ other)', evt.eventType);
+        addRow('Select one of the program themes\n(IPR/Innovation/ Entrepreneurship/\nStartup/Other)', evt.theme);
         addRow('Start Date', evt.startDate);
         addRow('End Date', evt.endDate);
-        addRow('Student Participants', evt.studentParticipation);
-        addRow('Faculty Participated', evt.facultyParticipation);
-        addRow('Budget / Expenditure', evt.budget ? `Rs ${Number(evt.budget).toLocaleString('en-IN')}` : 'Nil');
+        addRow('Number of Students Participated', evt.studentParticipation);
+        addRow('Number of faculty Participated', evt.facultyParticipation);
+        addRow('Expenditure Amount, if any', evt.budget ? `Rs ${Number(evt.budget).toLocaleString('en-IN')}` : 'Nil');
+        addRow('Remark', 'Nil');
+
+        // Description of activity (numbered items in table, blank line between each)
+        if (evt.description?.length && evt.description.some(d => d)) {
+            const numberedDesc = evt.description
+                .filter(d => d)
+                .map((d, i) => `${i + 1}. ${d}`)
+                .join('\n\n');
+            addRow('Description of activity( 50-150 words)', numberedDesc);
+        }
+
+        // Objectives (numbered items in table, blank line between each)
+        if (evt.objectives?.length && evt.objectives.some(o => o)) {
+            const numberedObj = evt.objectives
+                .filter(o => o)
+                .map((o, i) => `${i + 1}. ${o}`)
+                .join('\n\n');
+            addRow('Objective', numberedObj);
+        }
+
+        // Faculty involved
+        if (faculty.length) {
+            addRow('Faculty Name (Faculty involved in\norganizing the event)', faculty.map((f, i) => `${i + 1}. ${f}`).join('\n'));
+        }
+
+        // Collaborators
         if (evt.collaborators?.length) {
             addRow('Collaborators', evt.collaborators.join(', '));
         }
+
+        // POs mapped
         if (evt.pos?.length) {
-            addRow('POs Mapped', evt.pos.join(', '));
+            addRow('Mentioned the POs mapped with\nthe activity', evt.pos.join(', '));
         }
 
         autoTable(doc, {
             startY: ey,
-            body: rows,
-            styles: {
-                font: 'helvetica',
-                fontSize: 9,
-                cellPadding: 5,
-                overflow: 'linebreak',
-                lineColor: [200, 200, 200],
-                lineWidth: 0.5,
+            head: [['Required Field', 'Information to be filled']],
+            body: detailRows,
+            ...tableDefaults,
+            headStyles: {
+                ...tableDefaults.headStyles,
+                fillColor: false,
             },
             columnStyles: {
-                0: { cellWidth: 160, fontStyle: 'bold', fillColor: [240, 240, 240] },
+                0: { cellWidth: usable / 2 },
             },
-            margin: { left: MX, right: MX },
-            theme: 'grid',
         });
 
-        ey = doc.lastAutoTable.finalY + 16;
+        ey = doc.lastAutoTable.finalY + 12;
 
-        // ── Objectives section ───────────────────────────────────────
-        if (evt.objectives?.length && evt.objectives.some(o => o)) {
+        // ── Overview of the Event (outside the table, uses 'overview' field) ──
+        if (evt.overview?.length && evt.overview.some(d => d)) {
             ey = safeY(ey, 50);
-            doc.setFont('helvetica', 'bold');
-            doc.setFontSize(10);
-            setColor(DARK);
-            doc.text('Objectives', MX, ey);
-            ey += 14;
-            doc.setFont('helvetica', 'normal');
-            doc.setFontSize(9);
-            setColor(GRAY);
-            evt.objectives.forEach((obj) => {
-                if (!obj) return;
-                ey = safeY(ey, 14);
-                const lines = doc.splitTextToSize(`• ${obj}`, usable - 20);
-                lines.forEach((line) => {
-                    ey = safeY(ey, 13);
-                    doc.text(line, MX + 10, ey);
-                    ey += 12;
+            doc.setFont('times', 'bold');
+            doc.setFontSize(12);
+            setBlack();
+            doc.text('Overview of the Event:', MX, ey);
+            ey += 18;
+            doc.setFont('times', 'normal');
+            doc.setFontSize(11);
+            const filteredOverview = evt.overview.filter(p => p);
+            filteredOverview.forEach((para, idx) => {
+                ey = safeY(ey, 20);
+                const numLabel = `${idx + 1}. `;
+                const numWidth = doc.getTextWidth(numLabel);
+                doc.text(numLabel, MX, ey);
+                const lines = doc.splitTextToSize(para, usable - numWidth);
+                lines.forEach((line, li) => {
+                    ey = safeY(ey, 14);
+                    doc.text(line, MX + numWidth, ey);
+                    ey += 13;
                 });
-            });
-            ey += 6;
-        }
-
-        // ── Description / Overview ───────────────────────────────────
-        if (evt.description?.length && evt.description.some(d => d)) {
-            ey = safeY(ey, 50);
-            doc.setFont('helvetica', 'bold');
-            doc.setFontSize(10);
-            setColor(DARK);
-            doc.text('Overview of the Event', MX, ey);
-            ey += 14;
-            doc.setFont('helvetica', 'normal');
-            doc.setFontSize(9);
-            setColor(GRAY);
-            evt.description.forEach((para) => {
-                if (!para) return;
-                const lines = doc.splitTextToSize(para, usable - 10);
-                lines.forEach((line) => {
-                    ey = safeY(ey, 13);
-                    doc.text(line, MX + 5, ey);
-                    ey += 12;
-                });
-                ey += 4;
+                ey += 6;
             });
         }
     });
 
-    // ── Page numbers footer ──────────────────────────────────────────
-    const totalPages = doc.internal.getNumberOfPages();
-    for (let i = 1; i <= totalPages; i++) {
-        doc.setPage(i);
-        doc.setFont('helvetica', 'normal');
-        doc.setFontSize(8);
-        doc.setTextColor(150, 150, 150);
-        doc.text(`Page ${i} of ${totalPages}`, center, H - 20, { align: 'center' });
-        doc.text('Army Institute of Technology, Pune', MX, H - 20);
-    }
-
+    // ── Save ─────────────────────────────────────────────────────────
     const safe = clubName.replace(/[^a-z0-9]+/gi, '_');
     doc.save(`${safe}_IQAC_Report.pdf`);
 }

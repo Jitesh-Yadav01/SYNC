@@ -122,6 +122,8 @@ export default function ClubDetailPage() {
             await generateIqacPdf({
                 clubName: iqacData.clubName,
                 clubBudget: iqacData.clubBudget,
+                vision: iqacData.vision,
+                mission: iqacData.mission,
                 faculty: iqacData.faculty,
                 secretaries: iqacData.secretaries,
                 events: iqacData.events,

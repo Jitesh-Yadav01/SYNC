@@ -27,6 +27,12 @@ export default function SharedOverview() {
     const [isEditingBudget, setIsEditingBudget] = useState(false);
     const [editBudgetValue, setEditBudgetValue] = useState('');
 
+    const [vision, setVision] = useState('');
+    const [mission, setMission] = useState('');
+    const [isEditingVisionMission, setIsEditingVisionMission] = useState(false);
+    const [editVisionValue, setEditVisionValue] = useState('');
+    const [editMissionValue, setEditMissionValue] = useState('');
+
     const activeMembers = members.filter(m => m.status === 'Active').length;
     const unreadCount = notifications.filter(n => !n.isRead).length;
     const firstName = user?.name?.split(' ')[0] || 'there';
@@ -38,7 +44,7 @@ export default function SharedOverview() {
     useEffect(() => {
         if (!currentClubName) return;
         
-        const fetchBudget = async () => {
+        const fetchBudgetAndVisionMission = async () => {
             try {
                 const res = await axios.get(`${API}/api/admin/get-budget`, { 
                     params: { club: currentClubName },
@@ -47,11 +53,20 @@ export default function SharedOverview() {
                 if (res.data.success) {
                     setBudget(res.data.clubBudget || 0);
                 }
+
+                const vmRes = await axios.get(`${API}/api/admin/get-vision-mission`, { 
+                    params: { club: currentClubName },
+                    withCredentials: true 
+                });
+                if (vmRes.data.success) {
+                    setVision(vmRes.data.vision || '');
+                    setMission(vmRes.data.mission || '');
+                }
             } catch (err) {
-                console.error("Failed to fetch budget", err);
+                console.error("Failed to fetch club data", err);
             }
         };
-        fetchBudget();
+        fetchBudgetAndVisionMission();
     }, [currentClubName]);
 
     useEffect(() => {
@@ -107,7 +122,7 @@ export default function SharedOverview() {
         }
 
         try {
-            const res = await axios.put(`${API}/api/admin/update-budget`, { clubBudget: numVal }, { withCredentials: true });
+            const res = await axios.put(`${API}/api/admin/update-budget`, { clubBudget: numVal, club: currentClubName }, { withCredentials: true });
             if (res.data.success) {
                 toast.success('Budget updated!');
                 setBudget(numVal);
@@ -117,6 +132,27 @@ export default function SharedOverview() {
             }
         } catch (err) {
             toast.error(err.response?.data?.message || 'Failed to update budget');
+        }
+    };
+
+    const handleUpdateVisionMission = async () => {
+        try {
+            const res = await axios.put(`${API}/api/admin/update-vision-mission`, {
+                club: currentClubName,
+                vision: editVisionValue,
+                mission: editMissionValue
+            }, { withCredentials: true });
+            
+            if (res.data.success) {
+                toast.success('Vision & Mission updated!');
+                setVision(editVisionValue);
+                setMission(editMissionValue);
+                setIsEditingVisionMission(false);
+            } else {
+                toast.error(res.data.message);
+            }
+        } catch (err) {
+            toast.error(err.response?.data?.message || 'Failed to update Vision & Mission');
         }
     };
 
@@ -336,6 +372,77 @@ export default function SharedOverview() {
                     </div>
                 ))}
             </div>
+
+            {/* Vision & Mission Section */}
+            {role === 'Admin' && (
+                <div className="mt-8 bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
+                    <div className="flex items-center justify-between mb-4">
+                        <h2 className="text-xl font-bold text-gray-900 font-sans">Vision & Mission</h2>
+                        {!isEditingVisionMission ? (
+                            <button
+                                onClick={() => {
+                                    setEditVisionValue(vision);
+                                    setEditMissionValue(mission);
+                                    setIsEditingVisionMission(true);
+                                }}
+                                className="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-blue-600 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors font-sans"
+                            >
+                                <Edit2 className="w-4 h-4" /> Edit
+                            </button>
+                        ) : (
+                            <div className="flex gap-2">
+                                <button
+                                    onClick={() => setIsEditingVisionMission(false)}
+                                    className="px-3 py-1.5 text-sm font-medium text-gray-600 hover:text-gray-900 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors font-sans"
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    onClick={handleUpdateVisionMission}
+                                    className="px-3 py-1.5 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors font-sans"
+                                >
+                                    Save
+                                </button>
+                            </div>
+                        )}
+                    </div>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="bg-gray-50 p-4 rounded-xl border border-gray-100">
+                            <h3 className="text-sm font-bold text-gray-700 uppercase tracking-wider mb-2 font-sans">Vision</h3>
+                            {isEditingVisionMission ? (
+                                <textarea
+                                    value={editVisionValue}
+                                    onChange={(e) => setEditVisionValue(e.target.value)}
+                                    className="w-full p-3 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 font-sans resize-y"
+                                    rows={4}
+                                    placeholder="Enter club vision..."
+                                />
+                            ) : (
+                                <p className="text-gray-600 text-sm leading-relaxed font-sans min-h-[60px]">
+                                    {vision || <span className="text-gray-400 italic">No vision statement set.</span>}
+                                </p>
+                            )}
+                        </div>
+                        <div className="bg-gray-50 p-4 rounded-xl border border-gray-100">
+                            <h3 className="text-sm font-bold text-gray-700 uppercase tracking-wider mb-2 font-sans">Mission</h3>
+                            {isEditingVisionMission ? (
+                                <textarea
+                                    value={editMissionValue}
+                                    onChange={(e) => setEditMissionValue(e.target.value)}
+                                    className="w-full p-3 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 font-sans resize-y"
+                                    rows={4}
+                                    placeholder="Enter club mission..."
+                                />
+                            ) : (
+                                <p className="text-gray-600 text-sm leading-relaxed font-sans min-h-[60px]">
+                                    {mission || <span className="text-gray-400 italic">No mission statement set.</span>}
+                                </p>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

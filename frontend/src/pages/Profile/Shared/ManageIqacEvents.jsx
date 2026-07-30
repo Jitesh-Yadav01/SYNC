@@ -26,8 +26,9 @@ export default function ManageIqacEvents() {
         studentParticipation: 0,
         facultyParticipation: 0,
         collaborators: '',
-        description: '',
-        objectives: '',
+        description: [''],
+        objectives: [''],
+        overview: [''],
         pos: ''
     });
 
@@ -61,6 +62,25 @@ export default function ManageIqacEvents() {
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
+    const handleArrayItemChange = (field, index, value) => {
+        setFormData(prev => {
+            const updated = [...prev[field]];
+            updated[index] = value;
+            return { ...prev, [field]: updated };
+        });
+    };
+
+    const addArrayItem = (field) => {
+        setFormData(prev => ({ ...prev, [field]: [...prev[field], ''] }));
+    };
+
+    const removeArrayItem = (field, index) => {
+        setFormData(prev => {
+            const updated = prev[field].filter((_, i) => i !== index);
+            return { ...prev, [field]: updated.length ? updated : [''] };
+        });
+    };
+
     const openModal = (event = null) => {
         if (event) {
             setEditingEvent(event);
@@ -75,8 +95,9 @@ export default function ManageIqacEvents() {
                 studentParticipation: event.studentParticipation || 0,
                 facultyParticipation: event.facultyParticipation || 0,
                 collaborators: (event.collaborators || []).join(', '),
-                description: (event.description || []).join('\n'),
-                objectives: (event.objectives || []).join('\n'),
+                description: event.description?.length ? [...event.description] : [''],
+                objectives: event.objectives?.length ? [...event.objectives] : [''],
+                overview: event.overview?.length ? [...event.overview] : [''],
                 pos: (event.pos || []).join(', ')
             });
         } else {
@@ -84,7 +105,7 @@ export default function ManageIqacEvents() {
             setFormData({
                 title: '', academicYear: '', eventType: '', theme: '', startDate: '', endDate: '',
                 budget: 0, studentParticipation: 0, facultyParticipation: 0,
-                collaborators: '', description: '', objectives: '', pos: ''
+                collaborators: '', description: [''], objectives: [''], overview: [''], pos: ''
             });
         }
         setIsModalOpen(true);
@@ -102,8 +123,9 @@ export default function ManageIqacEvents() {
                 ...formData,
                 club: activeClub?.name,
                 collaborators: formData.collaborators.split(',').map(s => s.trim()).filter(Boolean),
-                description: formData.description.split('\n').map(s => s.trim()).filter(Boolean),
-                objectives: formData.objectives.split('\n').map(s => s.trim()).filter(Boolean),
+                description: formData.description.map(s => s.trim()).filter(Boolean),
+                objectives: formData.objectives.map(s => s.trim()).filter(Boolean),
+                overview: formData.overview.map(s => s.trim()).filter(Boolean),
                 pos: formData.pos.split(',').map(s => s.trim()).filter(Boolean),
             };
 
@@ -302,12 +324,100 @@ export default function ManageIqacEvents() {
                                 </div>
 
                                 <div>
-                                    <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1.5">Description (One paragraph per line)</label>
-                                    <textarea name="description" rows={3} value={formData.description} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
+                                    <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1.5">Description</label>
+                                    <div className="space-y-2">
+                                        {formData.description.map((item, idx) => (
+                                            <div key={idx} className="flex items-start gap-2 group">
+                                                <span className="mt-2.5 text-xs text-gray-400 font-mono w-5 text-right shrink-0">{idx + 1}.</span>
+                                                <textarea
+                                                    rows={2}
+                                                    value={item}
+                                                    onChange={(e) => handleArrayItemChange('description', idx, e.target.value)}
+                                                    placeholder={`Paragraph ${idx + 1}`}
+                                                    className="flex-1 px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 resize-none"
+                                                />
+                                                <button
+                                                    type="button"
+                                                    onClick={() => removeArrayItem('description', idx)}
+                                                    className="mt-1.5 p-1 text-gray-300 hover:text-red-500 hover:bg-red-50 rounded transition-colors opacity-0 group-hover:opacity-100"
+                                                    title="Remove"
+                                                >
+                                                    <X className="h-3.5 w-3.5" />
+                                                </button>
+                                            </div>
+                                        ))}
+                                        <button
+                                            type="button"
+                                            onClick={() => addArrayItem('description')}
+                                            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-blue-600 hover:text-blue-700 hover:bg-blue-50 border border-dashed border-blue-300 rounded-lg transition-colors"
+                                        >
+                                            <Plus className="h-3.5 w-3.5" /> Add paragraph
+                                        </button>
+                                    </div>
                                 </div>
                                 <div>
-                                    <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1.5">Objectives (One objective per line)</label>
-                                    <textarea name="objectives" rows={3} value={formData.objectives} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
+                                    <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1.5">Objectives</label>
+                                    <div className="space-y-2">
+                                        {formData.objectives.map((item, idx) => (
+                                            <div key={idx} className="flex items-center gap-2 group">
+                                                <span className="text-xs text-gray-400 font-mono w-5 text-right shrink-0">{idx + 1}.</span>
+                                                <input
+                                                    type="text"
+                                                    value={item}
+                                                    onChange={(e) => handleArrayItemChange('objectives', idx, e.target.value)}
+                                                    placeholder={`Objective ${idx + 1}`}
+                                                    className="flex-1 px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                                                />
+                                                <button
+                                                    type="button"
+                                                    onClick={() => removeArrayItem('objectives', idx)}
+                                                    className="p-1 text-gray-300 hover:text-red-500 hover:bg-red-50 rounded transition-colors opacity-0 group-hover:opacity-100"
+                                                    title="Remove"
+                                                >
+                                                    <X className="h-3.5 w-3.5" />
+                                                </button>
+                                            </div>
+                                        ))}
+                                        <button
+                                            type="button"
+                                            onClick={() => addArrayItem('objectives')}
+                                            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-blue-600 hover:text-blue-700 hover:bg-blue-50 border border-dashed border-blue-300 rounded-lg transition-colors"
+                                        >
+                                            <Plus className="h-3.5 w-3.5" /> Add objective
+                                        </button>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1.5">Overview of the Event</label>
+                                    <div className="space-y-2">
+                                        {formData.overview.map((item, idx) => (
+                                            <div key={idx} className="flex items-start gap-2 group">
+                                                <span className="mt-2.5 text-xs text-gray-400 font-mono w-5 text-right shrink-0">{idx + 1}.</span>
+                                                <textarea
+                                                    rows={2}
+                                                    value={item}
+                                                    onChange={(e) => handleArrayItemChange('overview', idx, e.target.value)}
+                                                    placeholder={`Paragraph ${idx + 1}`}
+                                                    className="flex-1 px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 resize-none"
+                                                />
+                                                <button
+                                                    type="button"
+                                                    onClick={() => removeArrayItem('overview', idx)}
+                                                    className="mt-1.5 p-1 text-gray-300 hover:text-red-500 hover:bg-red-50 rounded transition-colors opacity-0 group-hover:opacity-100"
+                                                    title="Remove"
+                                                >
+                                                    <X className="h-3.5 w-3.5" />
+                                                </button>
+                                            </div>
+                                        ))}
+                                        <button
+                                            type="button"
+                                            onClick={() => addArrayItem('overview')}
+                                            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-blue-600 hover:text-blue-700 hover:bg-blue-50 border border-dashed border-blue-300 rounded-lg transition-colors"
+                                        >
+                                            <Plus className="h-3.5 w-3.5" /> Add paragraph
+                                        </button>
+                                    </div>
                                 </div>
                                 <div>
                                     <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1.5">Program Outcomes (POs) (Comma-separated)</label>
