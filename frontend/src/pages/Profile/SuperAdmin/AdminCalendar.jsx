@@ -264,7 +264,7 @@ export default function AdminCalendar() {
                                             </div>
 
                                             <div className="space-y-1">
-                                                {dayEvents.slice(0, 2).map((event) => (
+                                                {dayEvents.map((event) => (
                                                     <div
                                                         key={event.id}
                                                         onClick={() => setSelectedEvent(event)}
@@ -274,9 +274,6 @@ export default function AdminCalendar() {
                                                         {event.title}
                                                     </div>
                                                 ))}
-                                                {dayEvents.length > 2 && (
-                                                    <div className="text-[10px] text-gray-400 px-1">+{dayEvents.length - 2} more</div>
-                                                )}
                                             </div>
                                         </>
                                     )}

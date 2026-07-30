@@ -297,7 +297,7 @@ const Calendar1 = () => {
                         </div>
 
                         <div className="space-y-1">
-                          {dayEvents.slice(0, 3).map(event => (
+                          {dayEvents.map(event => (
                             <div key={event.id} className="truncate">
                               <EventTag
                                 title={event.title}
@@ -307,11 +307,6 @@ const Calendar1 = () => {
                               />
                             </div>
                           ))}
-                          {dayEvents.length > 3 && (
-                            <div className="text-[10px] sm:text-xs text-zinc-500 px-1 sm:px-2 py-1">
-                              +{dayEvents.length - 3} more
-                            </div>
-                          )}
                         </div>
                       </>
                     )}

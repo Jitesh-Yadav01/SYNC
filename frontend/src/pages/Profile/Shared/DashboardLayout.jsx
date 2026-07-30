@@ -9,7 +9,8 @@ import AvailableForms from './AvailableForms';
 import MyForms from '@/pages/Forms/MyForms';
 import Dashboard from '@/pages/response/Dashboard';
 import ManageIqacEvents from './ManageIqacEvents';
-import { LayoutDashboard, Users, LogOut, Menu, FileText, X, ChevronRight, Building, ClipboardList, FileBarChart } from 'lucide-react';
+import AdminCalendar from '../SuperAdmin/AdminCalendar';
+import { LayoutDashboard, Users, LogOut, Menu, FileText, X, ChevronRight, Building, ClipboardList, FileBarChart, CalendarDays } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/context/AuthContext';
 import axios from 'axios';
@@ -53,17 +54,18 @@ export default function SharedDashboardLayout({ children }) {
         { id: 'members', label: 'Team Members', icon: Users },
         { id: 'my-clubs', label: 'My Clubs', icon: Building },
         { id: 'profile', label: 'Profile', icon: Users },
+        { id: 'calendar', label: 'Calendar', icon: CalendarDays },
     ];
 
     const getVisibleTabs = () => {
         if (role === 'Applicant') {
-            return tabs.filter(t => t.id === 'my-clubs');
+            return tabs.filter(t => t.id === 'my-clubs' || t.id === 'calendar');
         }
         if (role === 'Admin') {
             return tabs.filter(t => t.id !== 'profile' && t.id !== 'my-clubs');
         }
         if (role === 'Member') {
-            return tabs.filter(t => ['overview', 'my-clubs'].includes(t.id));
+            return tabs.filter(t => ['overview', 'my-clubs', 'calendar'].includes(t.id));
         }
         return tabs.filter(t => t.id !== 'profile');
     };
@@ -75,6 +77,7 @@ export default function SharedDashboardLayout({ children }) {
             case 'profile': return <SharedProfile />;
             case 'forms': return <AvailableForms />;
             case 'my-clubs': return <SharedMyClubs />;
+            case 'calendar': return <AdminCalendar />;
             case 'manage-forms': return <MyForms />;
             case 'responses': return <Dashboard viewerRole={role === 'Admin' ? 'admin' : 'member'} isEmbedded={true} />;
             case 'iqac-events': return <ManageIqacEvents />;
