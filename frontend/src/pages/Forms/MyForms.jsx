@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FileText, Plus, ArrowLeft, Trash2, Pencil, Globe, Lock, Loader2 } from 'lucide-react';
+import { FileText, Plus, ArrowLeft, Trash2, Pencil, Globe, Lock, Loader2, Share2 } from 'lucide-react';
 
 import { useNavigate } from 'react-router-dom';
 import CreateForm from './CreateForm';
@@ -212,6 +212,7 @@ export default function MyForms() {
                                      </div>
                                 </div>
                             ) : (
+                                <>
                                 <div className="flex flex-wrap gap-5">
                                     {forms.map(form => (
                                         <div
@@ -219,22 +220,38 @@ export default function MyForms() {
                                             onClick={() => setEditingForm(form)}
                                             className="group relative bg-white rounded-xl shadow-sm border border-gray-100 p-5 flex flex-col gap-3 cursor-pointer hover:shadow-md hover:border-blue-100 transition-all duration-200 w-full sm:w-[calc(50%-10px)] lg:w-[calc(33.333%-14px)]"
                                         >
-                                            {/* Edit hint */}
-                                            <div className="absolute top-3 right-10 opacity-0 group-hover:opacity-100 transition-opacity">
-                                                <Pencil className="h-3.5 w-3.5 text-blue-400" />
+                                            {/* Action buttons */}
+                                            <div className="absolute top-3 right-3 flex items-center gap-2">
+                                                {form.isPublic && (
+                                                    <button
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            const linksText = `Form: ${form.title}\nLink: ${window.location.origin}/forms/${form._id}`;
+                                                            navigator.clipboard.writeText(linksText);
+                                                            toast.success("Link copied to clipboard.");
+                                                        }}
+                                                        className="text-gray-300 hover:text-blue-500 transition-colors opacity-0 group-hover:opacity-100"
+                                                        title="Share form"
+                                                    >
+                                                        <Share2 className="h-4 w-4" />
+                                                    </button>
+                                                )}
+                                                {/* Edit hint */}
+                                                <div className="text-gray-300 hover:text-blue-500 transition-colors opacity-0 group-hover:opacity-100" title="Edit form">
+                                                    <Pencil className="h-3.5 w-3.5" />
+                                                </div>
+                                                {/* Delete button */}
+                                                <button
+                                                    onClick={(e) => handleDelete(e, form._id)}
+                                                    disabled={deletingId === form._id}
+                                                    className="text-gray-300 hover:text-red-500 transition-colors disabled:opacity-40"
+                                                    title="Delete form"
+                                                >
+                                                    {deletingId === form._id
+                                                        ? <Loader2 className="h-4 w-4 animate-spin" />
+                                                        : <Trash2 className="h-4 w-4" />}
+                                                </button>
                                             </div>
-
-                                            {/* Delete button */}
-                                            <button
-                                                onClick={(e) => handleDelete(e, form._id)}
-                                                disabled={deletingId === form._id}
-                                                className="absolute top-3 right-3 text-gray-300 hover:text-red-500 transition-colors disabled:opacity-40"
-                                                title="Delete form"
-                                            >
-                                                {deletingId === form._id
-                                                    ? <Loader2 className="h-4 w-4 animate-spin" />
-                                                    : <Trash2 className="h-4 w-4" />}
-                                            </button>
 
                                             {/* Form info */}
                                             <h3 className="font-semibold text-gray-900 truncate pr-8">{form.title}</h3>
@@ -254,6 +271,7 @@ export default function MyForms() {
                                         </div>
                                     ))}
                                 </div>
+                                </>
                             )}
                         </div>
                     </div>

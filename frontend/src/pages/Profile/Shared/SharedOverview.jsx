@@ -156,6 +156,8 @@ export default function SharedOverview() {
         }
     };
 
+
+
     const floatingIcons = [
         { icon: Code2, top: '10%', left: '-22px' },
         { icon: Terminal, bottom: '18%', left: '-18px' },
