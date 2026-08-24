@@ -46,7 +46,7 @@ const allDevelopers = [
     username: "@jittu.raox",
     github: "https://github.com/JiteshYadavvvvv",
     linkedin: "https://www.linkedin.com/in/jitesh-yadav01/",
-  }, 
+  },
   {
     name: "Vishal Goswami",
     role: "Web Developer",
@@ -64,7 +64,7 @@ const allDevelopers = [
     github: "https://github.com/SajalRawat",
     linkedin: "https://www.linkedin.com/in/sajal-rawat/",
   },
- 
+
 ];
 
 const DevGrid = () => {
@@ -128,7 +128,7 @@ const DevGrid = () => {
       const rect = revealImgRef.current.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
-      
+
       revealImgRef.current.style.setProperty('--mx', `${x}px`);
       revealImgRef.current.style.setProperty('--my', `${y}px`);
     };
@@ -157,7 +157,7 @@ const DevGrid = () => {
   }
 
   return (
-    <div 
+    <div
       ref={containerRef}
       className="relative w-full bg-transparent mt-0 pb-24"
     >
@@ -169,29 +169,29 @@ const DevGrid = () => {
         >
           <LaserFlow
             color="#f4f4f5"
-              horizontalSizing={1.01}
-  verticalSizing={3.1}
-  wispDensity={5}
-  wispSpeed={31}
-  wispIntensity={7.6}
-  flowSpeed={0.35}
-  flowStrength={0.82}
-  fogIntensity={0.61}
-  fogScale={0.29}
-  fogFallSpeed={0.91}
-  decay={0.84}
-  falloffStart={1.41}
+            horizontalSizing={0.75}
+            verticalSizing={3.1}
+            wispDensity={5}
+            wispSpeed={50}
+            wispIntensity={20}
+            flowSpeed={0.35}
+            flowStrength={0.92}
+            fogIntensity={0.71}
+            fogScale={0.75}
+            fogFallSpeed={0.91}
+            decay={0.80}
+            falloffStart={1.6}
             verticalBeamOffset={laser.beamY}
           />
         </div>
       )}
 
-     
+
       <img
         ref={revealImgRef}
         src="/clubprofiles/bg.jpeg"
         alt="Reveal effect"
-        className="fixed inset-0 -top-60 max-w-full z-4 mix-blend-lighten pointer-events-none opacity-30 object-cover"
+        className="fixed inset-0 -top-100 max-w-full z-4 mix-blend-lighten pointer-events-none opacity-30 object-cover"
         style={{
           '--mx': '-9999px',
           '--my': '-9999px',
@@ -202,19 +202,19 @@ const DevGrid = () => {
         }}
       />
 
-      
-      <div className="relative z-10 w-full px-4 sm:px-6 lg:px-8 mt-[80px] flex justify-center">
- 
-        <div ref={cardWrapRef} className="w-full max-w-[1200px] mx-auto bg-zinc-900 rounded-[24px] border border-[#f4f4f5] shadow-[0_-10px_60px_rgba(255,255,255,0.02)] relative overflow-hidden px-3 py-4 sm:px-4 sm:py-5 lg:px-5 lg:py-6">
-           
-           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[70%] h-[2px] bg-linear-to-r from-transparent via-[#f4f4f5] to-transparent shadow-[0_0_15px_rgba(244,244,245,0.4)] z-[2]" />
 
-           {/* Cards Grid */}
-           <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5 relative z-10">
-             {allDevelopers.map((dev, index) => {
-               return <DevCard key={`${dev.username}-${index}`} dev={dev} />;
-             })}
-           </div>
+      <div className="relative z-10 w-full px-4 sm:px-6 lg:px-8 mt-20 flex justify-center">
+
+        <div ref={cardWrapRef} className="w-full max-w-300 mx-auto bg-zinc-900 rounded-3xl border border-[#f4f4f5] shadow-[0_-10px_60px_rgba(255,255,255,0.02)] relative overflow-hidden px-3 py-4 sm:px-4 sm:py-5 lg:px-5 lg:py-6">
+
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[70%] h-0.5 bg-linear-to-r from-transparent via-[#f4f4f5] to-transparent shadow-[0_0_15px_rgba(244,244,245,0.4)] z-[2]" />
+
+          {/* Cards Grid */}
+          <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5 relative z-10">
+            {allDevelopers.map((dev, index) => {
+              return <DevCard key={`${dev.username}-${index}`} dev={dev} />;
+            })}
+          </div>
         </div>
       </div>
     </div>

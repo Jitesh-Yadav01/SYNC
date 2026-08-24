@@ -448,7 +448,7 @@ const AuthSelection = () => {
                 <h3 className="text-lg font-medium text-white">
                   SuperAdmin
                 </h3>
-                <p className="text-sm text-slate-400">Director, JD &amp; Principal</p>
+                <p className="text-sm text-slate-400"></p>
               </div>
               <ChevronRight className="h-5 w-5 text-slate-500 group-hover:text-white transition-colors" />
             </button>
