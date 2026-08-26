@@ -4,6 +4,7 @@ import { FileText, Plus, ArrowLeft, Trash2, Pencil, Globe, Lock, Loader2, Share2
 import { useNavigate } from 'react-router-dom';
 import CreateForm from './CreateForm';
 import { toast } from 'react-toastify';
+import { useProfile } from '../Profile/Shared/ProfileContext';
 
 const API = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
 
@@ -24,8 +25,7 @@ const ONBOARDING_TEMPLATE = {
 
 export default function MyForms() {
     const navigate = useNavigate();
-
-
+    const { activeClub } = useProfile();
     const [forms, setForms] = useState([]);
     const [formsLoading, setFormsLoading] = useState(true);
     const [fetchError, setFetchError] = useState('');
@@ -38,7 +38,8 @@ export default function MyForms() {
         setFormsLoading(true);
         setFetchError('');
         try {
-            const res = await fetch(`${API}/api/forms/get-club-forms`, {
+            const clubParam = activeClub ? `?club=${encodeURIComponent(activeClub.name)}` : '';
+            const res = await fetch(`${API}/api/forms/get-club-forms${clubParam}`, {
                 method: 'GET',
                 credentials: 'include',
             });
@@ -68,8 +69,8 @@ export default function MyForms() {
     };
 
     useEffect(() => {
-        fetchForms();
-    }, []);
+        if (activeClub) fetchForms();
+    }, [activeClub]);
 
     // Delete form
     const handleDelete = async (e, formId) => {
@@ -146,6 +147,7 @@ export default function MyForms() {
                 {isFormOpen ? (
                     <CreateForm
                         initialData={editingForm}
+                        clubName={activeClub?.name}
                         onSuccess={handleSuccess}
                         onCancel={() => { setShowCreate(false); setEditingForm(null); }}
                     />

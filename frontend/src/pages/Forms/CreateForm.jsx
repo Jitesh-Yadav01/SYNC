@@ -16,7 +16,7 @@ const emptyField = () => ({
     newOption: '',
 });
 
-export default function CreateForm({ onSuccess, onCancel, initialData }) {
+export default function CreateForm({ onSuccess, onCancel, initialData, clubName }) {
     const isEdit = Boolean(initialData?._id);
 
     const [title, setTitle] = useState(initialData?.title || '');
@@ -96,6 +96,7 @@ export default function CreateForm({ onSuccess, onCancel, initialData }) {
                     if (type === 'select') f.options = options;
                     return f;
                 }),
+                club: clubName,
             };
 
             const url = isEdit

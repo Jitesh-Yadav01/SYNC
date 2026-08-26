@@ -159,11 +159,12 @@ const SharedProfile = () => {
                                     />
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-sm font-medium text-gray-700">Year</label>
+                                    <label className="text-sm font-medium text-gray-700">Year {user.year && <span className="text-xs text-gray-400 font-normal">(Cannot be changed)</span>}</label>
                                     <select
-                                        className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-colors"
+                                        className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
                                         value={editForm.year}
                                         onChange={e => setEditForm({...editForm, year: e.target.value})}
+                                        disabled={Boolean(user.year)}
                                     >
                                         <option value="">Select Year</option>
                                         <option value="FE">FE</option>

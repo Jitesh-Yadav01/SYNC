@@ -270,28 +270,51 @@ export default function SharedDashboardLayout({ children }) {
                             </>
                         )}
 
-                        {role === 'Member' && (
-                            <button
-                                onClick={() => {
-                                    setActiveTab('responses');
-                                    setIsSidebarOpen(false);
-                                }}
-                                className={cn(
-                                    "w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 group relative overflow-hidden",
-                                    activeTab === 'responses'
-                                        ? "bg-blue-50 text-blue-700 shadow-sm"
-                                        : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
-                                )}
-                            >
-                                {activeTab === 'responses' && (
-                                    <div className="absolute left-0 top-0 bottom-0 w-1 bg-blue-600 rounded-r-full" />
-                                )}
-                                <ClipboardList className={cn(
-                                    "h-5 w-5 transition-colors",
-                                    activeTab === 'responses' ? "text-blue-600" : "text-gray-400 group-hover:text-gray-600"
-                                )} />
-                                Responses
-                            </button>
+                        {role === 'Member' && profile?.year !== 'FE' && (
+                            <>
+                                <button
+                                    onClick={() => {
+                                        setActiveTab('manage-forms');
+                                        setIsSidebarOpen(false);
+                                    }}
+                                    className={cn(
+                                        "w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 group relative overflow-hidden",
+                                        activeTab === 'manage-forms'
+                                            ? "bg-blue-50 text-blue-700 shadow-sm"
+                                            : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+                                    )}
+                                >
+                                    {activeTab === 'manage-forms' && (
+                                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-blue-600 rounded-r-full" />
+                                    )}
+                                    <FileText className={cn(
+                                        "h-5 w-5 transition-colors",
+                                        activeTab === 'manage-forms' ? "text-blue-600" : "text-gray-400 group-hover:text-gray-600"
+                                    )} />
+                                    Manage Forms
+                                </button>
+                                <button
+                                    onClick={() => {
+                                        setActiveTab('responses');
+                                        setIsSidebarOpen(false);
+                                    }}
+                                    className={cn(
+                                        "w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 group relative overflow-hidden",
+                                        activeTab === 'responses'
+                                            ? "bg-blue-50 text-blue-700 shadow-sm"
+                                            : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+                                    )}
+                                >
+                                    {activeTab === 'responses' && (
+                                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-blue-600 rounded-r-full" />
+                                    )}
+                                    <ClipboardList className={cn(
+                                        "h-5 w-5 transition-colors",
+                                        activeTab === 'responses' ? "text-blue-600" : "text-gray-400 group-hover:text-gray-600"
+                                    )} />
+                                    Responses
+                                </button>
+                            </>
                         )}
 
                         {/* Applicant can see & fill public forms */}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback } from "react";
+import React, { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import { useProfile } from '@/pages/Profile/Shared/ProfileContext';
@@ -32,6 +32,10 @@ const Dashboard = ({ viewerRole = 'admin', isEmbedded = false }) => {
   const [updatingDecision, setUpdatingDecision] = useState(false);
   const [exporting, setExporting] = useState(false);
    const [expandedFile, setExpandedFile] = useState(null);
+
+   const fetchClubRef = useRef("");
+   const fetchFormRef = useRef("");
+
    const isAdminView = viewerRole === 'admin';
    const responseBasePath = isAdminView ? '/admin/responses' : '/member/responses';
 
@@ -186,14 +190,21 @@ const Dashboard = ({ viewerRole = 'admin', isEmbedded = false }) => {
    }, [normalizeUploadedValue]);
 
    const fetchForms = useCallback(async (clubName) => {
+      fetchClubRef.current = clubName;
       setLoadingForms(true);
       setForms([]);
       setSelectedFormId("");
+      setResponses([]);
+      setSelectedResponseId(null);
+      
       try {
-         const params = isAdminView && clubName ? `?club=${encodeURIComponent(clubName)}` : '';
+         const params = clubName ? `?club=${encodeURIComponent(clubName)}` : '';
          console.log('[fetchForms] viewerRole:', viewerRole, '| clubName:', clubName, '| params:', params);
          const res = await fetch(`${API}/api/forms/get-club-forms${params}`, { credentials: 'include' });
          const json = await res.json();
+         
+         if (fetchClubRef.current !== clubName) return; // Prevent race condition
+         
          console.log('[fetchForms] response:', json);
          if (json.success && Array.isArray(json.forms)) {
             setForms(json.forms);
@@ -221,11 +232,15 @@ const Dashboard = ({ viewerRole = 'admin', isEmbedded = false }) => {
    }, [isAdminView, routeFormId, viewerRole]);
 
    const fetchResponses = useCallback(async (formId) => {
+      fetchFormRef.current = formId;
       setLoadingResponses(true);
       setResponses([]);
       try {
          const res = await fetch(`${API}/api/response/get-form-responses/${formId}`, { credentials: 'include' });
          const json = await res.json();
+         
+         if (fetchFormRef.current !== formId) return; // Prevent race condition
+         
          if (json.success && Array.isArray(json.responses)) {
             setResponses(json.responses);
             if (json.responses.length > 0) {
@@ -315,7 +330,7 @@ const Dashboard = ({ viewerRole = 'admin', isEmbedded = false }) => {
              }
            }
 
-           if (newDecision === 'rejected') {
+           if (newDecision === 'rejected' || newDecision === 'accepted') {
               setResponses(prev => prev.filter(r => r._id !== responseId));
               setSelectedResponseId(prevId => prevId === responseId ? null : prevId);
            } else {

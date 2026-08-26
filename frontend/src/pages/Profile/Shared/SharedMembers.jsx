@@ -7,10 +7,9 @@ import { Plus, Trash2, Search, Pencil, ShieldCheck, Loader2 } from 'lucide-react
 const API = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
 
 export default function SharedMembers() {
-    const { members, addMember, removeMember, editMember, role, activeClub, debugMsg } = useProfile();
+    const { members, addMember, removeMember, editMember, role, activeClub, debugMsg, profile } = useProfile();
     const [searchTerm, setSearchTerm] = useState('');
     const [yearFilter, setYearFilter] = useState('All Years');
-    const [roleFilter, setRoleFilter] = useState('All Roles');
     const [exporting, setExporting] = useState(false);
     const [showAddForm, setShowAddForm] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
@@ -105,8 +104,7 @@ export default function SharedMembers() {
     const filteredMembers = members.filter(m => {
         const matchesSearch = m.name?.toLowerCase().includes(searchTerm.toLowerCase()) || m.email?.toLowerCase().includes(searchTerm.toLowerCase());
         const matchesYear = yearFilter === 'All Years' || m.year === yearFilter;
-        const matchesRole = roleFilter === 'All Roles' || (m.role || 'Member').toLowerCase() === roleFilter.toLowerCase();
-        return matchesSearch && matchesYear && matchesRole;
+        return matchesSearch && matchesYear;
     });
 
     const handleExport = async () => {
@@ -116,7 +114,6 @@ export default function SharedMembers() {
             const params = new URLSearchParams();
             params.append('club', activeClub.name);
             if (yearFilter !== 'All Years') params.append('year', yearFilter);
-            if (roleFilter !== 'All Roles') params.append('role', roleFilter);
             if (searchTerm.trim()) params.append('search', searchTerm.trim());
 
             const res = await axios.get(`${API}/api/admin/export-members?${params.toString()}`, {
@@ -351,16 +348,6 @@ export default function SharedMembers() {
                         >
                             {['All Years', 'FE', 'SE', 'TE', 'BE'].map(y => (
                                 <option key={y} value={y}>{y}</option>
-                            ))}
-                        </select>
-                        
-                        <select
-                            value={roleFilter}
-                            onChange={(e) => setRoleFilter(e.target.value)}
-                            className="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2 shadow-sm"
-                        >
-                            {['All Roles', 'Member', 'Admin', 'Applicant', 'Lead', 'Co-Lead'].map(r => (
-                                <option key={r} value={r}>{r}</option>
                             ))}
                         </select>
 
