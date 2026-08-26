@@ -18,6 +18,7 @@ const cardImages = {
 const cards = [
     {
         title: "Communities",
+        imageSrc: cardImages.communities,
         subtitle: "Discover & Join Communities.",
         description: "Explore student-led clubs • Technical boards to cultural societies • Join with a single click",
         tags: ["COMMUNITY-FIRST"],
@@ -54,6 +55,7 @@ const cards = [
     },
     {
         title: "Events",
+        imageSrc: cardImages.events,
         subtitle: "Centralized Event Hub.",
         description: "Workshops • Hackathons • Cultural fests — all in one seamless calendar",
         tags: ["ONE CALENDAR"],
@@ -91,6 +93,7 @@ const cards = [
     },
     {
         isVision: true,
+        imageSrc: cardImages.announcements,
         wrapperClass: "cc-vision",
         frontClass: "cc-3",
         backClass: "cc-3",
@@ -125,6 +128,7 @@ const cards = [
     },
     {
         title: "Recruitment",
+        imageSrc: cardImages.recruitment,
         subtitle: "Effortless Recruitment.",
         description: "Unified applications • Transparent process • Hassle-free interviews",
         tags: ["HASSLE-FREE"],
@@ -161,6 +165,7 @@ const cards = [
     },
     {
         title: "Dashboards",
+        imageSrc: cardImages.dashboards,
         subtitle: "Run Your Club.",
         description: "Manage members & roles • Review applications • One control panel for club leads",
         tags: ["FOR CLUB LEADS"],
@@ -197,42 +202,56 @@ const cards = [
     }
 ];
 
-const ImageCard = ({ title, subtitle, description, tags, bottomContent, frontClass, backClass, wrapperClass = "", bgPos, isVision, expandedContent }) => (
+const ImageCard = ({ title, subtitle, description, tags, bottomContent, frontClass, backClass, wrapperClass = "", bgPos, isVision, expandedContent, imageSrc }) => (
     <div className={`c-image-card ${wrapperClass}`}>
         <div className={`c-card_frontface ${frontClass}`}>
             {isVision ? (
                 <>
-                    <div className="c-card-balls_wrapper">
-                        <div className="c-card_header cc-balls">
-                            <div className="c-image-card_header-ball"></div>
-                            <div className="c-image-card_heading-text">Announcements</div>
+                    <div className="c-image-card_content-wrapper" style={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
+                        <div>
+                            <div className="c-card_header">
+                                <div className="c-image-card_header-ball"></div>
+                                <div className="c-image-card_heading-text">Announcements</div>
+                            </div>
+                            <h4 className="c-image-card_title">Stay in the loop.</h4>
+                            <div className="c-image-card_divider"></div>
+                            <p className="c-image-card_body-text">Real-time broadcasts • Straight from club leads • Never miss a beat</p>
+                            <p className="c-image-card_flow-text">Post → Notify → Engage</p>
                         </div>
-                        <h4 className="c-image-card_title">Stay in the loop.</h4>
-                        <div className="c-image-card_divider"></div>
-                        <p className="c-image-card_body-text">Real-time broadcasts • Straight from club leads • Never miss a beat</p>
-                        <p className="c-image-card_flow-text">Post → Notify → Engage</p>
                         <div className="c-image-card_tags" style={{ marginTop: 'auto' }}>
                             <div className="c-image-card_tag">REAL-TIME</div>
                         </div>
                     </div>
+                    {imageSrc && (
+                        <div className="c-image-card_mobile-img">
+                            <img src={imageSrc} alt="Vision" />
+                        </div>
+                    )}
                 </>
             ) : (
                 <>
-                    <div>
-                        <div className="c-card_header">
-                            <div className="c-image-card_header-ball"></div>
-                            <div className="c-image-card_heading-text">{title}</div>
+                    <div className="c-image-card_content-wrapper" style={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
+                        <div>
+                            <div className="c-card_header">
+                                <div className="c-image-card_header-ball"></div>
+                                <div className="c-image-card_heading-text">{title}</div>
+                            </div>
+                            <h4 className="c-image-card_title">{subtitle}</h4>
+                            <div className="c-image-card_divider"></div>
+                            <p className="c-image-card_body-text">{description}</p>
                         </div>
-                        <h4 className="c-image-card_title">{subtitle}</h4>
-                        <div className="c-image-card_divider"></div>
-                        <p className="c-image-card_body-text">{description}</p>
+                        {tags && (
+                            <div className="c-image-card_tags" style={{ marginTop: 'auto' }}>
+                                {tags.map(t => <div key={t} className="c-image-card_tag">{t}</div>)}
+                            </div>
+                        )}
+                        {bottomContent}
                     </div>
-                    {tags && (
-                        <div className="c-image-card_tags">
-                            {tags.map(t => <div key={t} className="c-image-card_tag">{t}</div>)}
+                    {imageSrc && (
+                        <div className="c-image-card_mobile-img">
+                            <img src={imageSrc} alt={title} />
                         </div>
                     )}
-                    {bottomContent}
                 </>
             )}
         </div>

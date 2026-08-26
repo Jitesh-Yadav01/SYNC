@@ -107,7 +107,7 @@
 }
 
 .c-footer_contact-left {
-    flex: 1 1 380px;
+    flex: 1 1 100%;
     width: 100%;
     max-width: 34em;
 }
@@ -121,7 +121,9 @@
 }
 
 .c-footer_contact-right {
+    flex: 1 1 100%;
     width: 100%;
+    max-width: 34em;
 }
 
 .c-footer_contact-right.cc-success {
@@ -341,7 +343,7 @@
     font-variation-settings: "wght" 400;
     margin-right: 1em;
     margin-left: 0.25rem;
-    font-size: 1.125vw;
+    font-size: clamp(12px, 1.125vw, 16px);
     line-height: 1.5em;
     text-decoration: none;
     display: inline-block;
@@ -601,7 +603,7 @@
 
 /* Right column mirrors the JOIN NEXUS column: eyebrow → heading → divider → text */
 .c-footer_contact-right {
-    flex: 1 1 380px;
+    flex: 1 1 100%;
     max-width: 34em;
 }
 @media screen and (max-width: 767px) {

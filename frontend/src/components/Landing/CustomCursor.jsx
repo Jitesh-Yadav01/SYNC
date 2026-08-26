@@ -5,12 +5,10 @@ const CustomCursor = () => {
   const [isHovering, setIsHovering] = useState(false)
   const [isAutoScrolling, setIsAutoScrolling] = useState(false)
 
-  // Store positions in refs to avoid re-renders during animation loop
   const mousePosition = useRef({ x: 0, y: 0 })
   const cursorPosition = useRef({ x: 0, y: 0 })
   const targetElement = useRef(null)
-
-  // Auto-scroll refs
+  
   const autoScrollOrigin = useRef({ x: 0, y: 0 })
   const autoScrollActive = useRef(false)
   const autoScrollRAF = useRef(null)
@@ -72,16 +70,15 @@ const CustomCursor = () => {
       if (targetElement.current) {
         const related = e.relatedTarget
         if (related && targetElement.current.contains(related)) {
-          return // Still inside the interactive element
+          return 
         }
         setIsHovering(false)
         targetElement.current = null
       }
     }
 
-    // Middle mouse button auto-scroll
     const onMouseDown = (e) => {
-      if (e.button === 1) { // Middle mouse button
+      if (e.button === 1) {
         e.preventDefault()
         autoScrollOrigin.current = { x: e.clientX, y: e.clientY }
         autoScrollActive.current = true
@@ -92,8 +89,7 @@ const CustomCursor = () => {
 
           const deltaY = (mousePosition.current.y - autoScrollOrigin.current.y) * 0.1
           const deltaX = (mousePosition.current.x - autoScrollOrigin.current.x) * 0.1
-
-          // Only scroll if there's meaningful movement
+          
           if (Math.abs(deltaY) > 0.5 || Math.abs(deltaX) > 0.5) {
             window.scrollBy({
               top: deltaY,
@@ -110,7 +106,7 @@ const CustomCursor = () => {
     }
 
     const onMouseUp = (e) => {
-      if (e.button === 1) { // Middle mouse button
+      if (e.button === 1) {
         autoScrollActive.current = false
         setIsAutoScrolling(false)
         if (autoScrollRAF.current) {
@@ -119,7 +115,6 @@ const CustomCursor = () => {
       }
     }
 
-    // Also stop on any click (in case middle button state gets stuck)
     const onContextMenu = (e) => {
       if (autoScrollActive.current) {
         autoScrollActive.current = false
@@ -130,14 +125,12 @@ const CustomCursor = () => {
       }
     }
 
-    // Invalidate cached metrics when layout can change
     const invalidateMetrics = () => {
       if (targetElement.current && targetElement.current.__metrics) {
         targetElement.current.__metrics = null
       }
     }
 
-    // RAF loop with cancellable ref
     const rafIdRef = { current: 0 }
 
     const applySizeIfChanged = (el, w, h, r) => {
@@ -159,15 +152,13 @@ const CustomCursor = () => {
       if (!cursor) return
 
       let targetX, targetY, targetWidth, targetHeight, targetRadius
-
-      // Check if target element is still in DOM
+      
       if (targetElement.current && !targetElement.current.isConnected) {
         targetElement.current = null
         setIsHovering(false)
       }
 
       if (targetElement.current) {
-        // Use cached metrics when available; otherwise compute once and cache
         const rect = targetElement.current.getBoundingClientRect()
         const buffer = 15 
         if (
@@ -229,8 +220,7 @@ const CustomCursor = () => {
       }
       
       cursor.style.transform = `translate3d(${cursorPosition.current.x}px, ${cursorPosition.current.y}px, 0) translate(-50%, -50%)`
-
-      // Only update sizing when it changes significantly or on mode switch
+      
       applySizeIfChanged(cursor, targetWidth, targetHeight, targetRadius)
 
       rafIdRef.current = requestAnimationFrame(animate)
@@ -288,7 +278,7 @@ const CustomCursor = () => {
           background-color: var(--cursor-color, #000);
           border: 1px solid var(--cursor-invert, #fff);
           pointer-events: none;
-          z-index: 2147483647; /* Maximum possible z-index to stay above everything */
+          z-index: 2147483647; 
           will-change: transform, width, height, border-radius, background-color, border-color;
           transition: width 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), height 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), border-radius 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), background-color 0.2s ease, border-color 0.2s ease;
         }
