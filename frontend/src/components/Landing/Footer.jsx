@@ -1,16 +1,23 @@
 import React, { useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SiLinkedin, SiInstagram, SiGithub } from 'react-icons/si';
-import LogoLoop from './LogoLoop';
 import './Footer.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const socialLogos = [
-    { node: <SiGithub />, title: "GitHub", href: "https://github.com/Jitesh-Yadav01/SYNC-AIT" },
-    { node: <SiLinkedin />, title: "LinkedIn", href: "https://in.linkedin.com/company/gdsc-aitpune" },
-    { node: <SiInstagram />, title: "Instagram", href: "https://www.instagram.com/gdsc_aitpune/" },
+const SOCIAL_LINKS = [
+    { icon: <SiGithub />, title: "GitHub", href: "https://github.com/JiteshYadavvvvv/NEXUS" },
+    { icon: <SiLinkedin />, title: "LinkedIn", href: "https://in.linkedin.com/company/gdsc-aitpune" },
+    { icon: <SiInstagram />, title: "Instagram", href: "https://www.instagram.com/gdsc_aitpune/" },
+];
+
+const NAV_LINKS = [
+    { label: "Home", to: "/" },
+    { label: "Events", to: "/events" },
+    { label: "Clubs", to: "/clubs" },
+    { label: "Developers", to: "/developers" },
 ];
 
 export default function Footer() {
@@ -20,16 +27,16 @@ export default function Footer() {
         const ctx = gsap.context(() => {
             const elements = footerRef.current.querySelectorAll("[data-scroll-animation]");
             elements.forEach(u => {
-                gsap.set(u, { opacity: 0, y: 50 });
+                gsap.set(u, { opacity: 0, y: 30 });
                 gsap.to(u, {
                     opacity: 1,
                     y: 0,
                     delay: parseFloat(u.dataset.scrollAnimation) || 0,
-                    duration: 1,
+                    duration: 0.8,
                     ease: "power3.out",
                     scrollTrigger: {
                         trigger: u,
-                        start: "top 80%",
+                        start: "top 90%",
                         toggleActions: "play pause resume reverse"
                     }
                 });
@@ -40,63 +47,67 @@ export default function Footer() {
 
     return (
         <footer ref={footerRef} id="footer" className="c-footer_section">
-            <section id="early-access" className="c-footer_contact-section">
-                <div className="c-footer_logoloop-wrapper" data-scroll-animation="0">
-                    <LogoLoop
-                        logos={socialLogos}
-                        speed={35}
-                        direction="left"
-                        logoHeight={30}
-                        gap={56}
-                        hoverSpeed={0}
-                        scaleOnHover
-                        fadeOut
-                        fadeOutColor="#000000"
-                        ariaLabel="Connect with NEXUS"
-                    />
-                </div>
-
-                <div className="c-footer_container">
-                    <div className="c-footer_form-block u-form">
-                        <div className="c-footer_contact-wrapper" data-scroll-animation="0">
-                            <div className="c-footer_contact-left">
-                                <span className="c-footer_eyebrow">The platform</span>
-                                <h3 className="c-footer_heading-large">JOIN NEXUS</h3>
-                                <div className="c-footer_divider-large"></div>
-                                <div className="c-footer_text-wrapper">
-                                    <p className="c-footer_description-text">The central club platform for Army Institute of Technology, Pune. Discover clubs, track events, and stay connected — all in one place.</p>
-                                </div>
-                            </div>
-
-                            <div className="c-footer_contact-right">
-                                <span className="c-footer_eyebrow">The builders</span>
-                                <h3 className="c-footer_heading-large">MADE BY GDG-AIT</h3>
-                                <div className="c-footer_divider-large"></div>
-                                <div className="c-footer_text-wrapper">
-                                    <p className="c-footer_description-text">Made with ❤️ by GDG On Campus AIT — the student developer community at AIT Pune. Developers, designers, and builders who learn, collaborate, and ship real projects like NEXUS together.</p>
-                                </div>
+            <div className="c-footer_container">
+                <div className="c-footer_top-wrapper" data-scroll-animation="0">
+                    <div className="c-footer_main-grid">
+                        
+                        {/* Column 1: Identity & Lockup */}
+                        <div className="c-footer_col c-footer_col--main">
+                            <Link to="/" className="c-footer_brand-link" aria-label="NEXUS Home" onClick={() => window.scrollTo(0,0)}>
+                                <img src="/nexus.svg" alt="NEXUS" className="c-footer_logo-small" />
+                            </Link>
+                            <p className="c-footer_identity-text">
+                                The central project that syncs all the clubs of Army Institute of Technology, Pune.
+                            </p>
+                            <div className="c-footer_gdg-lockup">
+                                <span className="c-footer_made-by">Built by</span>
+                                <img src="/clublogos/google-developers.svg" alt="GDG On Campus AIT" className="c-footer_gdg-logo" />
                             </div>
                         </div>
+
+                        {/* Column 2: Platform Links */}
+                        <div className="c-footer_col c-footer_col--nav">
+                            <span className="c-footer_eyebrow">Platform</span>
+                            <ul className="c-footer_nav-list">
+                                {NAV_LINKS.map(link => (
+                                    <li key={link.label}>
+                                        <Link to={link.to} className="c-footer_nav-link" onClick={() => window.scrollTo(0,0)}>
+                                            {link.label}
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+
+                        {/* Column 3: Socials & CTA */}
+                        <div className="c-footer_col c-footer_col--social">
+                            <span className="c-footer_eyebrow">Connect</span>
+                            <ul className="c-footer_nav-list">
+                                {SOCIAL_LINKS.map(social => (
+                                    <li key={social.title}>
+                                        <a href={social.href} target="_blank" rel="noopener noreferrer" className="c-footer_nav-link c-footer_nav-link--external">
+                                            {social.title} <span className="c-footer_arrow">↗</span>
+                                        </a>
+                                    </li>
+                                ))}
+                                <li className="c-footer_cta-wrapper">
+                                    <Link to="/get-started" className="c-footer_btn-primary" onClick={() => window.scrollTo(0,0)}>
+                                        Join NEXUS
+                                    </Link>
+                                </li>
+                            </ul>
+                        </div>
+
                     </div>
                 </div>
-            </section>
 
-            <div className="c-footer_branding" data-scroll-animation="0.1">
-                <div className="c-footer_branding-lockup">
-                    <img src="/nexus.svg" alt="NEXUS" className="c-footer_branding-logo" />
-                    <div className="c-footer_branding-separator" aria-hidden="true"></div>
-                    <img src="/clublogos/google-developers.svg" alt="GDG On Campus AIT" className="c-footer_branding-gdg" />
+                <div className="c-footer_huge-branding" data-scroll-animation="0.1" aria-hidden="true">
+                    NEXUS
                 </div>
-            </div>
 
-            <div className="c-footer_baseline">
-                <div className="c-footer_container c-footer_baseline-row">
-                    <p className="c-footer_baseline-text">© 2026 NEXUS · Army Institute of Technology, Pune</p>
-                    <div className="c-footer_social-wrapper">
-                        <a href="https://github.com/Jitesh-Yadav01/SYNC-AIT" target="_blank" rel="noopener noreferrer" className="c-footer_social-link" aria-label="GitHub"><SiGithub /></a>
-                        <a href="https://in.linkedin.com/company/gdsc-aitpune" target="_blank" rel="noopener noreferrer" className="c-footer_social-link" aria-label="LinkedIn"><SiLinkedin /></a>
-                        <a href="https://www.instagram.com/gdsc_aitpune/" target="_blank" rel="noopener noreferrer" className="c-footer_social-link" aria-label="Instagram"><SiInstagram /></a>
-                    </div>
+                <div className="c-footer_baseline" data-scroll-animation="0.2">
+                    <p className="c-footer_baseline-text">© {new Date().getFullYear()} NEXUS. All rights reserved.</p>
+                    <p className="c-footer_baseline-text c-footer_baseline-right">Designed for AIT Pune.</p>
                 </div>
             </div>
         </footer>
