@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect, useMemo, useCallback } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import { useProfile } from '@/pages/Profile/Shared/ProfileContext';
@@ -30,6 +30,7 @@ const Dashboard = ({ viewerRole = 'admin', isEmbedded = false }) => {
   const [selectedResponseId, setSelectedResponseId] = useState(null);
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
   const [updatingDecision, setUpdatingDecision] = useState(false);
+  const [exporting, setExporting] = useState(false);
    const [expandedFile, setExpandedFile] = useState(null);
    const isAdminView = viewerRole === 'admin';
    const responseBasePath = isAdminView ? '/admin/responses' : '/member/responses';
@@ -335,7 +336,40 @@ const Dashboard = ({ viewerRole = 'admin', isEmbedded = false }) => {
       }
   };
 
+  const handleExport = async () => {
+      if (exporting || !selectedFormId || filteredResponses.length === 0) return;
+      setExporting(true);
+      try {
+          const params = new URLSearchParams({ formId: selectedFormId });
+          if (filterStatus !== 'all') params.append('status', filterStatus);
+          if (searchTerm.trim()) params.append('search', searchTerm.trim());
 
+          const res = await fetch(`${API}/api/response/export-csv?${params.toString()}`, {
+              credentials: 'include'
+          });
+
+          if (!res.ok) {
+              const errData = await res.json().catch(() => ({}));
+              throw new Error(errData.message || 'Export failed');
+          }
+
+          const blob = await res.blob();
+          const url = window.URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = url;
+          const formName = selectedForm?.title || 'Responses';
+          link.setAttribute('download', `NEXUS_${formName.replace(/[^a-z0-9]/gi, '_')}.csv`);
+          document.body.appendChild(link);
+          link.click();
+          link.parentNode.removeChild(link);
+          window.URL.revokeObjectURL(url);
+      } catch (err) {
+          console.error(err);
+          toast.error(err.message || "Unable to export data.");
+      } finally {
+          setExporting(false);
+      }
+  };
 
   const filteredResponses = responses.filter(r => {
     // Status Filter
@@ -446,6 +480,24 @@ const Dashboard = ({ viewerRole = 'admin', isEmbedded = false }) => {
                           className="flex h-8 w-full rounded border border-slate-200 bg-transparent px-3 py-1 pl-8 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm placeholder:text-slate-500 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950"
                         />
                       </div>
+                      
+                      <button
+                        onClick={handleExport}
+                        disabled={exporting || filteredResponses.length === 0}
+                        className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950 disabled:pointer-events-none disabled:opacity-50 border border-slate-200 bg-white shadow-sm hover:bg-slate-100 hover:text-slate-900 h-8 px-3 gap-2"
+                      >
+                        {exporting ? (
+                            <>
+                                <div className="h-4 w-4 animate-spin rounded-full border-2 border-slate-200 border-t-slate-900" />
+                                Exporting...
+                            </>
+                        ) : (
+                            <>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                Export CSV
+                            </>
+                        )}
+                      </button>
                     </>
                  )}
               </div>

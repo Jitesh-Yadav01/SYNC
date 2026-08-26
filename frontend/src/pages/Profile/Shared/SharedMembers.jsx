@@ -7,8 +7,11 @@ import { Plus, Trash2, Search, Pencil, ShieldCheck, Loader2 } from 'lucide-react
 const API = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
 
 export default function SharedMembers() {
-    const { members, addMember, removeMember, editMember, role, debugMsg } = useProfile();
+    const { members, addMember, removeMember, editMember, role, activeClub, debugMsg } = useProfile();
     const [searchTerm, setSearchTerm] = useState('');
+    const [yearFilter, setYearFilter] = useState('All Years');
+    const [roleFilter, setRoleFilter] = useState('All Roles');
+    const [exporting, setExporting] = useState(false);
     const [showAddForm, setShowAddForm] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [currentMemberId, setCurrentMemberId] = useState(null);
@@ -99,10 +102,42 @@ export default function SharedMembers() {
         }
     };
 
-    const filteredMembers = members.filter(m =>
-        m.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        m.email?.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    const filteredMembers = members.filter(m => {
+        const matchesSearch = m.name?.toLowerCase().includes(searchTerm.toLowerCase()) || m.email?.toLowerCase().includes(searchTerm.toLowerCase());
+        const matchesYear = yearFilter === 'All Years' || m.year === yearFilter;
+        const matchesRole = roleFilter === 'All Roles' || (m.role || 'Member').toLowerCase() === roleFilter.toLowerCase();
+        return matchesSearch && matchesYear && matchesRole;
+    });
+
+    const handleExport = async () => {
+        if (exporting || !activeClub) return;
+        setExporting(true);
+        try {
+            const params = new URLSearchParams();
+            params.append('club', activeClub.name);
+            if (yearFilter !== 'All Years') params.append('year', yearFilter);
+            if (roleFilter !== 'All Roles') params.append('role', roleFilter);
+            if (searchTerm.trim()) params.append('search', searchTerm.trim());
+
+            const res = await axios.get(`${API}/api/admin/export-members?${params.toString()}`, {
+                withCredentials: true,
+                responseType: 'blob'
+            });
+
+            const url = window.URL.createObjectURL(new Blob([res.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', `NEXUS_${activeClub.name.replace(/[^a-z0-9]/gi, '_')}_Team_Members.csv`);
+            document.body.appendChild(link);
+            link.click();
+            link.parentNode.removeChild(link);
+            window.URL.revokeObjectURL(url);
+        } catch (err) {
+            toast.error("Unable to export data.");
+        } finally {
+            setExporting(false);
+        }
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -308,14 +343,54 @@ export default function SharedMembers() {
             <div className="bg-white border border-gray-200 rounded-xl shadow-sm">
                 <div className="p-4 border-b border-gray-200 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                     <h3 className="font-semibold text-gray-900">All Members</h3>
-                    <div className="relative w-full sm:w-64">
-                        <Search className="absolute left-2 top-2.5 h-4 w-4 text-gray-400" />
-                        <input
-                            className="pl-8 flex h-9 w-full rounded-md border border-gray-300 bg-transparent px-3 py-1 text-sm text-gray-900 shadow-sm transition-colors focus:outline-none focus:ring-1 focus:ring-blue-500"
-                            placeholder="Search..."
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                        />
+                    <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                        <select
+                            value={yearFilter}
+                            onChange={(e) => setYearFilter(e.target.value)}
+                            className="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2 shadow-sm"
+                        >
+                            {['All Years', 'FE', 'SE', 'TE', 'BE'].map(y => (
+                                <option key={y} value={y}>{y}</option>
+                            ))}
+                        </select>
+                        
+                        <select
+                            value={roleFilter}
+                            onChange={(e) => setRoleFilter(e.target.value)}
+                            className="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2 shadow-sm"
+                        >
+                            {['All Roles', 'Member', 'Admin', 'Applicant', 'Lead', 'Co-Lead'].map(r => (
+                                <option key={r} value={r}>{r}</option>
+                            ))}
+                        </select>
+
+                        <div className="relative w-full sm:w-64">
+                            <Search className="absolute left-2 top-2.5 h-4 w-4 text-gray-400" />
+                            <input
+                                className="pl-8 flex h-9 w-full rounded-md border border-gray-300 bg-transparent px-3 py-1 text-sm text-gray-900 shadow-sm transition-colors focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                placeholder="Search..."
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                            />
+                        </div>
+                        
+                        <button
+                            onClick={handleExport}
+                            disabled={exporting || filteredMembers.length === 0}
+                            className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors border bg-white text-gray-700 border-gray-300 hover:bg-gray-50 hover:text-gray-900 shadow-sm disabled:bg-gray-100 disabled:text-gray-400 disabled:border-gray-200 disabled:cursor-not-allowed"
+                        >
+                            {exporting ? (
+                                <>
+                                    <Loader2 className="w-4 h-4 animate-spin" />
+                                    Exporting...
+                                </>
+                            ) : (
+                                <>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                    Export CSV
+                                </>
+                            )}
+                        </button>
                     </div>
                 </div>
                 <div className="overflow-x-auto">

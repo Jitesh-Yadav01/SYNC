@@ -14,6 +14,8 @@ export default function Students() {
     
     const [search, setSearch] = useState('');
     const [clubFilter, setClubFilter] = useState('all'); // 'all', '0', '1', '2', '3+'
+    const [yearFilter, setYearFilter] = useState('All Years');
+    const [exporting, setExporting] = useState(false);
     const [selectedStudent, setSelectedStudent] = useState(null);
 
     const debouncedSearch = useDebouncedValue(search, 300);
@@ -40,6 +42,36 @@ export default function Students() {
         fetchStudents();
     }, []);
 
+    const handleExport = async () => {
+        if (exporting) return;
+        setExporting(true);
+        try {
+            const params = new URLSearchParams();
+            if (yearFilter !== 'All Years') params.append('year', yearFilter);
+            if (clubFilter !== 'all') params.append('clubFilter', clubFilter);
+            if (search.trim()) params.append('search', search.trim());
+            
+            const res = await axios.get(`${API}/api/superadmin/export-students?${params.toString()}`, {
+                withCredentials: true,
+                responseType: 'blob'
+            });
+            
+            const url = window.URL.createObjectURL(new Blob([res.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            const yearFile = yearFilter === 'All Years' ? 'All' : yearFilter;
+            link.setAttribute('download', `NEXUS_Students_${yearFile}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            link.parentNode.removeChild(link);
+            window.URL.revokeObjectURL(url);
+        } catch (err) {
+            toast.error("Unable to export data.");
+        } finally {
+            setExporting(false);
+        }
+    };
+
     const visibleStudents = useMemo(() => {
         const q = debouncedSearch.trim().toLowerCase();
         return data.students.filter((s) => {
@@ -52,9 +84,12 @@ export default function Students() {
                 if (clubFilter === '2' && s.clubCount !== 2) return false;
                 if (clubFilter === '3+' && s.clubCount < 3) return false;
             }
+            if (yearFilter !== 'All Years' && s.year !== yearFilter) {
+                return false;
+            }
             return true;
         }).sort((a, b) => (a.name || '').localeCompare(b.name || ''));
-    }, [data.students, debouncedSearch, clubFilter]);
+    }, [data.students, debouncedSearch, clubFilter, yearFilter]);
 
     if (loading) {
         return (
@@ -109,6 +144,16 @@ export default function Students() {
                 </div>
                 
                 <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                    <select
+                        value={yearFilter}
+                        onChange={(e) => setYearFilter(e.target.value)}
+                        className="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2 shadow-sm"
+                    >
+                        {['All Years', 'FE', 'SE', 'TE', 'BE'].map(y => (
+                            <option key={y} value={y}>{y}</option>
+                        ))}
+                    </select>
+
                     <div className="flex items-center gap-1 bg-white border border-gray-200 rounded-lg p-1">
                         {['all', '0', '1', '2', '3+'].map(filter => (
                             <button
@@ -136,6 +181,29 @@ export default function Students() {
                             className="pl-9 pr-3 py-2 rounded-lg border border-gray-300 text-sm text-gray-900 caret-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full sm:w-64"
                         />
                     </div>
+                    
+                    <button
+                        onClick={handleExport}
+                        disabled={exporting || visibleStudents.length === 0}
+                        className={cn(
+                            "flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors border",
+                            exporting || visibleStudents.length === 0
+                                ? "bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed"
+                                : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50 hover:text-gray-900 shadow-sm"
+                        )}
+                    >
+                        {exporting ? (
+                            <>
+                                <Loader2 className="w-4 h-4 animate-spin" />
+                                Exporting...
+                            </>
+                        ) : (
+                            <>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                Export CSV
+                            </>
+                        )}
+                    </button>
                 </div>
             </div>
 

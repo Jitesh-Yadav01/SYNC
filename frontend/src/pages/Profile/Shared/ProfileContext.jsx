@@ -111,6 +111,7 @@ export const ProfileProvider = ({ children, initialData, role }) => {
                         name: u.name,
                         email: u.email,
                         role: u.role || 'Member',
+                        year: u.year || 'N/A',
                         domain: 'Technical', // Default or fetch if available
                         status: 'Active',
                         clubId: activeClub.id
