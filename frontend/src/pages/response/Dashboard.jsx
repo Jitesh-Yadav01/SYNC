@@ -289,10 +289,7 @@ const Dashboard = ({ viewerRole = 'admin', isEmbedded = false }) => {
       setSelectedFormId(routeFormId);
     }, [routeFormId, selectedFormId]);
 
-  const handleUpdateDecision = async (responseId, newDecision) => {
-         if (!isAdminView) {
-            return;
-         }
+    const handleUpdateDecision = async (responseId, newDecision) => {
 
       setUpdatingDecision(true);
       try {
@@ -602,8 +599,7 @@ const Dashboard = ({ viewerRole = 'admin', isEmbedded = false }) => {
                                        'border-transparent bg-slate-100 text-slate-900 hover:bg-slate-100/80'}`}>
                                    {currentDecision === 'reviewLater' ? 'Review Later' : currentDecision}
                                  </div>
-                               </div>
-                               {isAdminView && (
+                                </div>
                                  <div className="flex gap-2 mt-1">
                                     <button 
                                        onClick={() => handleUpdateDecision(selectedApplicant._id, 'accepted')}
@@ -630,7 +626,6 @@ const Dashboard = ({ viewerRole = 'admin', isEmbedded = false }) => {
                                        Reject
                                     </button>
                                  </div>
-                               )}
                             </div>
                          </div>
 

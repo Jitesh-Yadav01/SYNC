@@ -385,7 +385,7 @@ export default function SharedMembers() {
                         <thead className="text-xs text-gray-700 uppercase bg-gray-50 border-b border-gray-200">
                             <tr>
                                 <th scope="col" className="px-6 py-3 font-semibold">Name</th>
-                                <th scope="col" className="px-6 py-3 font-semibold">Role</th>
+                                <th scope="col" className="px-6 py-3 font-semibold">Year</th>
                                 <th scope="col" className="px-6 py-3 font-semibold">Email</th>
                                 {canManageMembers && <th scope="col" className="px-6 py-3 text-right font-semibold">Actions</th>}
                             </tr>
@@ -403,7 +403,7 @@ export default function SharedMembers() {
                                     </td>
                                     <td className="px-6 py-4">
                                         <span className="px-2 py-1 rounded text-xs font-medium bg-blue-50 text-blue-700 border border-blue-200">
-                                            {member.role || 'N/A'}
+                                            {member.year || 'N/A'}
                                         </span>
                                     </td>
                                     <td className="px-6 py-4 text-gray-500">
