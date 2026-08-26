@@ -2,15 +2,14 @@ import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { SiLinkedin, SiInstagram, SiGithub } from 'react-icons/si';
 import './Footer.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const SOCIAL_LINKS = [
-    { icon: <SiGithub />, title: "GitHub", href: "https://github.com/JiteshYadavvvvv/NEXUS" },
-    { icon: <SiLinkedin />, title: "LinkedIn", href: "https://in.linkedin.com/company/gdsc-aitpune" },
-    { icon: <SiInstagram />, title: "Instagram", href: "https://www.instagram.com/gdsc_aitpune/" },
+    { title: "GitHub", href: "https://github.com/JiteshYadavvvvv/NEXUS" },
+    { title: "LinkedIn", href: "https://in.linkedin.com/company/gdsc-aitpune" },
+    { title: "Instagram", href: "https://www.instagram.com/gdsc_aitpune/" },
 ];
 
 const NAV_LINKS = [
@@ -50,8 +49,6 @@ export default function Footer() {
             <div className="c-footer_container">
                 <div className="c-footer_top-wrapper" data-scroll-animation="0">
                     <div className="c-footer_main-grid">
-                        
-                        {/* Column 1: Identity & Lockup */}
                         <div className="c-footer_col c-footer_col--main">
                             <Link to="/" className="c-footer_brand-link" aria-label="NEXUS Home" onClick={() => window.scrollTo(0,0)}>
                                 <img src="/nexus.svg" alt="NEXUS" className="c-footer_logo-small" />
@@ -65,7 +62,6 @@ export default function Footer() {
                             </div>
                         </div>
 
-                        {/* Column 2: Platform Links */}
                         <div className="c-footer_col c-footer_col--nav">
                             <span className="c-footer_eyebrow">Platform</span>
                             <ul className="c-footer_nav-list">
@@ -79,7 +75,6 @@ export default function Footer() {
                             </ul>
                         </div>
 
-                        {/* Column 3: Socials & CTA */}
                         <div className="c-footer_col c-footer_col--social">
                             <span className="c-footer_eyebrow">Connect</span>
                             <ul className="c-footer_nav-list">
@@ -106,8 +101,7 @@ export default function Footer() {
                 </div>
 
                 <div className="c-footer_baseline" data-scroll-animation="0.2">
-                    <p className="c-footer_baseline-text">© {new Date().getFullYear()} NEXUS. All rights reserved.</p>
-                    <p className="c-footer_baseline-text c-footer_baseline-right">Designed for AIT Pune.</p>
+                    <p className="c-footer_baseline-text">© {new Date().getFullYear()} NEXUS · Army Institute of Technology, Pune</p>
                 </div>
             </div>
         </footer>

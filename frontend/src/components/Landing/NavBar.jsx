@@ -8,7 +8,7 @@ import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-// NEXUS navigation routes kept in the cloned pill navbar.
+
 const NAV_ITEMS = [
   { label: "Home", to: "/" },
   { label: "Events", to: "/events" },
@@ -58,7 +58,7 @@ export default function NavBar({ entered }) {
             boxShadow: "0 1px 2px rgba(0, 0, 0, 0.2), inset 0px 1px 1px 0px rgba(255, 255, 255, 0.05)",
           }}
         >
-          {/* Logo */}
+
           <Link
             to="/"
             link-cursor="true"
@@ -73,7 +73,7 @@ export default function NavBar({ entered }) {
             />
           </Link>
 
-          {/* Desktop nav routes (centered) */}
+
           <div className="hidden md:flex flex-1 items-center justify-center gap-7 lg:gap-9">
             {NAV_ITEMS.map((item) => (
               <Link
@@ -87,7 +87,7 @@ export default function NavBar({ entered }) {
             ))}
           </div>
 
-          {/* Right actions */}
+
           <div className="relative z-20 flex items-center gap-2 flex-shrink-0">
             <a
               href={GITHUB_URL}
@@ -136,7 +136,7 @@ export default function NavBar({ entered }) {
           </div>
         </div>
 
-        {/* Mobile dropdown */}
+
         <AnimatePresence>
           {isMobileMenuOpen && (
             <motion.div

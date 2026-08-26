@@ -30,8 +30,8 @@
 }
 
 /* The landing renders its own CustomCursor, so hide the native cursor here. */
-.spacebears-landing,
-.spacebears-landing * {
+body.hide-native-cursor .spacebears-landing,
+body.hide-native-cursor .spacebears-landing * {
   cursor: none !important;
 }
 
