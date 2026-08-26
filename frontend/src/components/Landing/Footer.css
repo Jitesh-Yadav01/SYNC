@@ -6,7 +6,6 @@
     font-size: 1em;
     color: #fff;
     transition: all .35s;
-    cursor: none;
     border-radius: 2rem;
 }
 
@@ -54,7 +53,6 @@
 .c-footer_section input[type="submit"] {
     -webkit-appearance: button;
     appearance: button;
-    cursor: none;
     overflow: visible;
     text-transform: none;
 }
@@ -186,7 +184,6 @@
 .c-footer_checkbox-hidden {
     position: absolute;
     opacity: 0;
-    cursor: none;
     height: 0;
     width: 0;
 }
@@ -206,7 +203,6 @@
     margin-right: 0.75rem;
     transition: all .25s;
     border-style: solid;
-    cursor: none;
 }
 
 .c-footer_checkbox-hidden:checked~.c-footer_checkbox-square {

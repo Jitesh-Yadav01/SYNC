@@ -115,8 +115,36 @@ const TargetCursor = ({
 
     tickerFnRef.current = tickerFn;
 
-    const moveHandler = e => moveCursor(e.clientX, e.clientY);
+    const moveHandler = e => {
+      moveCursor(e.clientX, e.clientY);
+      
+      if (activeTarget) {
+        if (!activeTarget.isConnected) {
+          if (currentLeaveHandler) currentLeaveHandler();
+        } else {
+          // Verify we are still over the active target (portal/overlay fix)
+          const isStillOverTarget = activeTarget.contains(e.target) || e.target.closest(targetSelector) === activeTarget;
+          if (!isStillOverTarget) {
+            if (currentLeaveHandler) currentLeaveHandler();
+          }
+        }
+      }
+    };
     window.addEventListener('mousemove', moveHandler);
+
+    // Hide cursor when leaving window or entering iframes
+    const windowMouseOutHandler = e => {
+      if (!e.relatedTarget && cursorRef.current) {
+        gsap.to(cursorRef.current, { autoAlpha: 0, duration: 0.2 });
+      }
+    };
+    const windowMouseOverHandler = e => {
+      if (cursorRef.current) {
+        gsap.to(cursorRef.current, { autoAlpha: 1, duration: 0.2 });
+      }
+    };
+    window.addEventListener('mouseout', windowMouseOutHandler);
+    window.addEventListener('mouseover', windowMouseOverHandler);
 
     const scrollHandler = () => {
       if (!activeTarget || !cursorRef.current) return;
@@ -257,6 +285,8 @@ const TargetCursor = ({
       }
       window.removeEventListener('mousemove', moveHandler);
       window.removeEventListener('mouseover', enterHandler);
+      window.removeEventListener('mouseout', windowMouseOutHandler);
+      window.removeEventListener('mouseover', windowMouseOverHandler);
       window.removeEventListener('scroll', scrollHandler);
       window.removeEventListener('mousedown', mouseDownHandler);
       window.removeEventListener('mouseup', mouseUpHandler);

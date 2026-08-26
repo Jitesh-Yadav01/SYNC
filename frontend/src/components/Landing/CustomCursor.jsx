@@ -19,6 +19,22 @@ const CustomCursor = () => {
     const cursor = cursorRef.current
 
     const onPointerMove = (e) => {
+      if (e.pointerType === 'touch') {
+        if (!document.body.classList.contains('is-touch-device')) {
+           document.body.classList.add('is-touch-device')
+           document.body.classList.remove('hide-native-cursor')
+           if (cursor) cursor.style.display = 'none'
+        }
+        return
+      } else {
+        if (document.body.classList.contains('is-touch-device')) {
+           document.body.classList.remove('is-touch-device')
+        }
+        if (!document.body.classList.contains('hide-native-cursor')) {
+           document.body.classList.add('hide-native-cursor')
+           if (cursor) cursor.style.display = 'block'
+        }
+      }
       mousePosition.current = { x: e.clientX, y: e.clientY }
     }
 
@@ -28,11 +44,20 @@ const CustomCursor = () => {
       const target = e.target.closest(interactiveSelector)
       if (target) {
         setIsHovering(true)
-        targetElement.current = target
-
-        // Cache metrics once on hover to avoid repeated style/layout reads
-        const rect = target.getBoundingClientRect()
-        const computedStyle = window.getComputedStyle(target)
+        
+        let actualTarget = target;
+        if (target.classList.contains('c-footer_checkbox-label')) {
+          const square = target.querySelector('.c-footer_checkbox-square');
+          if (square) actualTarget = square;
+        } else if (target.tagName.toLowerCase() === 'label') {
+          const square = target.querySelector('input[type="checkbox"], .checkbox-square');
+          if (square) actualTarget = square;
+        }
+        
+        targetElement.current = actualTarget
+        
+        const rect = actualTarget.getBoundingClientRect()
+        const computedStyle = window.getComputedStyle(actualTarget)
         targetElement.current.__metrics = {
           cx: rect.left + rect.width / 2,
           cy: rect.top + rect.height / 2,
@@ -143,6 +168,20 @@ const CustomCursor = () => {
 
       if (targetElement.current) {
         // Use cached metrics when available; otherwise compute once and cache
+        const rect = targetElement.current.getBoundingClientRect()
+        const buffer = 15 
+        if (
+          mousePosition.current.x < rect.left - buffer ||
+          mousePosition.current.x > rect.right + buffer ||
+          mousePosition.current.y < rect.top - buffer ||
+          mousePosition.current.y > rect.bottom + buffer
+        ) {
+          targetElement.current = null
+          setIsHovering(false)
+        }
+      }
+
+      if (targetElement.current) {
         let m = targetElement.current.__metrics
         if (!m) {
           const rect = targetElement.current.getBoundingClientRect()
@@ -153,28 +192,42 @@ const CustomCursor = () => {
             w: rect.width + 8,
             h: rect.height + 8,
             r: computedStyle.borderRadius === '0px' ? '4px' : computedStyle.borderRadius,
+            isLarge: rect.width > 250 || rect.height > 150
           }
           targetElement.current.__metrics = m
         }
 
-        targetX = m.cx
-        targetY = m.cy
-        targetWidth = m.w
-        targetHeight = m.h
-        targetRadius = m.r
+        if (m.isLarge) {
+          targetX = mousePosition.current.x
+          targetY = mousePosition.current.y
+          targetWidth = 48
+          targetHeight = 48
+          targetRadius = '50%'
+        } else {
+          targetX = m.cx
+          targetY = m.cy
+          targetWidth = m.w
+          targetHeight = m.h
+          targetRadius = m.r
+        }
       } else {
         targetX = mousePosition.current.x
         targetY = mousePosition.current.y
         targetWidth = 20
         targetHeight = 20
         targetRadius = '50%'
+        
+        // Zero lag, 1:1 hardware tracking when moving freely
+        cursorPosition.current.x = targetX
+        cursorPosition.current.y = targetY
       }
 
-      // Lerp (Higher value = faster response, less lag)
-      cursorPosition.current.x += (targetX - cursorPosition.current.x) * 0.35
-      cursorPosition.current.y += (targetY - cursorPosition.current.y) * 0.35
-
-      // Apply transform (position always updated)
+      if (targetElement.current) {
+        // Smooth magnetic pull only when hovering interactive elements
+        cursorPosition.current.x += (targetX - cursorPosition.current.x) * 0.35
+        cursorPosition.current.y += (targetY - cursorPosition.current.y) * 0.35
+      }
+      
       cursor.style.transform = `translate3d(${cursorPosition.current.x}px, ${cursorPosition.current.y}px, 0) translate(-50%, -50%)`
 
       // Only update sizing when it changes significantly or on mode switch
@@ -183,7 +236,21 @@ const CustomCursor = () => {
       rafIdRef.current = requestAnimationFrame(animate)
     }
 
+    const onPointerLeave = () => {
+      document.body.classList.remove('hide-native-cursor')
+      if (cursorRef.current) cursorRef.current.style.display = 'none'
+    }
+
+    const onPointerEnter = (e) => {
+      if (e.pointerType !== 'touch') {
+        document.body.classList.add('hide-native-cursor')
+        if (cursorRef.current) cursorRef.current.style.display = 'block'
+      }
+    }
+
     window.addEventListener('pointermove', onPointerMove)
+    document.addEventListener('pointerleave', onPointerLeave)
+    document.addEventListener('pointerenter', onPointerEnter)
     document.addEventListener('mouseover', onMouseOver)
     document.addEventListener('mouseout', onMouseOut)
     document.addEventListener('mousedown', onMouseDown)
@@ -196,6 +263,9 @@ const CustomCursor = () => {
 
     return () => {
       window.removeEventListener('pointermove', onPointerMove)
+      document.removeEventListener('pointerleave', onPointerLeave)
+      document.removeEventListener('pointerleave', onPointerLeave)
+      document.removeEventListener('pointerenter', onPointerEnter)
       document.removeEventListener('mouseover', onMouseOver)
       document.removeEventListener('mouseout', onMouseOut)
       document.removeEventListener('mousedown', onMouseDown)
@@ -220,7 +290,7 @@ const CustomCursor = () => {
           pointer-events: none;
           z-index: 2147483647; /* Maximum possible z-index to stay above everything */
           will-change: transform, width, height, border-radius, background-color, border-color;
-          transition: width 0.3s ease, height 0.3s ease, border-radius 0.3s ease, background-color 0.2s ease, border-color 0.2s ease;
+          transition: width 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), height 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), border-radius 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), background-color 0.2s ease, border-color 0.2s ease;
         }
         .c-custom-cursor.is-hovering {
           background-color: transparent;
