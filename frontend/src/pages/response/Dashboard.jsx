@@ -187,6 +187,8 @@ const Dashboard = ({ viewerRole = 'admin', isEmbedded = false }) => {
 
    const fetchForms = useCallback(async (clubName) => {
       setLoadingForms(true);
+      setForms([]);
+      setSelectedFormId("");
       try {
          const params = isAdminView && clubName ? `?club=${encodeURIComponent(clubName)}` : '';
          console.log('[fetchForms] viewerRole:', viewerRole, '| clubName:', clubName, '| params:', params);
