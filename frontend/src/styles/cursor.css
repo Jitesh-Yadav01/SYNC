@@ -1,16 +1,19 @@
 /* Light Mode (Default) */
 :root {
   --cursor-color: #000;
+  --cursor-invert: #fff;
 }
 
 /* Dark Mode */
 .dark {
   --cursor-color: #fff;
+  --cursor-invert: #000;
 }
 
 /* For specificity if needed */
 html.dark {
   --cursor-color: #fff;
+  --cursor-invert: #000;
 }
 
 /* Apply to TargetCursor elements */

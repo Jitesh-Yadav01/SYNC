@@ -28,7 +28,21 @@ export const ProfileProvider = ({ children, initialData, role }) => {
         return 'my-clubs'; 
     };
     const [activeTab, setActiveTab] = useState(location.state?.activeTab || getDefaultTab());
-    const [activeClub, setActiveClub] = useState(profile.clubs?.[0] || null);
+    const [activeClub, setActiveClub] = useState(() => {
+        if (!profile.clubs?.length) return null;
+        const savedId = localStorage.getItem('nexus_active_club');
+        if (savedId) {
+            const matched = profile.clubs.find(c => c.id === savedId || c._id === savedId);
+            if (matched) return matched;
+        }
+        return profile.clubs[0];
+    });
+
+    useEffect(() => {
+        if (activeClub) {
+            localStorage.setItem('nexus_active_club', activeClub.id || activeClub._id);
+        }
+    }, [activeClub]);
     // const { setCurrentView } = useView();
 
     useEffect(() => {
@@ -75,7 +89,7 @@ export const ProfileProvider = ({ children, initialData, role }) => {
     const clubMessages = messages.filter(m => m.clubId === activeClub?.id);
 
     const switchClub = (clubId) => {
-        const club = profile.clubs?.find(c => c.id === clubId);
+        const club = profile.clubs?.find(c => c.id === clubId || c._id === clubId);
         if (club) {
             setActiveClub(club);
         }

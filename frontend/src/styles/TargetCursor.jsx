@@ -41,7 +41,7 @@ const TargetCursor = ({
     gsap.to(cursorRef.current, {
       x,
       y,
-      duration: 0.1,
+      duration: 0.05,
       ease: 'power3.out'
     });
   }, []);
@@ -288,7 +288,7 @@ const TargetCursor = ({
   return (
     <div
       ref={cursorRef}
-      className="fixed top-0 left-0 w-0 h-0 pointer-events-none z-9999"
+      className="fixed top-0 left-0 w-0 h-0 pointer-events-none z-[2147483647]"
       style={{ willChange: 'transform' }}
     >
       <div

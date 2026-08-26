@@ -44,9 +44,11 @@ const CustomCursor = () => {
     }
 
     const onMouseOut = (e) => {
-      // If the mouse left an interactive element, and that element matches our current target, clear it
-      const target = e.target.closest(interactiveSelector)
-      if (target && target === targetElement.current) {
+      if (targetElement.current) {
+        const related = e.relatedTarget
+        if (related && targetElement.current.contains(related)) {
+          return // Still inside the interactive element
+        }
         setIsHovering(false)
         targetElement.current = null
       }
@@ -168,9 +170,9 @@ const CustomCursor = () => {
         targetRadius = '50%'
       }
 
-      // Lerp
-      cursorPosition.current.x += (targetX - cursorPosition.current.x) * 0.15
-      cursorPosition.current.y += (targetY - cursorPosition.current.y) * 0.15
+      // Lerp (Higher value = faster response, less lag)
+      cursorPosition.current.x += (targetX - cursorPosition.current.x) * 0.35
+      cursorPosition.current.y += (targetY - cursorPosition.current.y) * 0.35
 
       // Apply transform (position always updated)
       cursor.style.transform = `translate3d(${cursorPosition.current.x}px, ${cursorPosition.current.y}px, 0) translate(-50%, -50%)`
@@ -213,12 +215,16 @@ const CustomCursor = () => {
           position: fixed;
           top: 0;
           left: 0;
-          background-color: #fff;
-          mix-blend-mode: difference; /* This makes text visible through the cursor */
+          background-color: var(--cursor-color, #000);
+          border: 1px solid var(--cursor-invert, #fff);
           pointer-events: none;
-          z-index: 100000;
-          will-change: transform, width, height, border-radius;
-          transition: width 0.3s ease, height 0.3s ease, border-radius 0.3s ease;
+          z-index: 2147483647; /* Maximum possible z-index to stay above everything */
+          will-change: transform, width, height, border-radius, background-color, border-color;
+          transition: width 0.3s ease, height 0.3s ease, border-radius 0.3s ease, background-color 0.2s ease, border-color 0.2s ease;
+        }
+        .c-custom-cursor.is-hovering {
+          background-color: transparent;
+          border: 2px solid var(--cursor-color, #000);
         }
         .c-custom-cursor.auto-scrolling {
           background-color: #888891;
@@ -268,7 +274,7 @@ const CustomCursor = () => {
       `}</style>
       <div
         ref={cursorRef}
-        className={`c-custom-cursor ${isAutoScrolling ? 'auto-scrolling' : ''}`}
+        className={`c-custom-cursor ${isAutoScrolling ? 'auto-scrolling' : ''} ${isHovering ? 'is-hovering' : ''}`}
       />
       {isAutoScrolling && (
         <div

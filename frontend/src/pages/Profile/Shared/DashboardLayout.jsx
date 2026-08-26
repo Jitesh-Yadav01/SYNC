@@ -148,7 +148,28 @@ export default function SharedDashboardLayout({ children }) {
                         </button>
                     </div>
 
-
+                    {profile?.clubs?.length > 1 && (
+                        <div className="mb-6 px-1">
+                            <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5 block">Active Club</label>
+                            <select 
+                                value={activeClub?.id || activeClub?._id || ''}
+                                onChange={(e) => switchClub(e.target.value)}
+                                className="w-full bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 transition-all shadow-sm hover:border-blue-300"
+                            >
+                                {profile.clubs.map(c => (
+                                    <option key={c.id || c._id} value={c.id || c._id}>{c.name}</option>
+                                ))}
+                            </select>
+                        </div>
+                    )}
+                    {profile?.clubs?.length === 1 && (
+                        <div className="mb-6 px-1">
+                            <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5 block">Active Club</label>
+                            <div className="text-sm font-medium text-gray-900 bg-gray-50 p-2.5 rounded-lg border border-gray-200 shadow-sm">
+                                {profile.clubs[0].name}
+                            </div>
+                        </div>
+                    )}
 
                     <nav className="flex-1 space-y-2">
                         {getVisibleTabs().map(tab => (

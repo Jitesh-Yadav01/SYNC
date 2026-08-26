@@ -11,41 +11,61 @@ if (!import.meta.env.VITE_BACKEND_URL) {
 console.log("AuthContext: Backend API URL set to:", API);
 
 
+let authPromise = null;
+let adminAuthPromise = null;
+
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [authLoading, setAuthLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
   
   const checkAuth = async () => {
-    try {
-      const res = await axios.get(`${API}/api/auth/get-user-info`, {
-        withCredentials: true,
-      });
-      if (res.data.success) {
-        setUser(res.data.data);
-        return res.data.data;
+    if (authPromise) return authPromise;
+    authPromise = (async () => {
+      try {
+        const res = await axios.get(`${API}/api/auth/get-user-info`, {
+          withCredentials: true,
+        });
+        if (res.data.success) {
+          setUser(res.data.data);
+          return res.data.data;
+        }
+        return null;
+      } catch (err) {
+        console.error("checkAuth error:", err);
+        // Do not wipe session on rate limit or server error if we already have one
+        if (err.response && (err.response.status === 429 || err.response.status >= 500)) {
+           return user; 
+        }
+        return null;
+      } finally {
+        authPromise = null;
       }
-      return null;
-    } catch (err) {
-      console.log(err);
-      return null;
-    }
+    })();
+    return authPromise;
   };
 
   const checkAdminAuth = async () => {
-    try {
-      const res = await fetch(`${API}/api/admin/get-admin-info`, {
-        method: 'GET',
-        credentials: 'include',
-      });
-      const data = await res.json();
-      if (data.success) {
-        return data.data;
+    if (adminAuthPromise) return adminAuthPromise;
+    adminAuthPromise = (async () => {
+      try {
+        const res = await fetch(`${API}/api/admin/get-admin-info`, {
+          method: 'GET',
+          credentials: 'include',
+        });
+        const data = await res.json();
+        if (data.success) {
+          return data.data;
+        }
+        return null;
+      } catch (err) {
+        console.error("checkAdminAuth error:", err);
+        return null;
+      } finally {
+        adminAuthPromise = null;
       }
-      return null;
-    } catch {
-      return null;
-    }
+    })();
+    return adminAuthPromise;
   };
 
   useEffect(() => {
