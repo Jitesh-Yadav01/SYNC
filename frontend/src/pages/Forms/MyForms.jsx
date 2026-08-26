@@ -81,7 +81,7 @@ export default function MyForms() {
                 method: 'DELETE',
                 credentials: 'include',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ formId }),
+                body: JSON.stringify({ formId, club: activeClub?.name }),
             });
             const json = await res.json();
             if (json.success) {

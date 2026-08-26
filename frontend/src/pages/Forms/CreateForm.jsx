@@ -40,7 +40,7 @@ export default function CreateForm({ onSuccess, onCancel, initialData, clubName 
                 method: 'DELETE',
                 credentials: 'include',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ formId: initialData._id }),
+                body: JSON.stringify({ formId: initialData._id, club: clubName }),
             });
             const json = await res.json();
             if (json.success) {
