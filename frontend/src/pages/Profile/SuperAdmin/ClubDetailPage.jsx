@@ -36,6 +36,12 @@ export default function ClubDetailPage() {
     const [iqacLoading, setIqacLoading] = useState(false);
     const [pdfGenerating, setPdfGenerating] = useState(false);
 
+    const [isAddFacultyOpen, setIsAddFacultyOpen] = useState(false);
+    const [isAddSecretaryOpen, setIsAddSecretaryOpen] = useState(false);
+    const [newName, setNewName] = useState('');
+    const [newEmail, setNewEmail] = useState('');
+    const [isSubmittingRole, setIsSubmittingRole] = useState(false);
+
     const scrollSentinelRef = useRef(null);
 
     // Match the light theme + no custom cursor of the shared dashboard
@@ -114,6 +120,100 @@ export default function ClubDetailPage() {
         };
         fetchIqac();
     }, [slug, status]);
+
+    const handleAddFaculty = async (e) => {
+        e.preventDefault();
+        if (!newName.trim() || !newEmail.trim()) return toast.error('Name and Email are required');
+        
+        setIsSubmittingRole(true);
+        try {
+            const res = await axios.post(`${API}/api/superadmin/add-faculty`, {
+                name: newName.trim(),
+                facultyEmail: newEmail.trim(),
+                club: club.name
+            }, { withCredentials: true });
+            
+            if (res.data?.success) {
+                toast.success('Faculty added successfully! 🎉');
+                setIsAddFacultyOpen(false);
+                setNewName('');
+                setNewEmail('');
+                // refresh club details (simple way: fetch again, or append to club.faculty)
+                setClub({ ...club, faculty: [...(club.faculty || []), { name: newName.trim(), email: newEmail.trim() }] });
+            } else {
+                toast.error(res.data?.message || 'Failed to add faculty');
+            }
+        } catch (err) {
+            toast.error(err.response?.data?.message || err.message || 'Failed to add faculty');
+        } finally {
+            setIsSubmittingRole(false);
+        }
+    };
+
+    const handleAddSecretary = async (e) => {
+        e.preventDefault();
+        if (!newName.trim() || !newEmail.trim()) return toast.error('Name and Email are required');
+        
+        setIsSubmittingRole(true);
+        try {
+            const res = await axios.post(`${API}/api/admin/add-secretary`, {
+                secretaryName: newName.trim(),
+                secretaryEmail: newEmail.trim(),
+                club: club.name
+            }, { withCredentials: true });
+            
+            if (res.data?.success) {
+                toast.success('Secretary added successfully! 🎉');
+                setIsAddSecretaryOpen(false);
+                setNewName('');
+                setNewEmail('');
+                // refresh club details
+                setClub({ ...club, secretaries: [...(club.secretaries || []), { name: newName.trim(), email: newEmail.trim() }] });
+            } else {
+                toast.error(res.data?.message || 'Failed to add secretary');
+            }
+        } catch (err) {
+            toast.error(err.response?.data?.message || err.message || 'Failed to add secretary');
+        } finally {
+            setIsSubmittingRole(false);
+        }
+    };
+
+    const handleRemoveFaculty = async (facultyEmail) => {
+        if (!confirm('Are you sure you want to remove this faculty?')) return;
+        try {
+            const res = await axios.delete(`${API}/api/superadmin/remove-faculty`, {
+                data: { facultyEmail, club: club.name },
+                withCredentials: true
+            });
+            if (res.data?.success) {
+                toast.success('Faculty removed');
+                setClub({ ...club, faculty: (club.faculty || []).filter(f => f.email !== facultyEmail) });
+            } else {
+                toast.error(res.data?.message || 'Failed to remove faculty');
+            }
+        } catch (err) {
+            toast.error(err.response?.data?.message || err.message || 'Error removing faculty');
+        }
+    };
+
+    const handleRemoveSecretary = async (secretaryEmail) => {
+        if (!confirm('Are you sure you want to remove this secretary?')) return;
+        try {
+            const res = await axios.delete(`${API}/api/admin/remove-secretary`, {
+                data: { secretaryEmail, club: club.name },
+                withCredentials: true
+            });
+            if (res.data?.success) {
+                toast.success('Secretary removed');
+                setClub({ ...club, secretaries: (club.secretaries || []).filter(s => s.email !== secretaryEmail) });
+            } else {
+                toast.error(res.data?.message || 'Failed to remove secretary');
+            }
+        } catch (err) {
+            toast.error(err.response?.data?.message || err.message || 'Error removing secretary');
+        }
+    };
 
     const handleDownloadIqacPdf = async () => {
         if (!iqacData) return;
@@ -266,24 +366,68 @@ export default function ClubDetailPage() {
                                     <p className="text-lg font-extrabold text-gray-900">{club.strength}</p>
                                 </div>
                                 <div className="rounded-xl bg-gray-50 border border-gray-100 px-4 py-3">
-                                    <div className="flex items-center gap-2 mb-2 text-gray-400">
-                                        <GraduationCap className="h-4 w-4" />
-                                        <span className="text-[11px] font-semibold uppercase tracking-widest">Faculty</span>
+                                    <div className="flex items-center justify-between gap-2 mb-2">
+                                        <div className="flex items-center gap-2 text-gray-400">
+                                            <GraduationCap className="h-4 w-4" />
+                                            <span className="text-[11px] font-semibold uppercase tracking-widest">Faculty</span>
+                                        </div>
+                                        {admin?.role === 'maintainer' && (
+                                            <button 
+                                                onClick={() => setIsAddFacultyOpen(true)}
+                                                className="text-[10px] bg-blue-100 text-blue-700 hover:bg-blue-200 px-2 py-0.5 rounded transition-colors font-medium"
+                                            >
+                                                + ADD
+                                            </button>
+                                        )}
                                     </div>
                                     {club.faculty?.length ? (
-                                        <ul className="space-y-0.5">
-                                            {club.faculty.map((f) => <li key={f.email} className="text-sm text-gray-800 truncate">{f.name}</li>)}
+                                        <ul className="space-y-1">
+                                            {club.faculty.map((f) => (
+                                                <li key={f.email} className="flex items-center justify-between group">
+                                                    <span className="text-sm text-gray-800 truncate pr-2">{f.name}</span>
+                                                    {admin?.role === 'maintainer' && (
+                                                        <button 
+                                                            onClick={() => handleRemoveFaculty(f.email)}
+                                                            className="text-[10px] text-red-500 opacity-0 group-hover:opacity-100 transition-opacity hover:underline"
+                                                        >
+                                                            Remove
+                                                        </button>
+                                                    )}
+                                                </li>
+                                            ))}
                                         </ul>
                                     ) : <p className="text-sm text-gray-400">None assigned</p>}
                                 </div>
                                 <div className="rounded-xl bg-gray-50 border border-gray-100 px-4 py-3">
-                                    <div className="flex items-center gap-2 mb-2 text-gray-400">
-                                        <UserCog className="h-4 w-4" />
-                                        <span className="text-[11px] font-semibold uppercase tracking-widest">Secretaries</span>
+                                    <div className="flex items-center justify-between gap-2 mb-2">
+                                        <div className="flex items-center gap-2 text-gray-400">
+                                            <UserCog className="h-4 w-4" />
+                                            <span className="text-[11px] font-semibold uppercase tracking-widest">Secretaries</span>
+                                        </div>
+                                        {admin?.role === 'maintainer' && (
+                                            <button 
+                                                onClick={() => setIsAddSecretaryOpen(true)}
+                                                className="text-[10px] bg-blue-100 text-blue-700 hover:bg-blue-200 px-2 py-0.5 rounded transition-colors font-medium"
+                                            >
+                                                + ADD
+                                            </button>
+                                        )}
                                     </div>
                                     {club.secretaries?.length ? (
-                                        <ul className="space-y-0.5">
-                                            {club.secretaries.map((s) => <li key={s.email} className="text-sm text-gray-800 truncate">{s.name}</li>)}
+                                        <ul className="space-y-1">
+                                            {club.secretaries.map((s) => (
+                                                <li key={s.email} className="flex items-center justify-between group">
+                                                    <span className="text-sm text-gray-800 truncate pr-2">{s.name}</span>
+                                                    {admin?.role === 'maintainer' && (
+                                                        <button 
+                                                            onClick={() => handleRemoveSecretary(s.email)}
+                                                            className="text-[10px] text-red-500 opacity-0 group-hover:opacity-100 transition-opacity hover:underline"
+                                                        >
+                                                            Remove
+                                                        </button>
+                                                    )}
+                                                </li>
+                                            ))}
                                         </ul>
                                     ) : <p className="text-sm text-gray-400">None assigned</p>}
                                 </div>
@@ -430,7 +574,66 @@ export default function ClubDetailPage() {
             </main>
 
             {selectedMember && (
-                <UserDetailsModal user={selectedMember} onClose={() => setSelectedMember(null)} />
+                <UserDetailsModal
+                    isOpen={!!selectedMember}
+                    onClose={() => setSelectedMember(null)}
+                    user={selectedMember}
+                />
+            )}
+
+            {/* Modals for adding Faculty / Secretary */}
+            {(isAddFacultyOpen || isAddSecretaryOpen) && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+                    <div className="bg-white rounded-2xl p-6 w-full max-w-md shadow-xl">
+                        <h3 className="text-xl font-bold text-gray-900 mb-4">
+                            {isAddFacultyOpen ? 'Add Faculty' : 'Add Secretary'}
+                        </h3>
+                        <form onSubmit={isAddFacultyOpen ? handleAddFaculty : handleAddSecretary} className="space-y-4">
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Name *</label>
+                                <input
+                                    type="text"
+                                    required
+                                    value={newName}
+                                    onChange={(e) => setNewName(e.target.value)}
+                                    placeholder="Enter full name"
+                                    className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 text-sm"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Email *</label>
+                                <input
+                                    type="email"
+                                    required
+                                    value={newEmail}
+                                    onChange={(e) => setNewEmail(e.target.value)}
+                                    placeholder="Enter email address"
+                                    className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 text-sm"
+                                />
+                            </div>
+                            <div className="flex justify-end gap-3 mt-6">
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        isAddFacultyOpen ? setIsAddFacultyOpen(false) : setIsAddSecretaryOpen(false);
+                                        setNewName('');
+                                        setNewEmail('');
+                                    }}
+                                    className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    type="submit"
+                                    disabled={isSubmittingRole}
+                                    className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 disabled:opacity-50 transition-colors"
+                                >
+                                    {isSubmittingRole ? 'Saving...' : 'Save'}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             )}
         </div>
     );

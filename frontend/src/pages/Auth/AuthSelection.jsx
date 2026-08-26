@@ -41,7 +41,7 @@ const AuthSelection = () => {
   useEffect(() => {
     if (authLoading) return;
     if (isAdmin) {
-      if (['director', 'principal', 'jd'].includes(user?.role)) {
+      if (['director', 'principal', 'jd', 'maintainer'].includes(user?.role)) {
         navigate('/profile/SuperAdmin', { replace: true });
         return;
       }
@@ -332,7 +332,7 @@ const AuthSelection = () => {
           </h1>
           <p className="text-sm text-slate-400 max-w-[280px] mx-auto leading-relaxed">
             {showSuperAdmin
-              ? "Director, Joint Director & Principal access"
+              ? "Director, Joint Director, Principal & Maintainer access"
               : showApplicantGoogle
                 ? "Sign in with your Google account to continue"
                 : showClubSelect

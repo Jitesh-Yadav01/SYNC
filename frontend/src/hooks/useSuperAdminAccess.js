@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
 
-const SUPER_ROLES = ['director', 'principal', 'jd'];
+const SUPER_ROLES = ['director', 'principal', 'jd', 'maintainer'];
 
 export default function useSuperAdminAccess() {
     const { checkAdminAuth, setUser, setIsAdmin } = useAuth();

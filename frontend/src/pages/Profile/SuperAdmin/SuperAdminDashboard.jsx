@@ -16,7 +16,8 @@ export default function SuperAdminDashboard({ admin }) {
     const { logout } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
-    const [activeTab, setActiveTab] = useState(location.state?.activeTab || 'overview');
+    const defaultTab = admin?.role === 'maintainer' ? 'clubs' : 'overview';
+    const [activeTab, setActiveTab] = useState(location.state?.activeTab || defaultTab);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [isDesktopCollapsed, setIsDesktopCollapsed] = useState(false);
 
@@ -55,7 +56,7 @@ export default function SuperAdminDashboard({ admin }) {
     const renderContent = () => {
         switch (activeTab) {
             case 'overview': return <SuperOverview admin={admin} onNavigate={setActiveTab} />;
-            case 'clubs': return <ManageClubs />;
+            case 'clubs': return <ManageClubs admin={admin} />;
             case 'students': 
                 return (
                     <React.Suspense fallback={

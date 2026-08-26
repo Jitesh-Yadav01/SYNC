@@ -2,7 +2,7 @@ import React from 'react';
 import { LayoutDashboard, Building2, FileBarChart, LogOut, Menu, X, ChevronRight, ShieldCheck, Users } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-const ROLE_LABEL = { director: 'Director', principal: 'Principal', jd: 'Joint Director' };
+const ROLE_LABEL = { director: 'Director', principal: 'Principal', jd: 'Joint Director', maintainer: 'Maintainer' };
 
 const SUPERADMIN_TABS = [
     { id: 'overview', label: 'Overview', icon: LayoutDashboard },
@@ -22,6 +22,7 @@ export default function SuperAdminSidebar({
     onLogout,
 }) {
     const roleLabel = ROLE_LABEL[admin?.role] || 'SuperAdmin';
+    const visibleTabs = admin?.role === 'maintainer' ? SUPERADMIN_TABS.filter(t => t.id === 'clubs') : SUPERADMIN_TABS;
 
     return (
         <>
@@ -54,7 +55,7 @@ export default function SuperAdminSidebar({
                     </div>
 
                     <nav className="flex-1 space-y-2">
-                        {SUPERADMIN_TABS.map((tab) => (
+                        {visibleTabs.map((tab) => (
                             <button
                                 key={tab.id}
                                 onClick={() => { onTabSelect(tab.id); setIsSidebarOpen(false); }}

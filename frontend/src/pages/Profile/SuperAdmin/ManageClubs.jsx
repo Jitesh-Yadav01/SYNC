@@ -10,8 +10,12 @@ const API = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
 const formatDate = (d) =>
     new Date(d).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
 
-export default function ManageClubs() {
+export default function ManageClubs({ admin }) {
     const navigate = useNavigate();
+    const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+    const [newClubName, setNewClubName] = useState('');
+    const [newClubLogo, setNewClubLogo] = useState('');
+    const [isCreating, setIsCreating] = useState(false);
     const [clubs, setClubs] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -41,6 +45,35 @@ export default function ManageClubs() {
         fetchClubs();
     }, []);
 
+    const handleCreateClub = async (e) => {
+        e.preventDefault();
+        if (!newClubName.trim()) return toast.error('Club name is required');
+        
+        setIsCreating(true);
+        try {
+            const res = await axios.post(`${API}/api/superadmin/create-club`, {
+                name: newClubName.trim(),
+                logo: newClubLogo.trim(),
+                faculty: []
+            }, { withCredentials: true });
+            
+            if (res.data?.success) {
+                toast.success('Club created successfully! 🎉');
+                setIsCreateModalOpen(false);
+                setNewClubName('');
+                setNewClubLogo('');
+                // Optionally reload clubs
+                setClubs(prev => [...prev, res.data.club]);
+            } else {
+                toast.error(res.data?.message || 'Failed to create club');
+            }
+        } catch (err) {
+            toast.error(err.response?.data?.message || err.message || 'Failed to create club');
+        } finally {
+            setIsCreating(false);
+        }
+    };
+
     const visibleClubs = useMemo(() => {
         const q = debouncedSearch.trim().toLowerCase();
         return clubs
@@ -69,15 +102,25 @@ export default function ManageClubs() {
         <div className="w-full" style={{ fontFamily: "'JetBrains Mono', 'Fira Code', 'Courier New', monospace" }}>
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
                 <h2 className="text-lg font-bold text-gray-900">Manage Clubs</h2>
-                <div className="relative">
-                    <Search className="h-4 w-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
-                    <input
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                        placeholder="Search clubs by name"
-                        style={{ colorScheme: "light" }}
-                        className="pl-9 pr-3 py-2 rounded-lg border border-gray-300 text-sm text-gray-900 caret-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-64"
-                    />
+                <div className="flex items-center gap-3">
+                    <div className="relative">
+                        <Search className="h-4 w-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                        <input
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                            placeholder="Search clubs by name"
+                            style={{ colorScheme: "light" }}
+                            className="pl-9 pr-3 py-2 rounded-lg border border-gray-300 text-sm text-gray-900 caret-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-64"
+                        />
+                    </div>
+                    {admin?.role === 'maintainer' && (
+                        <button
+                            onClick={() => setIsCreateModalOpen(true)}
+                            className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors"
+                        >
+                            + Create Club
+                        </button>
+                    )}
                 </div>
             </div>
 
@@ -170,6 +213,53 @@ export default function ManageClubs() {
                             </div>
                         </div>
                     ))}
+                </div>
+            )}
+
+            {isCreateModalOpen && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+                    <div className="bg-white rounded-2xl p-6 w-full max-w-md shadow-xl">
+                        <h3 className="text-xl font-bold text-gray-900 mb-4">Create New Club</h3>
+                        <form onSubmit={handleCreateClub} className="space-y-4">
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Club Name *</label>
+                                <input
+                                    type="text"
+                                    required
+                                    value={newClubName}
+                                    onChange={(e) => setNewClubName(e.target.value)}
+                                    placeholder="e.g. GDG, Turing Club"
+                                    className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 text-sm"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Logo URL (Optional)</label>
+                                <input
+                                    type="url"
+                                    value={newClubLogo}
+                                    onChange={(e) => setNewClubLogo(e.target.value)}
+                                    placeholder="https://example.com/logo.png"
+                                    className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 text-sm"
+                                />
+                            </div>
+                            <div className="flex justify-end gap-3 mt-6">
+                                <button
+                                    type="button"
+                                    onClick={() => setIsCreateModalOpen(false)}
+                                    className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    type="submit"
+                                    disabled={isCreating}
+                                    className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 disabled:opacity-50 transition-colors"
+                                >
+                                    {isCreating ? 'Creating...' : 'Create Club'}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             )}
         </div>
