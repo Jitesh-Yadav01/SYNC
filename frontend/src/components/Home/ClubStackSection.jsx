@@ -34,18 +34,18 @@ export function ClubStackSection() {
    * - [x] Verify hover text matches logos
    */
   return (
-    <section className="my-20 md:my-32 w-[90vw] lg:w-[80vw] max-w-none mx-auto relative z-10 font-mono">
+    <section className="my-20 md:my-32 w-[90vw] lg:w-[80vw] max-w-none mx-auto relative z-10">
       {/* Card shell — matches the 5 feature cards above: same 16/9 rounded
           rectangle, capped at 38.75em tall, with the identical warm-white glow. */}
       <div
-        className="relative overflow-hidden rounded-[1.5em] border border-white/10 bg-transparent md:backdrop-blur-xl px-4 py-8 md:px-12 lg:px-16 lg:py-16 flex items-center lg:aspect-[16/9] lg:max-h-[38.75em] mx-auto"
-        style={{ boxShadow: '0 0 40px rgba(255, 250, 235, 0.75), 0 0 80px rgba(255, 250, 235, 0.5)' }}
+        className="relative overflow-hidden rounded-[1.5em] border border-white/5 bg-[#09090b] px-4 py-8 md:px-12 lg:px-16 lg:py-16 flex items-center lg:aspect-[16/9] lg:max-h-[38.75em] mx-auto"
+        style={{ boxShadow: '0 4px 60px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05)' }}
       >
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-24 w-full">
 
           {/* Left Side: Dynamic Heading */}
           <div className="w-full lg:w-1/2 flex flex-col justify-center min-h-[120px]">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-mono font-bold tracking-tight text-white leading-tight">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tighter text-white leading-[1.1]">
               Works with <br />
               <span className="relative inline-block min-h-[1.2em]">
                 <AnimatePresence mode="wait">
@@ -55,7 +55,7 @@ export function ClubStackSection() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
                     transition={{ duration: 0.2, ease: "easeOut" }}
-                    className="text-gray-400 block"
+                    className="text-[#a1a1aa] block font-medium"
                   >
                     {hoveredClub || 'all AIT Clubs'}
                   </motion.span>

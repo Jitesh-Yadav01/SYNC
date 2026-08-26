@@ -51,7 +51,7 @@ export default function Footer() {
                         hoverSpeed={0}
                         scaleOnHover
                         fadeOut
-                        fadeOutColor="#ffffff"
+                        fadeOutColor="#000000"
                         ariaLabel="Connect with NEXUS"
                     />
                 </div>

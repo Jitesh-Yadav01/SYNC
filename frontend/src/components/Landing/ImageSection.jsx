@@ -290,7 +290,7 @@ export default function ImageSection() {
                 });
 
                 tl.fromTo(".c-image-grid",
-                    { height: "90vh", maxHeight: "90vh", boxShadow: "0 0 30px rgba(255, 250, 235, 0.6), 0 0 60px rgba(255, 250, 235, 0.4)", borderRadius: "1.5em" },
+                    { height: "90vh", maxHeight: "90vh", boxShadow: "0 30px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.05)", borderRadius: "1.5em" },
                     { height: "25em", maxHeight: "25em", duration: 0.7 },
                     0
                 )
@@ -301,7 +301,7 @@ export default function ImageSection() {
 
                     .to(".c-card_backface", { borderRadius: "1.5em", duration: 0.1 }, 0.7)
 
-                    .to([".c-card_frontface", ".c-card_backface"], { boxShadow: "0 0 30px rgba(255, 250, 235, 0.6), 0 0 60px rgba(255, 250, 235, 0.4)", duration: 0.1 }, 0.7)
+                    .to([".c-card_frontface", ".c-card_backface"], { boxShadow: "0 20px 40px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.05)", duration: 0.1 }, 0.7)
 
                     .to(".c-image-card", { borderRadius: "1.5em", boxShadow: "none", duration: 0.1 }, 0.7)
 

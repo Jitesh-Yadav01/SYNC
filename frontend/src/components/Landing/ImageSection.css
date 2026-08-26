@@ -71,7 +71,7 @@
 }
 
 .c-image-card {
-    background-color: #21212500;
+    background-color: transparent;
     border-radius: 0;
     flex-direction: column;
     justify-content: space-between;
@@ -98,7 +98,8 @@
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     transform-style: preserve-3d;
-    background-color: #212125;
+    background-color: #09090b;
+    border: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: 1.5em;
     flex-direction: column;
     justify-content: space-between;
@@ -113,17 +114,18 @@
 
 .c-card_frontface.cc-2 {
     color: var(--black);
-    background-color: #fffffe;
+    background-color: #fafafa;
+    border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .c-card_frontface.cc-3 {
     color: var(--light);
-    background-color: #646166;
+    background-color: #18181b;
 }
 
 .c-card_frontface.cc-1 {
     color: var(--dark);
-    background-color: #646166;
+    background-color: #18181b;
 }
 
 .c-card_backface {
@@ -164,25 +166,26 @@
 }
 
 .c-image-card_title {
-    font-variation-settings: "wght" 700;
-    letter-spacing: -.01em;
-    font-size: 1.5em;
-    line-height: 1.2em;
+    font-variation-settings: "wght" 600;
+    letter-spacing: -0.03em;
+    font-size: 2.25em;
+    line-height: 1.1em;
 }
 
 .c-image-card_divider {
-    background-color: #161618;
+    background-color: rgba(255, 255, 255, 0.1);
     width: 100%;
     height: 1px;
-    margin-top: 1em;
-    margin-bottom: 1em;
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
 }
 
 .c-image-card_body-text {
-    font-variation-settings: "wght" 500;
+    font-variation-settings: "wght" 400;
     margin-bottom: 0;
-    font-size: 1em;
-    line-height: 1.2em;
+    font-size: 1.05em;
+    line-height: 1.5em;
+    color: #a1a1aa;
 }
 
 .c-image-card_tags {
@@ -193,13 +196,19 @@
 }
 
 .c-image-card_tag {
-    border: 1px solid var(--dark);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.03);
     font-variation-settings: "wght" 500;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
-    border-radius: .25rem;
-    padding: .125rem .5rem;
-    font-size: .875em;
-    line-height: 1.4em;
+    border-radius: 2em;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.75em;
+    line-height: 1.2em;
+}
+.cc-2 .c-image-card_tag {
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    background: rgba(0, 0, 0, 0.03);
 }
 
 .c-card-balls {

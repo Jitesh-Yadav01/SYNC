@@ -9,9 +9,7 @@ const SPLINE_OVERLAY_1 =
 const SPLINE_OVERLAY_2 =
   "radial-gradient(circle at 50% 50%, rgba(255,255,255,0) 0%, rgba(0,0,0,0.05) 100%)";
 const BOTTOM_VIGNETTE =
-  "linear-gradient(to top, #000 0%, #000 2%, rgba(0,0,0,0.738) 5%, rgba(0,0,0,0.541) 6%, rgba(0,0,0,0.382) 8%, rgba(0,0,0,0.278) 9%, rgba(0,0,0,0.194) 10.5%, rgba(0,0,0,0.126) 12%, rgba(0,0,0,0.075) 13%, rgba(0,0,0,0.042) 13.8%, rgba(0,0,0,0.021) 14.4%, rgba(0,0,0,0.008) 14.8%, transparent 15%)";
-const CONTAINER_MARGIN = "20px";
-const CONTAINER_WIDTH_CALC = () => `calc(100% - 40px)`;
+  "linear-gradient(to top, #09090b 0%, #09090b 5%, transparent 35%)";
 
 function Number({ mv, number, height }) {
   let y = useTransform(mv, (latest) => {
@@ -263,17 +261,17 @@ export default function Hero({ entered }) {
               {/* Animated wave field — the hero background canvas. Sits below all
                   gradient overlays (z 10/20/30) and the NEXUS tagline (z 40). */}
               <div
-                className="absolute inset-0 bg-black md:rounded-[24px] overflow-hidden"
+                className="absolute inset-0 bg-[#09090b] md:rounded-[24px] overflow-hidden"
                 style={{ zIndex: 0 }}
               >
                 <LineWaves
-                  speed={0.3}
-                  innerLineCount={32}
-                  outerLineCount={36}
-                  warpIntensity={1.0}
+                  speed={0.15}
+                  innerLineCount={24}
+                  outerLineCount={28}
+                  warpIntensity={0.8}
                   rotation={-45}
-                  brightness={0.2}
-                  colorCycleSpeed={1.0}
+                  brightness={0.15}
+                  colorCycleSpeed={0.5}
                   color1="#ffffff"
                   color2="#ffffff"
                   color3="#ffffff"
@@ -308,26 +306,25 @@ export default function Hero({ entered }) {
                   Automation" copy baked into the Spline scene / fallback image. */}
               <div
                 className="absolute inset-0 flex flex-col items-center justify-center text-center px-6 pointer-events-none select-none"
-                style={{ zIndex: 40, fontFamily: '"Chakra Petch", sans-serif' }}
+                style={{ zIndex: 40 }}
               >
                 <h1
-                  className="uppercase leading-none"
+                  className="leading-none tracking-tighter"
                   style={{
-                    fontSize: "clamp(3rem, 12vw, 8rem)",
-                    fontWeight: 700,
-                    letterSpacing: "0.12em",
+                    fontSize: "clamp(3.5rem, 15vw, 12rem)",
+                    fontWeight: 600,
                     color: "#ffffff",
-                    textShadow: "0 2px 40px rgba(0,0,0,0.6)",
+                    letterSpacing: "-0.05em",
                   }}
                 >
                   NEXUS
                 </h1>
                 <p
-                  className="mt-4 text-sm sm:text-base md:text-lg"
-                  style={{ letterSpacing: "0.02em", maxWidth: "40ch" }}
+                  className="mt-6 text-base sm:text-lg md:text-xl font-light tracking-tight"
+                  style={{ color: "#a1a1aa", maxWidth: "45ch", lineHeight: 1.4 }}
                 >
-                  <span style={{ color: "#ffffff" }}>The project that syncs </span>
-                  <span style={{ color: "#9ca3af" }}>all the clubs of AIT</span>
+                  <span className="text-white">The project that syncs</span>{" "}
+                  <span>all the clubs of AIT</span>
                 </p>
               </div>
 

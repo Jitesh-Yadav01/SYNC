@@ -55,8 +55,7 @@ export default function NavBar({ entered }) {
             backdropFilter: "blur(10px)",
             WebkitBackdropFilter: "blur(10px)",
             borderRadius: "14px",
-            boxShadow: "inset 0px 1px 1px 1px rgba(255, 255, 255, 0.08)",
-            fontFamily: '"Chakra Petch", sans-serif',
+            boxShadow: "0 1px 2px rgba(0, 0, 0, 0.2), inset 0px 1px 1px 0px rgba(255, 255, 255, 0.05)",
           }}
         >
           {/* Logo */}
@@ -81,8 +80,7 @@ export default function NavBar({ entered }) {
                 key={item.to}
                 to={item.to}
                 link-cursor="true"
-                className="text-[14px] font-medium text-gray-300 hover:text-white transition-colors whitespace-nowrap"
-                style={{ fontFamily: '"Chakra Petch", sans-serif' }}
+                className="text-[13px] font-medium text-gray-300 hover:text-white transition-colors whitespace-nowrap tracking-wide"
               >
                 {item.label}
               </Link>
@@ -110,9 +108,8 @@ export default function NavBar({ entered }) {
                 backgroundColor: "#ffffff",
                 color: "#000",
                 borderRadius: "8px",
-                fontSize: "13px",
-                fontWeight: 500,
-                boxShadow: "inset 0px 2px 1px 1px rgb(255, 255, 255)",
+                fontSize: "12px",
+                fontWeight: 600,
               }}
             >
               Login
@@ -153,9 +150,8 @@ export default function NavBar({ entered }) {
                 backdropFilter: "blur(12px)",
                 WebkitBackdropFilter: "blur(12px)",
                 borderRadius: "14px",
-                border: "1px solid rgba(255, 255, 255, 0.1)",
+                border: "1px solid rgba(255, 255, 255, 0.05)",
                 zIndex: 49,
-                fontFamily: '"Chakra Petch", sans-serif',
               }}
             >
               <div className="flex flex-col p-4 gap-1">
