@@ -1,7 +1,7 @@
 import React from 'react';
 import { Star } from 'lucide-react';
 
-const ApplicantCard = ({ applicant, index, isSelected, onClick }) => {
+const ApplicantCard = ({ applicant, rank, isSelected, onClick }) => {
   const { _id, answers, averageScore, decision, review } = applicant;
 
   const decisionColor = {
@@ -36,7 +36,7 @@ const ApplicantCard = ({ applicant, index, isSelected, onClick }) => {
             {initials}
           </div>
           <div className="absolute -top-1.5 -left-1.5 bg-slate-900 text-slate-50 text-[10px] font-medium px-1.5 py-0.5 rounded shadow-sm">
-            #{index + 1}
+            #{rank}
           </div>
         </div>
 

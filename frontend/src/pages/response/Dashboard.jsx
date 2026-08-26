@@ -373,28 +373,37 @@ const Dashboard = ({ viewerRole = 'admin', isEmbedded = false }) => {
       }
   };
 
-  const filteredResponses = responses.filter(r => {
-    // Status Filter
-    if (filterStatus !== 'all') {
-      const currentDecision = r.decision || 'pending';
-      if (filterStatus !== currentDecision) return false;
-    }
+  const rankedResponses = useMemo(() => {
+    return responses.map((r, index) => ({
+      ...r,
+      rank: index + 1
+    }));
+  }, [responses]);
 
-    // Search Filter
-    if (!searchTerm.trim()) return true;
-    const q = searchTerm.toLowerCase();
-    
-    // Check if the applicant's real name matches the search query
-    const applicantName = getDisplayName(r).toLowerCase();
-    if (applicantName.includes(q)) return true;
-    
-    // Check if the applicant's email (if populated) matches the search query
-    if (r.userId?.email && r.userId.email.toLowerCase().includes(q)) return true;
+  const filteredResponses = useMemo(() => {
+    return rankedResponses.filter(r => {
+      // Status Filter
+      if (filterStatus !== 'all') {
+        const currentDecision = r.decision || 'pending';
+        if (filterStatus !== currentDecision) return false;
+      }
 
-    // Finally check if any form answers match the search query
-    const answers = r.answers || {};
-    return Object.values(answers).some(v => String(v).toLowerCase().includes(q));
-  });
+      // Search Filter
+      if (!searchTerm.trim()) return true;
+      const q = searchTerm.toLowerCase();
+      
+      // Check if the applicant's real name matches the search query
+      const applicantName = getDisplayName(r).toLowerCase();
+      if (applicantName.includes(q)) return true;
+      
+      // Check if the applicant's email (if populated) matches the search query
+      if (r.userId?.email && r.userId.email.toLowerCase().includes(q)) return true;
+
+      // Finally check if any form answers match the search query
+      const answers = r.answers || {};
+      return Object.values(answers).some(v => String(v).toLowerCase().includes(q));
+    });
+  }, [rankedResponses, filterStatus, searchTerm, getDisplayName]);
 
    return (
       <div className="flex h-screen flex-col overflow-hidden bg-white text-slate-950 font-mono">
@@ -416,11 +425,11 @@ const Dashboard = ({ viewerRole = 'admin', isEmbedded = false }) => {
               )}
             </div>
             <div className="flex-1 p-3 space-y-2">
-              {filteredResponses.map((r, idx) => (
+              {filteredResponses.map((r) => (
                 <ApplicantCard
                   key={r._id}
                   applicant={r}
-                  index={idx}
+                  rank={r.rank}
                   isSelected={selectedResponseId === r._id}
                   onClick={() => setSelectedResponseId(r._id)}
                 />
@@ -633,8 +642,8 @@ const Dashboard = ({ viewerRole = 'admin', isEmbedded = false }) => {
                                <div className="flex flex-col space-y-1">
                                    <div className="text-xs font-semibold tracking-tight text-slate-900 uppercase">Rank</div>
                                    <div className="text-xl font-bold">
-                                      #{filteredResponses.findIndex(r => r._id === selectedApplicant._id) + 1}
-                                      <span className="text-xs text-slate-500 font-medium ml-1">of {filteredResponses.length}</span>
+                                      #{selectedApplicant.rank}
+                                      <span className="text-xs text-slate-500 font-medium ml-1">of {rankedResponses.length}</span>
                                    </div>
                                </div>
                                <Trophy className="text-slate-400 w-5 h-5" />
