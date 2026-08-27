@@ -1,0 +1,30 @@
+{
+  "name": "NEXUS",
+  "short_name": "NEXUS",
+  "description": "NEXUS - GDG AIT Pune Platform",
+  "start_url": "/",
+  "display": "standalone",
+  "scope": "/",
+  "orientation": "portrait-primary",
+  "theme_color": "#4285F4",
+  "background_color": "#0b1220",
+  "icons": [
+    {
+      "src": "/clublogos/bwLogos/GDG.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/clublogos/bwLogos/GDG.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/clublogos/bwLogos/GDG.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml"
+    }
+  ]
+}
