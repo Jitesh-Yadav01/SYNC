@@ -90,7 +90,7 @@ export default function SuperAdminDashboard({ admin }) {
                 onLogout={handleLogout}
             />
 
-            <main className={`flex-1 flex flex-col min-w-0 bg-transparent relative transition-all duration-300 ${!isDesktopCollapsed ? 'md:ml-64' : 'md:ml-0'}`}>
+            <main className={`flex-1 flex flex-col min-w-0 bg-transparent relative transition-all duration-300 ${!isDesktopCollapsed ? 'md:ml-64' : 'md:ml-20'}`}>
                 <SuperAdminContextHeader 
                     isDesktopCollapsed={isDesktopCollapsed} 
                     setIsDesktopCollapsed={setIsDesktopCollapsed} 

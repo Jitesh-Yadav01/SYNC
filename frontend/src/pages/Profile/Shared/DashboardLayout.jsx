@@ -509,7 +509,6 @@ export default function SharedDashboardLayout({ children }) {
                         )}
 
                         <div className="flex items-center gap-3">
-                            <SquareChevronRight className="h-5 w-5 text-blue-600 md:hidden" />
                             <div className="flex items-center gap-2 text-[14px]">
                                 <span className="font-extrabold text-slate-900 tracking-tight hidden sm:inline">NEXUS</span>
                                 <span className="text-slate-300 hidden sm:inline">/</span>

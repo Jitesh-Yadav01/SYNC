@@ -176,7 +176,6 @@ export default function SuperAdminSidebar({
                         <div className="flex items-center gap-3">
                             <div className="h-8 w-8 rounded-lg flex items-center justify-center shrink-0">
                                 <SquareChevronRight className="h-7 w-7 text-blue-600" />
-                                <ShieldCheck className="h-5 w-5 text-blue-600 hidden" />
                             </div>
                             {!isDesktopCollapsed && (
                                 <div>
@@ -370,7 +369,6 @@ export function SuperAdminContextHeader({ isDesktopCollapsed, setIsDesktopCollap
                 )}
 
                 <div className="flex items-center gap-3">
-                    <SquareChevronRight className="h-5 w-5 text-blue-600 md:hidden" />
                     <div className="flex items-center gap-2 text-[14px]">
                         <span className="font-extrabold text-slate-900 tracking-tight hidden sm:inline">NEXUS</span>
                         <span className="text-slate-300 hidden sm:inline">/</span>
