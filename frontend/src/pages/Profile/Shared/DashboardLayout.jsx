@@ -102,7 +102,7 @@ export default function SharedDashboardLayout({ children }) {
     }
 
     return (
-        <div className="flex min-h-screen bg-[#f9fafb] text-slate-900 font-sans antialiased selection:bg-blue-600/20">
+        <div className="flex min-h-screen bg-[#f9fafb] text-slate-900 font-sans antialiased selection:bg-blue-600/20" style={{ backgroundImage: "url('/background.svg')", backgroundSize: 'cover', backgroundAttachment: 'fixed', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}>
             {/* OLD UI IMPLEMENTATION PRESERVED:
             className="flex min-h-screen bg-gray-50 text-gray-900 font-mono..."
             style={{ backgroundImage: "url('/back.svg')", ... fontFamily: "'JetBrains Mono'..." }}

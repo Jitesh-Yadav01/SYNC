@@ -64,7 +64,7 @@ export default function SuperOverview({ admin, onNavigate }) {
     ];
 
     return (
-        <div className="max-w-5xl mx-auto" style={{ fontFamily: "'JetBrains Mono', 'Fira Code', 'Courier New', monospace" }}>
+        <div className="max-w-5xl mx-auto" style={{ fontFamily: "inherit" }}>
             <div className="flex flex-col lg:flex-row items-start lg:items-center gap-10 lg:gap-20 py-12">
                 <div className="flex-1 min-w-0">
                     <div
@@ -145,10 +145,10 @@ export default function SuperOverview({ admin, onNavigate }) {
             <UserSearchBar />
 
             {/* Stats bar */}
-            <div style={{ marginTop: '8px', borderRadius: '16px', background: '#f3f4f6', border: '1px solid #e5e7eb', padding: '20px 24px', display: 'flex', flexWrap: 'wrap', gap: '0' }}>
+            <div style={{ marginTop: '8px', borderRadius: '16px', background: '#ffffff', border: '1px solid #e2e8f0', padding: '20px 24px', display: 'flex', flexWrap: 'wrap', gap: '0' }}>
                 {stats.map(({ icon: Icon, label, value }, i) => (
-                    <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '14px', flex: '1 1 150px', padding: '8px 20px', borderRight: i < stats.length - 1 ? '1px solid #e5e7eb' : 'none' }}>
-                        <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: '#e5e7eb', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '14px', flex: '1 1 150px', padding: '8px 20px', borderRight: i < stats.length - 1 ? '1px solid #e2e8f0' : 'none' }}>
+                        <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                             <Icon style={{ width: '18px', height: '18px', color: '#111827' }} />
                         </div>
                         <div>

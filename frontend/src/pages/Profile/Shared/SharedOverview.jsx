@@ -165,7 +165,7 @@ export default function SharedOverview() {
     ];
 
     return (
-        <div className="max-w-5xl mx-auto" style={{ fontFamily: "'JetBrains Mono', 'Fira Code', 'Courier New', monospace" }}>
+        <div className="max-w-5xl mx-auto" style={{ fontFamily: "inherit" }}>
             <div className="flex flex-col lg:flex-row items-start lg:items-center gap-10 lg:gap-20 py-16">
 
                 <div className="flex-1 min-w-0">
@@ -176,7 +176,7 @@ export default function SharedOverview() {
                         <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
                         <span
                             className="text-sm font-semibold tracking-wide"
-                            style={{ fontFamily: "'JetBrains Mono', monospace", color: '#4b5563' }}
+                            style={{ color: '#4b5563' }}
                         >
                             {getGreeting()}, {firstName}
                         </span>
@@ -184,7 +184,6 @@ export default function SharedOverview() {
 
                     <h1
                         style={{
-                            fontFamily: "'JetBrains Mono', 'Fira Code', monospace",
                             fontSize: 'clamp(3rem, 7vw, 5.5rem)',
                             fontWeight: 800,
                             lineHeight: 1.02,
@@ -199,7 +198,6 @@ export default function SharedOverview() {
 
                     <p
                         style={{
-                            fontFamily: "'JetBrains Mono', monospace",
                             fontSize: '1rem',
                             color: '#374151',
                             lineHeight: 1.7,
@@ -214,7 +212,6 @@ export default function SharedOverview() {
                         <button
                             onClick={() => navigate(role === 'Admin' ? '/admin/responses' : '/member/responses')}
                             style={{
-                                fontFamily: "'JetBrains Mono', monospace",
                                 padding: '12px 28px',
                                 borderRadius: '8px',
                                 fontSize: '0.95rem',
@@ -234,7 +231,6 @@ export default function SharedOverview() {
                         <button
                             onClick={() => navigate(role === 'Admin' ? '/my-forms' : '#')}
                             style={{
-                                fontFamily: "'JetBrains Mono', monospace",
                                 padding: '12px 28px',
                                 borderRadius: '8px',
                                 fontSize: '0.95rem',
@@ -315,8 +311,8 @@ export default function SharedOverview() {
                 style={{
                     marginTop: '32px',
                     borderRadius: '16px',
-                    background: '#f3f4f6',
-                    border: '1px solid #e5e7eb',
+                    background: '#ffffff',
+                    border: '1px solid #e2e8f0',
                     padding: '20px 32px',
                     display: 'flex',
                     flexWrap: 'wrap',
@@ -332,10 +328,10 @@ export default function SharedOverview() {
                             gap: '14px',
                             flex: '1 1 160px',
                             padding: '8px 24px',
-                            borderRight: i < stats.length - 1 ? '1px solid #e5e7eb' : 'none',
+                            borderRight: i < stats.length - 1 ? '1px solid #e2e8f0' : 'none',
                         }}
                     >
-                        <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: '#e5e7eb', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                        <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                             <Icon style={{ width: '18px', height: '18px', color: '#111827' }} />
                         </div>
                         <div>
@@ -357,7 +353,7 @@ export default function SharedOverview() {
                                     </button>
                                 </div>
                             ) : (
-                                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '1.5rem', fontWeight: 900, color: '#111827', lineHeight: 1, display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                <div style={{ fontSize: '1.5rem', fontWeight: 900, color: '#111827', lineHeight: 1, display: 'flex', alignItems: 'center', gap: '8px' }}>
                                     {value}
                                     {isBudget && role === 'Admin' && (
                                         <button 
@@ -369,7 +365,7 @@ export default function SharedOverview() {
                                     )}
                                 </div>
                             )}
-                            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.7rem', color: '#4b5563', marginTop: '4px', letterSpacing: '0.05em', textTransform: 'uppercase' }}>{label}</div>
+                            <div style={{ fontSize: '0.7rem', color: '#4b5563', marginTop: '4px', letterSpacing: '0.05em', textTransform: 'uppercase' }}>{label}</div>
                         </div>
                     </div>
                 ))}

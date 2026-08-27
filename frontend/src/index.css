@@ -115,7 +115,8 @@ h5,
 h6,
 .section-title,
 .title {
-  font-family: "Playfair Display", Georgia, serif;
+  font-family: inherit;
+  letter-spacing: -0.02em;
 }
 
 .app {
