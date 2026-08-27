@@ -16,13 +16,14 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const selectedClub = location.state?.club || null;
+  const fromPath = location.state?.from;
 
   // Auto-redirect if already authenticated
   useEffect(() => {
     if (authLoading) return;
-    if (isAdmin) { navigate('/profile/Admin', { replace: true }); return; }
-    if (user?.year) { navigate(user.role === 'member' ? '/profile/Member' : '/profile/Applicant', { replace: true }); return; }
-  }, [authLoading, user, isAdmin]);
+    if (isAdmin) { navigate(fromPath || '/profile/Admin', { replace: true }); return; }
+    if (user?.year) { navigate(fromPath || (user.role === 'member' ? '/profile/Member' : '/profile/Applicant'), { replace: true }); return; }
+  }, [authLoading, user, isAdmin, fromPath]);
 
   if (authLoading) {
     return (
@@ -73,7 +74,7 @@ const Login = () => {
     }
     if (user?.year) {
       toast.success("Logged in with Google! 👌");
-      setTimeout(() => navigate(user.role === 'member' ? '/profile/Member' : '/profile/Applicant', { state: { club: selectedClub } }), 1500);
+      setTimeout(() => navigate(fromPath || (user.role === 'member' ? '/profile/Member' : '/profile/Applicant'), { state: { club: selectedClub } }), 1500);
     } else {
       toast.info("Almost there! Please complete your profile to continue. 📝");
       setTimeout(() => navigate("/signup", { state: { ...location.state, fromLogin: true } }), 1500);

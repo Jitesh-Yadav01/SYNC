@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { CheckCircle2, Trash2, Pencil, AlertTriangle } from 'lucide-react';
 
 import FileUploadField from '@/components/ui/FileUploadField';
@@ -12,6 +12,7 @@ export default function FillForm() {
   const { formId } = useParams();
   const { user, authLoading } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [form, setForm] = useState(null);
   const [answers, setAnswers] = useState({});
@@ -272,7 +273,7 @@ export default function FillForm() {
         <div className="rounded-xl border bg-white p-8 text-center shadow-sm">
           <h2 className="mb-2 text-xl font-bold text-red-600">Login Required</h2>
           <p className="mb-4 text-gray-600">You must be logged in to fill this form.</p>
-          <button onClick={() => navigate('/login')} className="rounded-lg bg-blue-600 px-4 py-2 text-sm text-white transition hover:bg-blue-700">
+          <button onClick={() => navigate('/login', { state: { from: location.pathname } })} className="rounded-lg bg-blue-600 px-4 py-2 text-sm text-white transition hover:bg-blue-700">
             Go to Login
           </button>
         </div>
@@ -568,7 +569,7 @@ export default function FillForm() {
                     <option value="" disabled>
                       Select Priority
                     </option>
-                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
+                    {Array.from({ length: 30 }, (_, i) => i + 1).map((num) => (
                       <option key={num} value={num} disabled={usedPriorities.includes(num)}>
                         Priority {num} {usedPriorities.includes(num) ? '(Already Filled)' : ''}
                       </option>

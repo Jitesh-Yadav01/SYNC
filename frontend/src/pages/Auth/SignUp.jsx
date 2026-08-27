@@ -181,6 +181,7 @@ const GoogleProfileSetup = ({ onSubmit, loading }) => {
 // ─── Main SignUp Component ───────────────────────────────────────
 const SignUp = () => {
   const location = useLocation();
+  const fromPath = location.state?.from;
 
   // [EMAIL/PASSWORD AUTH — INTENTIONALLY DISABLED]
   // These state vars were used by the email/password registration form.
@@ -239,7 +240,7 @@ const SignUp = () => {
     const user = result.user;
     if (user?.year) {
       toast.success("Signed up with Google! 👌");
-      setTimeout(() => navigate(user.role === "member" ? "/profile/Member" : "/profile/Applicant"), 1500);
+      setTimeout(() => navigate(fromPath || (user.role === "member" ? "/profile/Member" : "/profile/Applicant")), 1500);
     } else {
       setGoogleUser(user);
       setStep("profile-setup");
@@ -257,7 +258,7 @@ const SignUp = () => {
       const result = await updateUserInfo({ name, regnNo, bio, hobbies, number, branch, year });
       if (result.success) {
         toast.success(`Welcome aboard, ${name}! 🎉`);
-        setTimeout(() => navigate(result.user?.role === "member" ? "/profile/Member" : "/profile/Applicant"), 1500);
+        setTimeout(() => navigate(fromPath || (result.user?.role === "member" ? "/profile/Member" : "/profile/Applicant")), 1500);
       } else {
         toast.error(result.message || "Failed to save profile");
       }
