@@ -74,16 +74,11 @@ export default function SuperAdminDashboard({ admin }) {
     };
 
     return (
-        <div
-            className="flex min-h-screen bg-gray-50 text-gray-900 font-mono selection:bg-blue-500/30"
-            style={{
-                backgroundImage: "url('/back.svg')",
-                backgroundSize: 'cover',
-                backgroundAttachment: 'fixed',
-                backgroundPosition: 'center',
-                fontFamily: "'JetBrains Mono', 'Fira Code', 'Courier New', monospace",
-            }}
-        >
+        <div className="flex min-h-screen bg-[#f9fafb] text-slate-900 font-sans antialiased selection:bg-blue-600/20">
+            {/* OLD UI IMPLEMENTATION PRESERVED:
+            className="flex min-h-screen bg-gray-50 text-gray-900 font-mono..."
+            style={{ backgroundImage: "url('/back.svg')", ... fontFamily: "'JetBrains Mono'..." }}
+            */}
             <SuperAdminSidebar
                 admin={admin}
                 activeTab={activeTab}
@@ -95,7 +90,7 @@ export default function SuperAdminDashboard({ admin }) {
                 onLogout={handleLogout}
             />
 
-            <main className={`flex-1 flex flex-col min-w-0 bg-transparent relative transition-all duration-300 ${!isDesktopCollapsed ? 'md:ml-68' : 'md:ml-0'}`}>
+            <main className={`flex-1 flex flex-col min-w-0 bg-transparent relative transition-all duration-300 ${!isDesktopCollapsed ? 'md:ml-64' : 'md:ml-0'}`}>
                 <SuperAdminExpandButton isDesktopCollapsed={isDesktopCollapsed} setIsDesktopCollapsed={setIsDesktopCollapsed} />
 
                 <SuperAdminMobileHeader setIsSidebarOpen={setIsSidebarOpen} />

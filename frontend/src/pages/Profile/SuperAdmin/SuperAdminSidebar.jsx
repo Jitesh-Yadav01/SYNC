@@ -31,14 +31,14 @@ export default function SuperAdminSidebar({
             )}
 
             <aside className={cn(
-                'fixed inset-y-0 left-0 z-50 w-68 bg-white border-r border-gray-200 transform transition-transform duration-300 ease-in-out',
+                'fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-200 transform transition-transform duration-300 ease-in-out shadow-[4px_0_24px_rgba(0,0,0,0.02)]',
                 (isSidebarOpen || !isDesktopCollapsed) ? 'translate-x-0' : '-translate-x-full'
             )}>
                 <div className="flex flex-col h-full p-3">
                     <div className="flex items-center justify-between mb-8">
                         <div className="flex items-center gap-3">
-                            <div className="h-10 w-10 rounded-lg bg-gray-900 flex items-center justify-center shadow-sm">
-                                <ShieldCheck className="h-5 w-5 text-white" />
+                            <div className="h-8 w-8 rounded-md bg-slate-900 flex items-center justify-center shadow-sm">
+                                <ShieldCheck className="h-4 w-4 text-white" />
                             </div>
                             <div>
                                 <h1 className="font-bold text-lg tracking-tight text-gray-900">SuperAdmin</h1>
@@ -54,19 +54,19 @@ export default function SuperAdminSidebar({
                         </button>
                     </div>
 
-                    <nav className="flex-1 space-y-2">
+                    <nav className="flex-1 space-y-1">
                         {visibleTabs.map((tab) => (
                             <button
                                 key={tab.id}
                                 onClick={() => { onTabSelect(tab.id); setIsSidebarOpen(false); }}
                                 className={cn(
-                                    'w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 group relative overflow-hidden',
+                                    'w-full flex items-center gap-3 px-3 py-2 rounded-md text-[13px] font-medium transition-colors group relative',
                                     activeTab === tab.id
-                                        ? 'bg-blue-50 text-blue-700 shadow-sm'
-                                        : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                                        ? 'bg-blue-50/80 text-blue-700'
+                                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/80'
                                 )}
                             >
-                                {activeTab === tab.id && <div className="absolute left-0 top-0 bottom-0 w-1 bg-blue-600 rounded-r-full" />}
+                                {activeTab === tab.id && <div className="absolute left-0 top-1/2 -translate-y-1/2 h-4 w-[3px] bg-blue-600 rounded-r-md" />}
                                 <tab.icon className={cn('h-5 w-5 transition-colors', activeTab === tab.id ? 'text-blue-600' : 'text-gray-400 group-hover:text-gray-600')} />
                                 {tab.label}
                             </button>
@@ -75,17 +75,17 @@ export default function SuperAdminSidebar({
 
                     <div className="pt-6 border-t border-gray-200 mt-auto space-y-4">
                         <div className="flex items-center gap-2 px-1 p-2">
-                            <div className="h-9 w-9 rounded-full border border-gray-200 bg-gray-900 flex items-center justify-center shrink-0">
+                            <div className="h-9 w-9 rounded-full border border-gray-200 bg-slate-900 flex items-center justify-center shrink-0">
                                 <span className="text-white text-sm font-bold">{roleLabel[0]}</span>
                             </div>
                             <div className="flex-1 min-w-0">
-                                <p className="text-sm font-medium truncate text-gray-900">{roleLabel}</p>
-                                <p className="text-xs text-gray-500 break-all">{admin?.email}</p>
+                                <p className="text-sm font-medium truncate text-slate-900">{roleLabel}</p>
+                                <p className="text-xs text-slate-500 break-all">{admin?.email}</p>
                             </div>
                         </div>
                         <button
                             onClick={onLogout}
-                            className="w-full flex items-center gap-2 px-4 py-2 rounded-lg text-sm text-red-600 hover:bg-red-50 hover:text-red-700 transition-colors"
+                            className="w-full flex items-center gap-2 px-3 py-2 rounded-md text-[13px] font-medium text-slate-600 hover:bg-red-50 hover:text-red-700 transition-colors"
                         >
                             <LogOut className="h-4 w-4" /> Sign Out
                         </button>

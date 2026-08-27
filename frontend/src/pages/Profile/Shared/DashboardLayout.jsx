@@ -102,16 +102,11 @@ export default function SharedDashboardLayout({ children }) {
     }
 
     return (
-        <div
-            className="flex min-h-screen bg-gray-50 text-gray-900 font-mono selection:bg-blue-500/30"
-            style={{
-                backgroundImage: "url('/back.svg')",
-                backgroundSize: 'cover',
-                backgroundAttachment: 'fixed',
-                backgroundPosition: 'center',
-                fontFamily: "'JetBrains Mono', 'Fira Code', 'Courier New', monospace"
-            }}
-        >
+        <div className="flex min-h-screen bg-[#f9fafb] text-slate-900 font-sans antialiased selection:bg-blue-600/20">
+            {/* OLD UI IMPLEMENTATION PRESERVED:
+            className="flex min-h-screen bg-gray-50 text-gray-900 font-mono..."
+            style={{ backgroundImage: "url('/back.svg')", ... fontFamily: "'JetBrains Mono'..." }}
+            */}
             {isSidebarOpen && (
                 <div
                     className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 md:hidden"
@@ -126,14 +121,14 @@ export default function SharedDashboardLayout({ children }) {
             )}
 
             <aside className={cn(
-                "fixed inset-y-0 left-0 z-50 w-68 bg-white border-r border-gray-200 transform transition-transform duration-300 ease-in-out",
+                "fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-200 transform transition-transform duration-300 ease-in-out shadow-[4px_0_24px_rgba(0,0,0,0.02)]",
                 (isSidebarOpen || !isDesktopCollapsed) ? "translate-x-0" : "-translate-x-full"
             )}>
                 <div className="flex flex-col h-full p-3">
                     <div className="flex items-center justify-between mb-8">
                         <div className="flex items-center gap-3">
-                            <div className="h-10 w-10 rounded-lg bg-gray-900 flex items-center justify-center shadow-sm">
-                                <span className="font-bold text-white text-lg">{role?.[0]}</span>
+                            <div className="h-8 w-8 rounded-md bg-slate-900 flex items-center justify-center shadow-sm">
+                                <span className="font-bold text-white text-sm">{role?.[0]}</span>
                             </div>
                             <div>
                                 <h1 className="font-bold text-lg tracking-tight text-gray-900">{role} Panel</h1>
@@ -154,7 +149,7 @@ export default function SharedDashboardLayout({ children }) {
                             <select 
                                 value={activeClub?.id || activeClub?._id || ''}
                                 onChange={(e) => switchClub(e.target.value)}
-                                className="w-full bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 transition-all shadow-sm hover:border-blue-300"
+                                className="w-full bg-slate-50/50 border border-slate-200 text-slate-900 text-[13px] font-medium rounded-md focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 block p-2 transition-all hover:border-slate-300 outline-none"
                             >
                                 {profile.clubs.map(c => (
                                     <option key={c.id || c._id} value={c.id || c._id}>{c.name}</option>
@@ -171,7 +166,7 @@ export default function SharedDashboardLayout({ children }) {
                         </div>
                     )}
 
-                    <nav className="flex-1 space-y-2">
+                    <nav className="flex-1 space-y-1">
                         {getVisibleTabs().map(tab => (
                             <button
                                 key={tab.id}
@@ -184,14 +179,14 @@ export default function SharedDashboardLayout({ children }) {
                                     setIsSidebarOpen(false);
                                 }}
                                 className={cn(
-                                    "w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 group relative overflow-hidden",
+                                    "w-full flex items-center gap-3 px-3 py-2 rounded-md text-[13px] font-medium transition-colors group relative",
                                     !isStandalonePage && activeTab === tab.id
-                                        ? "bg-blue-50 text-blue-700 shadow-sm"
-                                        : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+                                        ? "bg-blue-50/80 text-blue-700"
+                                        : "text-slate-600 hover:text-slate-900 hover:bg-slate-100/80"
                                 )}
                             >
                                 {!isStandalonePage && activeTab === tab.id && (
-                                    <div className="absolute left-0 top-0 bottom-0 w-1 bg-blue-600 rounded-r-full" />
+                                    <div className="absolute left-0 top-1/2 -translate-y-1/2 h-4 w-[3px] bg-blue-600 rounded-r-md" />
                                 )}
                                 <tab.icon className={cn(
                                     "h-5 w-5 transition-colors",
@@ -210,14 +205,14 @@ export default function SharedDashboardLayout({ children }) {
                                         setIsSidebarOpen(false);
                                     }}
                                     className={cn(
-                                        "w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 group relative overflow-hidden",
+                                        "w-full flex items-center gap-3 px-3 py-2 rounded-md text-[13px] font-medium transition-colors group relative",
                                         activeTab === 'manage-forms'
-                                            ? "bg-blue-50 text-blue-700 shadow-sm"
-                                            : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+                                            ? "bg-blue-50/80 text-blue-700"
+                                            : "text-slate-600 hover:text-slate-900 hover:bg-slate-100/80"
                                     )}
                                 >
                                     {activeTab === 'manage-forms' && (
-                                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-blue-600 rounded-r-full" />
+                                        <div className="absolute left-0 top-1/2 -translate-y-1/2 h-4 w-[3px] bg-blue-600 rounded-r-md" />
                                     )}
                                     <FileText className={cn(
                                         "h-5 w-5 transition-colors",
@@ -231,14 +226,14 @@ export default function SharedDashboardLayout({ children }) {
                                         setIsSidebarOpen(false);
                                     }}
                                     className={cn(
-                                        "w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 group relative overflow-hidden",
+                                        "w-full flex items-center gap-3 px-3 py-2 rounded-md text-[13px] font-medium transition-colors group relative",
                                         activeTab === 'responses'
-                                            ? "bg-blue-50 text-blue-700 shadow-sm"
-                                            : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+                                            ? "bg-blue-50/80 text-blue-700"
+                                            : "text-slate-600 hover:text-slate-900 hover:bg-slate-100/80"
                                     )}
                                 >
                                     {activeTab === 'responses' && (
-                                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-blue-600 rounded-r-full" />
+                                        <div className="absolute left-0 top-1/2 -translate-y-1/2 h-4 w-[3px] bg-blue-600 rounded-r-md" />
                                     )}
                                     <ClipboardList className={cn(
                                         "h-5 w-5 transition-colors",
@@ -252,14 +247,14 @@ export default function SharedDashboardLayout({ children }) {
                                         setIsSidebarOpen(false);
                                     }}
                                     className={cn(
-                                        "w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 group relative overflow-hidden",
+                                        "w-full flex items-center gap-3 px-3 py-2 rounded-md text-[13px] font-medium transition-colors group relative",
                                         activeTab === 'iqac-events'
-                                            ? "bg-blue-50 text-blue-700 shadow-sm"
-                                            : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+                                            ? "bg-blue-50/80 text-blue-700"
+                                            : "text-slate-600 hover:text-slate-900 hover:bg-slate-100/80"
                                     )}
                                 >
                                     {activeTab === 'iqac-events' && (
-                                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-blue-600 rounded-r-full" />
+                                        <div className="absolute left-0 top-1/2 -translate-y-1/2 h-4 w-[3px] bg-blue-600 rounded-r-md" />
                                     )}
                                     <FileBarChart className={cn(
                                         "h-5 w-5 transition-colors",
@@ -278,14 +273,14 @@ export default function SharedDashboardLayout({ children }) {
                                         setIsSidebarOpen(false);
                                     }}
                                     className={cn(
-                                        "w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 group relative overflow-hidden",
+                                        "w-full flex items-center gap-3 px-3 py-2 rounded-md text-[13px] font-medium transition-colors group relative",
                                         activeTab === 'manage-forms'
-                                            ? "bg-blue-50 text-blue-700 shadow-sm"
-                                            : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+                                            ? "bg-blue-50/80 text-blue-700"
+                                            : "text-slate-600 hover:text-slate-900 hover:bg-slate-100/80"
                                     )}
                                 >
                                     {activeTab === 'manage-forms' && (
-                                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-blue-600 rounded-r-full" />
+                                        <div className="absolute left-0 top-1/2 -translate-y-1/2 h-4 w-[3px] bg-blue-600 rounded-r-md" />
                                     )}
                                     <FileText className={cn(
                                         "h-5 w-5 transition-colors",
@@ -299,14 +294,14 @@ export default function SharedDashboardLayout({ children }) {
                                         setIsSidebarOpen(false);
                                     }}
                                     className={cn(
-                                        "w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 group relative overflow-hidden",
+                                        "w-full flex items-center gap-3 px-3 py-2 rounded-md text-[13px] font-medium transition-colors group relative",
                                         activeTab === 'responses'
-                                            ? "bg-blue-50 text-blue-700 shadow-sm"
-                                            : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+                                            ? "bg-blue-50/80 text-blue-700"
+                                            : "text-slate-600 hover:text-slate-900 hover:bg-slate-100/80"
                                     )}
                                 >
                                     {activeTab === 'responses' && (
-                                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-blue-600 rounded-r-full" />
+                                        <div className="absolute left-0 top-1/2 -translate-y-1/2 h-4 w-[3px] bg-blue-600 rounded-r-md" />
                                     )}
                                     <ClipboardList className={cn(
                                         "h-5 w-5 transition-colors",
@@ -329,14 +324,14 @@ export default function SharedDashboardLayout({ children }) {
                                     setIsSidebarOpen(false);
                                 }}
                                 className={cn(
-                                    "w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 group relative overflow-hidden",
+                                    "w-full flex items-center gap-3 px-3 py-2 rounded-md text-[13px] font-medium transition-colors group relative",
                                     activeTab === 'forms'
-                                        ? "bg-blue-50 text-blue-700 shadow-sm"
-                                        : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+                                        ? "bg-blue-50/80 text-blue-700"
+                                        : "text-slate-600 hover:text-slate-900 hover:bg-slate-100/80"
                                 )}
                             >
                                 {activeTab === 'forms' && (
-                                    <div className="absolute left-0 top-0 bottom-0 w-1 bg-blue-600 rounded-r-full" />
+                                    <div className="absolute left-0 top-1/2 -translate-y-1/2 h-4 w-[3px] bg-blue-600 rounded-r-md" />
                                 )}
                                 <FileText className={cn(
                                     "h-5 w-5 transition-colors",
@@ -369,7 +364,7 @@ export default function SharedDashboardLayout({ children }) {
                         </div>
                         <button
                             onClick={handleLogout}
-                            className="w-full flex items-center gap-2 px-4 py-2 rounded-lg text-sm text-red-600 hover:bg-red-50 hover:text-red-700 transition-colors"
+                            className="w-full flex items-center gap-2 px-3 py-2 rounded-md text-[13px] font-medium text-slate-600 hover:bg-red-50 hover:text-red-700 transition-colors"
                         >
                             <LogOut className="h-4 w-4" />
                             Sign Out
@@ -380,7 +375,7 @@ export default function SharedDashboardLayout({ children }) {
 
             <main className={cn(
                 "flex-1 flex flex-col min-w-0 bg-transparent relative transition-all duration-300",
-                !isDesktopCollapsed ? "md:ml-68" : "md:ml-0"
+                !isDesktopCollapsed ? "md:ml-64" : "md:ml-0"
             )}>
                 {/* Floating expand button when collapsed */}
                 {isDesktopCollapsed && (
