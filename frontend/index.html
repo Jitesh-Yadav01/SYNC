@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>NEXUS</title>
+    <title>AIT NEXUS</title>
     <link rel="icon" href="/clublogos/bwLogos/GDG.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,6 +11,14 @@
     <script src="https://accounts.google.com/gsi/client" async defer></script>
   </head>
   <body>
+    <div id="error-log" style="color: red; position: fixed; top: 0; left: 0; z-index: 9999; background: white; padding: 10px; display: none;"></div>
+    <script>
+      window.onerror = function(message, source, lineno, colno, error) {
+        var el = document.getElementById("error-log");
+        el.style.display = "block";
+        el.innerText += message + "\n";
+      };
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

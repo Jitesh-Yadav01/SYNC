@@ -101,27 +101,34 @@ svg {
   color-scheme: dark;
 }
 
-/* GDG Premium Four-Colour Scrollbar */
-@media (pointer: fine) {
-  ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-  }
-  ::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  ::-webkit-scrollbar-thumb {
-    background-color: #cbd5e1; /* neutral base */
-    border-radius: 6px;
-    background-image: linear-gradient(
-      to bottom,
-      var(--gdg-red) 0%, var(--gdg-red) 25%,
-      var(--gdg-yellow) 25%, var(--gdg-yellow) 50%,
-      var(--gdg-green) 50%, var(--gdg-green) 75%,
-      var(--gdg-blue) 75%, var(--gdg-blue) 100%
-    );
-  }
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
 }
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    to bottom,
+    #E94436 0%,
+    #E94436 25%,
+    #109D58 25%,
+    #109D58 50%,
+    #FABC05 50%,
+    #FABC05 75%,
+    #4385F3 75%,
+    #4385F3 100%
+  );
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #E6E4D5;
+}
+
 
 
 body {

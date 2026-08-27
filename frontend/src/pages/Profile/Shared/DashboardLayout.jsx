@@ -101,17 +101,14 @@ export default function SharedDashboardLayout({ children }) {
         return <Navigate to="/" replace />;
     }
 
+    // <div className="flex min-h-screen bg-[#f9fafb] text-slate-900 font-sans antialiased selection:bg-gdg-blue/20" style={{ backgroundImage: "url('/background.svg')", backgroundSize: 'cover', backgroundAttachment: 'fixed', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}>
     return (
-        <div className="flex min-h-screen bg-[#f9fafb] text-slate-900 font-sans antialiased selection:bg-gdg-blue/20" style={{ backgroundImage: "url('/background.svg')", backgroundSize: 'cover', backgroundAttachment: 'fixed', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}>
-            {/* OLD UI IMPLEMENTATION PRESERVED:
+        <div className="flex h-screen overflow-hidden bg-[#f9fafb] text-slate-900 font-sans antialiased selection:bg-gdg-blue/20" style={{ backgroundImage: "url('/background.svg')", backgroundSize: 'cover', backgroundAttachment: 'fixed', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}>
+            {/* 
             className="flex min-h-screen bg-gray-50 text-gray-900 font-mono..."
             style={{ backgroundImage: "url('/back.svg')", ... fontFamily: "'JetBrains Mono'..." }}
             */}
-            {/* 
-            ========================================================================
-            OLD IMPLEMENTATION PRESERVED (COMMENTED OUT)
-            ========================================================================
-            */}
+            
             {/*
             {isSidebarOpen && (
                 <div
@@ -123,7 +120,7 @@ export default function SharedDashboardLayout({ children }) {
                 "fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-200 transform transition-transform duration-300 ease-in-out shadow-[4px_0_24px_rgba(0,0,0,0.02)]",
                 (isSidebarOpen || !isDesktopCollapsed) ? "translate-x-0" : "-translate-x-full"
             )}>
-               ... [old code hidden] ...
+               
             </aside>
             */}
 
@@ -468,7 +465,7 @@ export default function SharedDashboardLayout({ children }) {
                                         }}
                                         className="flex flex-col items-center gap-2 p-2 rounded-xl active:bg-slate-50 transition-colors"
                                     >
-                                        <div className={cn("w-12 h-12 rounded-full flex items-center justify-center", activeTab === tab.id ? "bg-blue-100 text-gdg-blue" : "bg-slate-100 text-slate-600")}>
+                                        <div className={cn("w-12 h-12 rounded-full flex items-center justify-center", activeTab === tab.id ? "bg-gdg-blue/10 text-gdg-blue" : "bg-slate-100 text-slate-600")}>
                                             <tab.icon className="h-5 w-5" />
                                         </div>
                                         <span className={cn("text-[10px] font-medium text-center", activeTab === tab.id ? "text-gdg-blue font-bold font-bold" : "text-slate-600")}>{tab.label}</span>
@@ -528,7 +525,7 @@ export default function SharedDashboardLayout({ children }) {
                     
                     <div className="flex items-center gap-4">
                         <div className="hidden sm:flex items-center gap-1.5 opacity-50" title="Built by GDG AIT Pune">
-                            <div className="w-1.5 h-1.5 rounded-full bg-gdg-blue/100 shadow-sm"></div>
+                            <div className="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-sm"></div>
                             <div className="w-1.5 h-1.5 rounded-full bg-red-500 shadow-sm"></div>
                             <div className="w-1.5 h-1.5 rounded-full bg-yellow-500 shadow-sm"></div>
                             <div className="w-1.5 h-1.5 rounded-full bg-green-500 shadow-sm"></div>
@@ -536,6 +533,7 @@ export default function SharedDashboardLayout({ children }) {
                     </div>
                 </header>
 
+                {/* <div className={`flex-1 overflow-y-auto ${!isStandalonePage && activeTab !== 'responses' ? (activeTab === 'overview' ? 'p-4 md:px-8' : 'p-4 md:p-8') : ''}`}> */}
                 <div className={`flex-1 overflow-y-auto ${!isStandalonePage && activeTab !== 'responses' ? (activeTab === 'overview' ? 'p-4 md:px-8' : 'p-4 md:p-8') : ''}`}>
                     <div className={`${!isStandalonePage && activeTab !== 'responses' ? (`max-w-6xl mx-auto w-full ${activeTab === 'overview' ? 'space-y-4 pb-2' : 'space-y-8 pb-12'}`) : activeTab === 'responses' ? 'flex flex-col h-full' : 'flex flex-col h-full'} animate-in fade-in slide-in-from-bottom-4 duration-500`}>
                         {children ?? renderContent()}

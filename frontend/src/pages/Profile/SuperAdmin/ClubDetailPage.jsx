@@ -299,7 +299,7 @@ export default function ClubDetailPage() {
 
     return (
         <div
-            className="flex min-h-screen bg-gray-50 text-gray-900 font-sans selection:bg-gdg-blue/100/30"
+            className="flex min-h-screen bg-gray-50 text-gray-900 font-sans selection:bg-gdg-blue/30"
             style={{
                 backgroundImage: "url('/background.svg')",
                 backgroundSize: 'cover',
@@ -376,7 +376,7 @@ export default function ClubDetailPage() {
                                         {admin?.role === 'maintainer' && (
                                             <button 
                                                 onClick={() => setIsAddFacultyOpen(true)}
-                                                className="text-[10px] bg-blue-100 text-gdg-blue hover:bg-blue-200 px-2 py-0.5 rounded transition-colors font-medium"
+                                                className="text-[10px] bg-blue-100 text-[#3367d6] hover:bg-blue-200 px-2 py-0.5 rounded transition-colors font-medium"
                                             >
                                                 + ADD
                                             </button>
@@ -409,7 +409,7 @@ export default function ClubDetailPage() {
                                         {admin?.role === 'maintainer' && (
                                             <button 
                                                 onClick={() => setIsAddSecretaryOpen(true)}
-                                                className="text-[10px] bg-blue-100 text-gdg-blue hover:bg-blue-200 px-2 py-0.5 rounded transition-colors font-medium"
+                                                className="text-[10px] bg-blue-100 text-[#3367d6] hover:bg-blue-200 px-2 py-0.5 rounded transition-colors font-medium"
                                             >
                                                 + ADD
                                             </button>

@@ -12,9 +12,6 @@ const SUPERADMIN_TABS = [
 ];
 
 /* 
-========================================================================
-OLD IMPLEMENTATION PRESERVED (COMMENTED OUT)
-========================================================================
 
 export default function SuperAdminSidebar({
     admin,
@@ -148,9 +145,6 @@ export function SuperAdminContextHeader({ isDesktopCollapsed, setIsDesktopCollap
 }
 */
 
-// ========================================================================
-// NEW PREMIUM IMPLEMENTATION
-// ========================================================================
 
 export default function SuperAdminSidebar({
     admin,

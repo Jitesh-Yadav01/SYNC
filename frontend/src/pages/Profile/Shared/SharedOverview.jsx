@@ -193,7 +193,7 @@ export default function SharedOverview() {
                         }}
                     >
                         {activeClub?.name || 'Your Club'}<br />
-                        <span style={{ color: 'var(--gdg-blue)' }}>Control Center.</span>
+                        <span style={{ color: '#1d4ed8' }}>Dashboard.</span>
                     </h1>
 
                     <p
@@ -320,7 +320,7 @@ export default function SharedOverview() {
                     gap: '0',
                 }}
             >
-                {stats.map(({ icon: Icon, label, value, isBudget }, i) => (
+                {stats.map(({ icon: Icon, label, value, isBudget, color }, i) => (
                     <div
                         key={i}
                         style={{
@@ -384,7 +384,7 @@ export default function SharedOverview() {
                                     setEditMissionValue(mission);
                                     setIsEditingVisionMission(true);
                                 }}
-                                className="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-gdg-blue hover:text-gdg-blue bg-gdg-blue/10 hover:bg-blue-100 rounded-lg transition-colors font-sans"
+                                className="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-gdg-blue hover:text-[#3367d6] bg-gdg-blue/10 hover:bg-blue-100 rounded-lg transition-colors font-sans"
                             >
                                 <Edit2 className="w-4 h-4" /> Edit
                             </button>
