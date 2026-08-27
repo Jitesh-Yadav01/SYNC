@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { publicRoutes } from "./Routes/PublicRoutes.jsx";
 import { protectedRoutes } from "./Routes/ProtectedRoutes.jsx";
 import SideBar from "./components/Navbar/SideBar";
+import PwaInstallPrompt from "./components/PwaInstallPrompt";
 
 function AppContent({ isSidebarOpen, setIsSidebarOpen }) {
   const routing = useRoutes([...publicRoutes, ...protectedRoutes]);
@@ -61,6 +62,7 @@ export default function App() {
       )}
       <div className={`app ${isSidebarOpen ? 'overflow-hidden' : ''}`}>
         <AppContent isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
+        <PwaInstallPrompt />
       </div>
     </ClickSpark>
   );
