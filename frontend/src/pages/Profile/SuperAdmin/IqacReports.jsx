@@ -124,7 +124,7 @@ export default function IqacReports() {
     const years = Array.from({ length: 11 }, (_, i) => now.getFullYear() - 5 + i);
 
     return (
-        <div className="max-w-5xl mx-auto" style={{ fontFamily: "'JetBrains Mono', 'Fira Code', 'Courier New', monospace" }}>
+        <div className="max-w-5xl mx-auto" style={{ fontFamily: "inherit" }}>
             <div className="flex items-center gap-3 mb-8">
                 <div className="h-11 w-11 rounded-xl bg-gray-900 flex items-center justify-center shadow-sm">
                     <FileBarChart className="h-5 w-5 text-white" />

@@ -299,13 +299,12 @@ export default function ClubDetailPage() {
 
     return (
         <div
-            className="flex min-h-screen bg-gray-50 text-gray-900 font-mono selection:bg-blue-500/30"
+            className="flex min-h-screen bg-gray-50 text-gray-900 font-sans selection:bg-blue-500/30"
             style={{
-                backgroundImage: "url('/back.svg')",
+                backgroundImage: "url('/background.svg')",
                 backgroundSize: 'cover',
                 backgroundAttachment: 'fixed',
                 backgroundPosition: 'center',
-                fontFamily: "'JetBrains Mono', 'Fira Code', 'Courier New', monospace",
             }}
         >
             <SuperAdminSidebar

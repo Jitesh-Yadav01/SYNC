@@ -64,7 +64,7 @@ export default function SuperOverview({ admin, onNavigate }) {
     ];
 
     return (
-        <div className="max-w-5xl mx-auto" style={{ fontFamily: "inherit" }}>
+        <div className="max-w-5xl mx-auto">
             <div className="flex flex-col lg:flex-row items-start lg:items-center gap-10 lg:gap-20 py-12">
                 <div className="flex-1 min-w-0">
                     <div

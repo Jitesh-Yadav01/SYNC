@@ -83,7 +83,7 @@ export default function ManageClubs({ admin }) {
 
     if (loading) {
         return (
-            <div className="flex flex-col items-center justify-center min-h-[400px] text-gray-400" style={{ fontFamily: "'JetBrains Mono', 'Fira Code', 'Courier New', monospace" }}>
+            <div className="flex flex-col items-center justify-center min-h-[400px] text-gray-400" style={{ fontFamily: "inherit" }}>
                 <Loader2 className="h-8 w-8 animate-spin mb-3" />
                 <p className="text-sm">Loading clubs...</p>
             </div>
@@ -92,14 +92,14 @@ export default function ManageClubs({ admin }) {
 
     if (error) {
         return (
-            <div className="rounded-2xl border border-red-200 bg-red-50 px-5 py-4 text-sm text-red-700" style={{ fontFamily: "'JetBrains Mono', 'Fira Code', 'Courier New', monospace" }}>
+            <div className="rounded-2xl border border-red-200 bg-red-50 px-5 py-4 text-sm text-red-700" style={{ fontFamily: "inherit" }}>
                 {error}
             </div>
         );
     }
 
     return (
-        <div className="w-full" style={{ fontFamily: "'JetBrains Mono', 'Fira Code', 'Courier New', monospace" }}>
+        <div className="w-full" style={{ fontFamily: "inherit" }}>
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
                 <h2 className="text-lg font-bold text-gray-900">Manage Clubs</h2>
                 <div className="flex items-center gap-3">

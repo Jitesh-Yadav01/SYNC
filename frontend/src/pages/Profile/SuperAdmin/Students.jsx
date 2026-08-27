@@ -93,7 +93,7 @@ export default function Students() {
 
     if (loading) {
         return (
-            <div className="flex flex-col items-center justify-center min-h-[400px] text-gray-400" style={{ fontFamily: "'JetBrains Mono', 'Fira Code', 'Courier New', monospace" }}>
+            <div className="flex flex-col items-center justify-center min-h-[400px] text-gray-400" style={{ fontFamily: "inherit" }}>
                 <Loader2 className="h-8 w-8 animate-spin mb-3" />
                 <p className="text-sm">Loading students data...</p>
             </div>
@@ -102,7 +102,7 @@ export default function Students() {
 
     if (error) {
         return (
-            <div className="rounded-2xl border border-red-200 bg-red-50 px-5 py-4 text-sm text-red-700" style={{ fontFamily: "'JetBrains Mono', 'Fira Code', 'Courier New', monospace" }}>
+            <div className="rounded-2xl border border-red-200 bg-red-50 px-5 py-4 text-sm text-red-700" style={{ fontFamily: "inherit" }}>
                 {error}
             </div>
         );
@@ -111,7 +111,7 @@ export default function Students() {
     const { totalStudents = 0, unassignedStudents = 0, studentsInOneClub = 0, studentsInTwoClubs = 0, studentsInThreeOrMoreClubs = 0 } = data.summary;
 
     return (
-        <div className="w-full" style={{ fontFamily: "'JetBrains Mono', 'Fira Code', 'Courier New', monospace" }}>
+        <div className="w-full" style={{ fontFamily: "inherit" }}>
             
             {/* Summary Cards */}
             <div className="grid grid-cols-2 sm:grid-cols-5 gap-4 mb-8">

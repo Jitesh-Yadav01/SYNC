@@ -58,7 +58,7 @@ export default function UserSearchBar() {
     const hiddenCount = results.length - visibleResults.length;
 
     return (
-        <div className="relative mt-8" style={{ fontFamily: "'JetBrains Mono', 'Fira Code', 'Courier New', monospace" }}>
+        <div className="relative mt-8" style={{ fontFamily: "inherit" }}>
             <div className="relative">
                 <Search className="h-5 w-5 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2" />
                 <input
