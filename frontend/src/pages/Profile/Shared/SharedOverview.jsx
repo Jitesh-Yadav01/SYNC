@@ -104,10 +104,10 @@ export default function SharedOverview() {
     }, [currentClubName, role]);
 
     const stats = [
-        { icon: Users, label: 'Active Members', value: activeMembers },
-        { icon: Trophy, label: 'Notifications', value: unreadCount },
-        { icon: ClipboardList, label: 'Total Responses', value: loadingResponses ? '...' : totalResponses },
-        ...(role === 'Admin' ? [{ icon: IndianRupee, label: 'Club Budget', value: `₹${budget}`, isBudget: true }] : []),
+        { icon: Users, label: 'Active Members', value: activeMembers, color: 'var(--gdg-green)' },
+        { icon: Trophy, label: 'Notifications', value: unreadCount, color: 'var(--gdg-yellow)' },
+        { icon: ClipboardList, label: 'Total Responses', value: loadingResponses ? '...' : totalResponses, color: 'var(--gdg-blue)' },
+        ...(role === 'Admin' ? [{ icon: IndianRupee, label: 'Club Budget', value: `₹${budget}`, isBudget: true, color: 'var(--gdg-green)' }] : []),
     ];
 
     const handleUpdateBudget = async () => {
@@ -193,7 +193,7 @@ export default function SharedOverview() {
                         }}
                     >
                         {activeClub?.name || 'Your Club'}<br />
-                        <span style={{ color: '#1d4ed8' }}>Dashboard.</span>
+                        <span style={{ color: 'var(--gdg-blue)' }}>Control Center.</span>
                     </h1>
 
                     <p
@@ -259,11 +259,12 @@ export default function SharedOverview() {
                             position: 'absolute',
                             inset: 0,
                             borderRadius: '24px',
-                            background: 'linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%)',
+                            background: 'linear-gradient(135deg, var(--gdg-blue) 0%, #1e3a8a 100%)',
                             transform: 'rotate(4deg)',
                             zIndex: 0,
                         }}
                     />
+                    <div className="absolute top-2 left-2 right-2 h-1 z-10 flex rounded-full overflow-hidden opacity-90"><div className="flex-1 bg-gdg-red"></div><div className="flex-1 bg-gdg-yellow"></div><div className="flex-1 bg-gdg-green"></div><div className="flex-1 bg-gdg-blue"></div></div>
                     <div
                         style={{
                             position: 'relative',
@@ -301,7 +302,7 @@ export default function SharedOverview() {
                                 ...pos,
                             }}
                         >
-                            <Icon style={{ width: '18px', height: '18px', color: '#1d4ed8' }} />
+                            <Icon style={{ width: '18px', height: '18px', color: 'var(--gdg-blue)' }} />
                         </div>
                     ))}
                 </div>
@@ -332,7 +333,7 @@ export default function SharedOverview() {
                         }}
                     >
                         <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                            <Icon style={{ width: '18px', height: '18px', color: '#111827' }} />
+                            <Icon style={{ width: '18px', height: '18px', color: color || '#111827' }} />
                         </div>
                         <div>
                             {isBudget && isEditingBudget ? (
@@ -342,7 +343,7 @@ export default function SharedOverview() {
                                         type="number" 
                                         value={editBudgetValue}
                                         onChange={(e) => setEditBudgetValue(e.target.value)}
-                                        className="w-20 px-1 py-0.5 text-sm font-bold border border-gray-300 rounded focus:ring-1 focus:ring-blue-500 font-mono text-gray-900"
+                                        className="w-20 px-1 py-0.5 text-sm font-bold border border-gray-300 rounded focus:ring-1 focus:ring-gdg-blue font-mono text-gray-900"
                                         autoFocus
                                     />
                                     <button onClick={handleUpdateBudget} className="p-1.5 text-white bg-green-600 hover:bg-green-700 rounded-md shadow-sm transition-colors flex items-center justify-center">
@@ -358,7 +359,7 @@ export default function SharedOverview() {
                                     {isBudget && role === 'Admin' && (
                                         <button 
                                             onClick={() => { setEditBudgetValue(budget.toString()); setIsEditingBudget(true); }}
-                                            className="text-gray-400 hover:text-blue-600 transition-colors"
+                                            className="text-gray-400 hover:text-gdg-blue transition-colors"
                                         >
                                             <Edit2 className="w-4 h-4" />
                                         </button>
@@ -383,7 +384,7 @@ export default function SharedOverview() {
                                     setEditMissionValue(mission);
                                     setIsEditingVisionMission(true);
                                 }}
-                                className="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-blue-600 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors font-sans"
+                                className="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-gdg-blue hover:text-gdg-blue bg-gdg-blue/10 hover:bg-blue-100 rounded-lg transition-colors font-sans"
                             >
                                 <Edit2 className="w-4 h-4" /> Edit
                             </button>
@@ -397,7 +398,7 @@ export default function SharedOverview() {
                                 </button>
                                 <button
                                     onClick={handleUpdateVisionMission}
-                                    className="px-3 py-1.5 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors font-sans"
+                                    className="px-3 py-1.5 text-sm font-medium text-white bg-gdg-blue hover:bg-[#3367d6] rounded-lg transition-colors font-sans"
                                 >
                                     Save
                                 </button>
@@ -412,7 +413,7 @@ export default function SharedOverview() {
                                 <textarea
                                     value={editVisionValue}
                                     onChange={(e) => setEditVisionValue(e.target.value)}
-                                    className="w-full p-3 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 font-sans resize-y"
+                                    className="w-full p-3 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-gdg-blue font-sans resize-y"
                                     rows={4}
                                     placeholder="Enter club vision..."
                                 />
@@ -428,7 +429,7 @@ export default function SharedOverview() {
                                 <textarea
                                     value={editMissionValue}
                                     onChange={(e) => setEditMissionValue(e.target.value)}
-                                    className="w-full p-3 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 font-sans resize-y"
+                                    className="w-full p-3 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-gdg-blue font-sans resize-y"
                                     rows={4}
                                     placeholder="Enter club mission..."
                                 />

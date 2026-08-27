@@ -70,14 +70,14 @@ export default function SharedTasks() {
                     <h3 className="font-semibold text-lg text-gray-900">{isEditing ? 'Edit Task' : 'Create Task'}</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <input
-                            className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-gdg-blue"
                             placeholder="Task Title"
                             value={newTask.title}
                             onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
                             required
                         />
                         <select
-                            className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-gdg-blue"
                             value={newTask.assignedTo}
                             onChange={(e) => setNewTask({ ...newTask, assignedTo: e.target.value })}
                             required
@@ -89,13 +89,13 @@ export default function SharedTasks() {
                         </select>
                         <input
                             type="date"
-                            className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-gdg-blue"
                             value={newTask.deadline}
                             onChange={(e) => setNewTask({ ...newTask, deadline: e.target.value })}
                             required
                         />
                         <select
-                            className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-gdg-blue"
                             value={newTask.priority}
                             onChange={(e) => setNewTask({ ...newTask, priority: e.target.value })}
                         >
@@ -104,7 +104,7 @@ export default function SharedTasks() {
                             <option value="High">High Priority</option>
                         </select>
                         <textarea
-                            className="col-span-2 flex w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[80px]"
+                            className="col-span-2 flex w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-gdg-blue min-h-[80px]"
                             placeholder="Description (Optional)"
                             value={newTask.description}
                             onChange={(e) => setNewTask({ ...newTask, description: e.target.value })}
@@ -122,7 +122,7 @@ export default function SharedTasks() {
                         >
                             Cancel
                         </button>
-                        <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">
+                        <button type="submit" className="bg-gdg-blue text-white px-4 py-2 rounded-md hover:bg-[#3367d6] transition-colors">
                             {isEditing ? 'Update Task' : 'Create Task'}
                         </button>
                     </div>
@@ -154,7 +154,7 @@ export default function SharedTasks() {
                                         <div className="flex gap-1">
                                             {role !== 'Applicant' && (
                                                 <>
-                                                    <button onClick={() => openEditModal(task)} className="text-gray-400 hover:text-blue-500 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                    <button onClick={() => openEditModal(task)} className="text-gray-400 hover:text-gdg-blue opacity-0 group-hover:opacity-100 transition-opacity">
                                                         <Pencil className="h-3.5 w-3.5" />
                                                     </button>
                                                     <button onClick={() => deleteTask(task.id)} className="text-gray-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -170,7 +170,7 @@ export default function SharedTasks() {
                                     <div className="flex items-center gap-2 mb-3">
                                         <span className={`text-[10px] px-1.5 py-0.5 rounded border ${task.priority === 'High' ? 'bg-red-50 text-red-600 border-red-200' :
                                                 task.priority === 'Medium' ? 'bg-amber-50 text-amber-600 border-amber-200' :
-                                                    'bg-blue-50 text-blue-600 border-blue-200'
+                                                    'bg-gdg-blue/10 text-gdg-blue border-blue-200'
                                             }`}>
                                             {task.priority}
                                         </span>
@@ -188,7 +188,7 @@ export default function SharedTasks() {
                                                 <input 
                                                     type="url" 
                                                     placeholder="Submission Link" 
-                                                    className="flex-1 min-w-0 text-xs px-2 py-1 rounded border border-gray-200 outline-none focus:border-blue-500"
+                                                    className="flex-1 min-w-0 text-xs px-2 py-1 rounded border border-gray-200 outline-none focus:border-gdg-blue"
                                                     value={submissionLink[task.id] || ''}
                                                     onChange={(e) => setSubmissionLink(prev => ({...prev, [task.id]: e.target.value}))}
                                                 />

@@ -11,6 +11,12 @@ module.exports = {
       fontFamily: {
         'jersey-20': ['"Jersey 20"', 'sans-serif'],
       },
+      colors: {
+        'gdg-blue': 'var(--gdg-blue)',
+        'gdg-red': 'var(--gdg-red)',
+        'gdg-yellow': 'var(--gdg-yellow)',
+        'gdg-green': 'var(--gdg-green)',
+      },
     },
   },
   plugins: [],

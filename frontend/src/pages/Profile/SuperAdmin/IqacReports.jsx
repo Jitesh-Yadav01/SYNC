@@ -141,7 +141,7 @@ export default function IqacReports() {
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">Club</label>
-                        <select value={clubId} onChange={(e) => setClubId(e.target.value)} className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm bg-white outline-none focus:ring-2 focus:ring-blue-500">
+                        <select value={clubId} onChange={(e) => setClubId(e.target.value)} className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm bg-white outline-none focus:ring-2 focus:ring-gdg-blue">
                             {clubs.length === 0 && <option value="">No clubs</option>}
                             {clubs.map((c) => (
                                 <option key={c._id} value={c._id}>{c.name}</option>
@@ -150,7 +150,7 @@ export default function IqacReports() {
                     </div>
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">Month</label>
-                        <select value={month} onChange={(e) => setMonth(Number(e.target.value))} className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm bg-white outline-none focus:ring-2 focus:ring-blue-500">
+                        <select value={month} onChange={(e) => setMonth(Number(e.target.value))} className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm bg-white outline-none focus:ring-2 focus:ring-gdg-blue">
                             {MONTHS.map((m, i) => (
                                 <option key={m} value={i + 1}>{m}</option>
                             ))}
@@ -158,7 +158,7 @@ export default function IqacReports() {
                     </div>
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">Year</label>
-                        <select value={year} onChange={(e) => setYear(Number(e.target.value))} className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm bg-white outline-none focus:ring-2 focus:ring-blue-500">
+                        <select value={year} onChange={(e) => setYear(Number(e.target.value))} className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm bg-white outline-none focus:ring-2 focus:ring-gdg-blue">
                             {years.map((y) => (
                                 <option key={y} value={y}>{y}</option>
                             ))}
@@ -166,7 +166,7 @@ export default function IqacReports() {
                     </div>
                 </div>
                 <div className="mt-4">
-                    <button type="submit" disabled={loading || !clubId} className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-bold text-white hover:bg-blue-700 disabled:opacity-50">
+                    <button type="submit" disabled={loading || !clubId} className="inline-flex items-center gap-2 rounded-lg bg-gdg-blue px-5 py-2.5 text-sm font-bold text-white hover:bg-[#3367d6] disabled:opacity-50">
                         {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Search className="h-4 w-4" />}
                         Generate Report
                     </button>
@@ -181,7 +181,7 @@ export default function IqacReports() {
                             <p className="text-sm text-gray-500 mt-1">Activity Report — {MONTHS[Number(report.month) - 1]} {report.year}</p>
                         </div>
                         <div className="text-right">
-                            <div className="text-3xl font-black text-blue-600">{report.totalEvents}</div>
+                            <div className="text-3xl font-black text-gdg-blue">{report.totalEvents}</div>
                             <div className="text-[11px] uppercase tracking-wider text-gray-400">Total Events</div>
                         </div>
                     </div>
@@ -190,8 +190,8 @@ export default function IqacReports() {
                         <div className="space-y-3">
                             {report.events.map((ev) => (
                                 <div key={ev._id} className="flex items-center gap-4 rounded-xl border border-gray-100 bg-gray-50 px-4 py-3">
-                                    <div className="h-10 w-10 rounded-lg bg-blue-600/10 flex items-center justify-center shrink-0">
-                                        <CalendarDays className="h-5 w-5 text-blue-600" />
+                                    <div className="h-10 w-10 rounded-lg bg-gdg-blue/10 flex items-center justify-center shrink-0">
+                                        <CalendarDays className="h-5 w-5 text-gdg-blue" />
                                     </div>
                                     <div className="flex-1 min-w-0">
                                         <p className="text-sm font-semibold text-gray-900 truncate">{ev.eventName || ev.name || ev.title || 'Untitled Event'}</p>
@@ -219,7 +219,7 @@ export default function IqacReports() {
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">Duration (months)</label>
-                        <select value={qMonths} onChange={(e) => setQMonths(Number(e.target.value))} className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm bg-white outline-none focus:ring-2 focus:ring-blue-500">
+                        <select value={qMonths} onChange={(e) => setQMonths(Number(e.target.value))} className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm bg-white outline-none focus:ring-2 focus:ring-gdg-blue">
                             {DURATION_OPTIONS.map((m) => (
                                 <option key={m} value={m}>Last {m} month{m > 1 ? 's' : ''}</option>
                             ))}
@@ -245,7 +245,7 @@ export default function IqacReports() {
                         </div>
                         <div className="flex gap-6 text-right">
                             <div>
-                                <div className="text-3xl font-black text-blue-600">{qReport.totalEvents}</div>
+                                <div className="text-3xl font-black text-gdg-blue">{qReport.totalEvents}</div>
                                 <div className="text-[11px] uppercase tracking-wider text-gray-400">Events</div>
                             </div>
                             <div>
@@ -266,7 +266,7 @@ export default function IqacReports() {
                                     <div className="space-y-2">
                                         {c.events.map((ev) => (
                                             <div key={ev._id} className="flex items-center gap-3 rounded-lg border border-gray-100 bg-gray-50 px-3 py-2">
-                                                <CalendarDays className="h-4 w-4 text-blue-600 shrink-0" />
+                                                <CalendarDays className="h-4 w-4 text-gdg-blue shrink-0" />
                                                 <span className="flex-1 min-w-0 text-sm text-gray-800 truncate">{ev.eventName || ev.name || ev.title || 'Untitled Event'}</span>
                                                 <span className="text-xs text-gray-500 shrink-0">{formatDate(ev.date)}</span>
                                             </div>

@@ -110,13 +110,13 @@ export default function ManageClubs({ admin }) {
                             onChange={(e) => setSearch(e.target.value)}
                             placeholder="Search clubs by name"
                             style={{ colorScheme: "light" }}
-                            className="pl-9 pr-3 py-2 rounded-lg border border-gray-300 text-sm text-gray-900 caret-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-64"
+                            className="pl-9 pr-3 py-2 rounded-lg border border-gray-300 text-sm text-gray-900 caret-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-gdg-blue focus:border-gdg-blue w-64"
                         />
                     </div>
                     {admin?.role === 'maintainer' && (
                         <button
                             onClick={() => setIsCreateModalOpen(true)}
-                            className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors"
+                            className="px-4 py-2 bg-gdg-blue text-white rounded-lg text-sm font-medium hover:bg-[#3367d6] transition-colors"
                         >
                             + Create Club
                         </button>
@@ -152,17 +152,17 @@ export default function ManageClubs({ admin }) {
 
                             <div className="grid grid-cols-3 sm:grid-cols-3 gap-3 mb-5 sm:max-w-md">
                                 <div className="rounded-xl bg-gray-50 border border-gray-100 px-3 py-3 text-center">
-                                    <Users className="h-4 w-4 text-blue-600 mx-auto mb-1" />
+                                    <Users className="h-4 w-4 text-gdg-blue mx-auto mb-1" />
                                     <div className="text-lg font-extrabold text-gray-900">{club.strength}</div>
                                     <div className="text-[10px] text-gray-500 uppercase tracking-wider">Strength</div>
                                 </div>
                                 <div className="rounded-xl bg-gray-50 border border-gray-100 px-3 py-3 text-center">
-                                    <GraduationCap className="h-4 w-4 text-blue-600 mx-auto mb-1" />
+                                    <GraduationCap className="h-4 w-4 text-gdg-blue mx-auto mb-1" />
                                     <div className="text-lg font-extrabold text-gray-900">{club.faculty?.length || 0}</div>
                                     <div className="text-[10px] text-gray-500 uppercase tracking-wider">Faculty</div>
                                 </div>
                                 <div className="rounded-xl bg-gray-50 border border-gray-100 px-3 py-3 text-center">
-                                    <UserCog className="h-4 w-4 text-blue-600 mx-auto mb-1" />
+                                    <UserCog className="h-4 w-4 text-gdg-blue mx-auto mb-1" />
                                     <div className="text-lg font-extrabold text-gray-900">{club.secretaries?.length || 0}</div>
                                     <div className="text-[10px] text-gray-500 uppercase tracking-wider">Secretaries</div>
                                 </div>
@@ -229,7 +229,7 @@ export default function ManageClubs({ admin }) {
                                     value={newClubName}
                                     onChange={(e) => setNewClubName(e.target.value)}
                                     placeholder="e.g. GDG, Turing Club"
-                                    className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 text-sm"
+                                    className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-gdg-blue text-sm"
                                 />
                             </div>
                             <div>
@@ -239,7 +239,7 @@ export default function ManageClubs({ admin }) {
                                     value={newClubLogo}
                                     onChange={(e) => setNewClubLogo(e.target.value)}
                                     placeholder="https://example.com/logo.png"
-                                    className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 text-sm"
+                                    className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-gdg-blue text-sm"
                                 />
                             </div>
                             <div className="flex justify-end gap-3 mt-6">
@@ -253,7 +253,7 @@ export default function ManageClubs({ admin }) {
                                 <button
                                     type="submit"
                                     disabled={isCreating}
-                                    className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 disabled:opacity-50 transition-colors"
+                                    className="px-4 py-2 bg-gdg-blue text-white rounded-lg text-sm font-medium hover:bg-[#3367d6] disabled:opacity-50 transition-colors"
                                 >
                                     {isCreating ? 'Creating...' : 'Create Club'}
                                 </button>

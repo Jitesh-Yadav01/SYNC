@@ -74,6 +74,10 @@ svg {
   --title-h2: #3b82f6;
   --title-h3: #1e3a8a;
   --title-h4: #00c29a;
+  --gdg-blue: #4285F4;
+  --gdg-red: #EA4335;
+  --gdg-yellow: #FBBC04;
+  --gdg-green: #34A853;
 }
 
 .dark {
@@ -90,8 +94,35 @@ svg {
   --title-h2: #60a5fa;
   --title-h3: #93c5fd;
   --title-h4: #34d399;
+  --gdg-blue: #4285F4;
+  --gdg-red: #EA4335;
+  --gdg-yellow: #FBBC04;
+  --gdg-green: #34A853;
   color-scheme: dark;
 }
+
+/* GDG Premium Four-Colour Scrollbar */
+@media (pointer: fine) {
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: #cbd5e1; /* neutral base */
+    border-radius: 6px;
+    background-image: linear-gradient(
+      to bottom,
+      var(--gdg-red) 0%, var(--gdg-red) 25%,
+      var(--gdg-yellow) 25%, var(--gdg-yellow) 50%,
+      var(--gdg-green) 50%, var(--gdg-green) 75%,
+      var(--gdg-blue) 75%, var(--gdg-blue) 100%
+    );
+  }
+}
+
 
 body {
   background: #000000;

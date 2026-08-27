@@ -104,7 +104,7 @@ const SharedProfile = () => {
                         <button
                             onClick={handleSave}
                             disabled={saveStatus === 'saving'}
-                            className="flex items-center gap-2 px-6 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 disabled:opacity-60 disabled:cursor-not-allowed transition-colors shadow-sm"
+                            className="flex items-center gap-2 px-6 py-2 bg-gdg-blue text-white text-sm font-medium rounded-lg hover:bg-[#3367d6] disabled:opacity-60 disabled:cursor-not-allowed transition-colors shadow-sm"
                         >
                             <Save className="h-4 w-4" />
                             {saveStatus === 'saving' ? 'Saving...' : saveStatus === 'success' ? 'Saved!' : 'Save'}
@@ -125,7 +125,7 @@ const SharedProfile = () => {
                                 <div className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
                                     <Camera className="h-8 w-8 text-white" />
                                 </div>
-                                <div className="absolute bottom-0 right-0 bg-blue-600 p-2 rounded-full text-white shadow-lg shadow-blue-600/20 border-2 border-white">
+                                <div className="absolute bottom-0 right-0 bg-gdg-blue p-2 rounded-full text-white shadow-lg shadow-blue-600/20 border-2 border-white">
                                     <Camera className="h-4 w-4" />
                                 </div>
                                 <input 
@@ -152,7 +152,7 @@ const SharedProfile = () => {
                                     <label className="text-sm font-medium text-gray-700">Full Name</label>
                                     <input 
                                         type="text" 
-                                        className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-colors"
+                                        className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gdg-blue focus:bg-white transition-colors"
                                         value={editForm.name}
                                         onChange={e => setEditForm({...editForm, name: e.target.value})}
                                         placeholder="e.g. John Doe"
@@ -161,7 +161,7 @@ const SharedProfile = () => {
                                 <div className="space-y-2">
                                     <label className="text-sm font-medium text-gray-700">Year {user.year && <span className="text-xs text-gray-400 font-normal">(Cannot be changed)</span>}</label>
                                     <select
-                                        className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
+                                        className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gdg-blue focus:bg-white transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
                                         value={editForm.year}
                                         onChange={e => setEditForm({...editForm, year: e.target.value})}
                                         disabled={Boolean(user.year)}
@@ -182,7 +182,7 @@ const SharedProfile = () => {
                                     <label className="text-sm font-medium text-gray-700">Registration Number</label>
                                     <input 
                                         type="number" 
-                                        className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-colors [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                                        className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gdg-blue focus:bg-white transition-colors [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                                         value={editForm.regnNo}
                                         onChange={e => setEditForm({...editForm, regnNo: e.target.value})}
                                         placeholder="e.g. 123456"
@@ -191,7 +191,7 @@ const SharedProfile = () => {
                                 <div className="space-y-2">
                                     <label className="text-sm font-medium text-gray-700">Branch</label>
                                     <select
-                                        className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-colors"
+                                        className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gdg-blue focus:bg-white transition-colors"
                                         value={editForm.branch}
                                         onChange={e => setEditForm({...editForm, branch: e.target.value})}
                                     >
@@ -209,7 +209,7 @@ const SharedProfile = () => {
                                 <label className="text-sm font-medium text-gray-700">Hobbies</label>
                                 <input 
                                     type="text" 
-                                    className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-colors"
+                                    className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gdg-blue focus:bg-white transition-colors"
                                     value={editForm.hobbies}
                                     onChange={e => setEditForm({...editForm, hobbies: e.target.value})}
                                     placeholder="e.g. Reading, Gaming, Coding"
@@ -220,7 +220,7 @@ const SharedProfile = () => {
                                 <label className="text-sm font-medium text-gray-700">Bio</label>
                                 <textarea 
                                     rows="4"
-                                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-colors resize-y"
+                                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gdg-blue focus:bg-white transition-colors resize-y"
                                     value={editForm.bio}
                                     onChange={e => setEditForm({...editForm, bio: e.target.value})}
                                     placeholder="Tell others a bit about yourself..."
@@ -240,7 +240,7 @@ const SharedProfile = () => {
                                     <input 
                                         type="email"
                                         disabled
-                                        className="w-full px-4 py-2.5 bg-gray-100 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors text-gray-500 cursor-not-allowed"
+                                        className="w-full px-4 py-2.5 bg-gray-100 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gdg-blue transition-colors text-gray-500 cursor-not-allowed"
                                         value={user.email}
                                         placeholder="your@email.com"
                                     />
@@ -251,7 +251,7 @@ const SharedProfile = () => {
                                         <Phone className="absolute left-3.5 top-3 h-5 w-5 text-gray-400" />
                                         <input 
                                             type="number" 
-                                            className="w-full pl-11 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-colors [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                                            className="w-full pl-11 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gdg-blue focus:bg-white transition-colors [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                                             value={editForm.number}
                                             onChange={e => setEditForm({...editForm, number: e.target.value})}
                                             placeholder="9876543210"
@@ -275,7 +275,7 @@ const SharedProfile = () => {
         <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
             {/* View Mode Actions */}
             <div className="flex justify-end pr-4 pt-4">
-                <button onClick={startEditing} className="flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-600 rounded-full hover:bg-blue-100 text-sm font-semibold transition-colors">
+                <button onClick={startEditing} className="flex items-center gap-2 px-4 py-2 bg-gdg-blue/10 text-gdg-blue rounded-full hover:bg-blue-100 text-sm font-semibold transition-colors">
                     <Edit2 className="h-4 w-4" /> Edit Profile
                 </button>
             </div>
@@ -376,7 +376,7 @@ const SharedProfile = () => {
                                 <h3 className="text-lg font-bold text-gray-900 transition-colors">
                                     {club.name}
                                 </h3>
-                                <p className="text-sm font-medium text-blue-600 mt-1 mb-2">
+                                <p className="text-sm font-medium text-gdg-blue mt-1 mb-2">
                                     {club.role || user.role}
                                 </p>
                                 <p className="text-sm text-gray-500 leading-snug">

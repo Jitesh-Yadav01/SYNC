@@ -4,7 +4,7 @@ import { Loader2, AlertCircle, X, CalendarDays, Clock, MapPin, Tag } from 'lucid
 
 const API = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
 
-const colorPalette = ['bg-blue-600', 'bg-emerald-600', 'bg-amber-600', 'bg-purple-600', 'bg-rose-600'];
+const colorPalette = ['bg-gdg-blue', 'bg-emerald-600', 'bg-amber-600', 'bg-purple-600', 'bg-rose-600'];
 
 const EventModal = ({ event, onClose }) => {
     const { raw, status, color } = event;
@@ -255,7 +255,7 @@ export default function AdminCalendar() {
                                         <>
                                             <div className="text-sm sm:text-base font-bold mb-1">
                                                 {todayCell ? (
-                                                    <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-blue-600 text-white text-xs">
+                                                    <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-gdg-blue text-white text-xs">
                                                         {day}
                                                     </span>
                                                 ) : (

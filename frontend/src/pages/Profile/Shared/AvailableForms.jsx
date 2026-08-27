@@ -53,8 +53,8 @@ export default function AvailableForms() {
               <div className="flex items-start justify-between gap-3">
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
-                    <FileText className="h-4 w-4 text-blue-500" />
-                    <h3 className="text-base font-semibold text-gray-900 group-hover:text-blue-700 transition-colors">
+                    <FileText className="h-4 w-4 text-gdg-blue" />
+                    <h3 className="text-base font-semibold text-gray-900 group-hover:text-[#3367d6] transition-colors">
                       {form.title}
                     </h3>
                   </div>
@@ -63,7 +63,7 @@ export default function AvailableForms() {
                     {form.fields?.length || 0} question{form.fields?.length !== 1 ? 's' : ''}
                   </p>
                 </div>
-                <ChevronRight className="h-5 w-5 text-gray-300 group-hover:text-blue-500 shrink-0 transition-colors mt-0.5" />
+                <ChevronRight className="h-5 w-5 text-gray-300 group-hover:text-gdg-blue shrink-0 transition-colors mt-0.5" />
               </div>
             </div>
           ))}

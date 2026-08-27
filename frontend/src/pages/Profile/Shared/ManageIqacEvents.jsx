@@ -182,14 +182,14 @@ export default function ManageIqacEvents() {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
                 <div>
                     <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
-                        <FileBarChart className="h-6 w-6 text-blue-600" />
+                        <FileBarChart className="h-6 w-6 text-gdg-blue" />
                         IQAC Reports & Events
                     </h2>
                     <p className="text-sm text-gray-500 mt-1">Manage events for IQAC reporting</p>
                 </div>
                 <button
                     onClick={() => openModal()}
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors"
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-gdg-blue text-white text-sm font-medium rounded-lg hover:bg-[#3367d6] transition-colors"
                 >
                     <Plus className="h-4 w-4" /> Create Event
                 </button>
@@ -204,7 +204,7 @@ export default function ManageIqacEvents() {
                             placeholder="Search by title or academic year..."
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
-                            className="w-full pl-9 pr-4 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50"
+                            className="w-full pl-9 pr-4 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gdg-blue bg-gray-50"
                         />
                     </div>
                 </div>
@@ -244,7 +244,7 @@ export default function ManageIqacEvents() {
                                             <div className="flex items-center justify-end gap-2">
                                                 <button
                                                     onClick={() => openModal(event)}
-                                                    className="p-1.5 text-blue-600 hover:bg-blue-50 rounded transition-colors"
+                                                    className="p-1.5 text-gdg-blue hover:bg-gdg-blue/10 rounded transition-colors"
                                                     title="Edit Event"
                                                 >
                                                     <Edit2 className="h-4 w-4" />
@@ -283,43 +283,43 @@ export default function ManageIqacEvents() {
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                                     <div>
                                         <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1.5">Event Title <span className="text-red-500">*</span></label>
-                                        <input required name="title" value={formData.title} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
+                                        <input required name="title" value={formData.title} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-gdg-blue" />
                                     </div>
                                     <div>
                                         <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1.5">Academic Year <span className="text-red-500">*</span></label>
-                                        <input required name="academicYear" placeholder="e.g. 2023-2024" value={formData.academicYear} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
+                                        <input required name="academicYear" placeholder="e.g. 2023-2024" value={formData.academicYear} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-gdg-blue" />
                                     </div>
                                     <div>
                                         <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1.5">Event Type</label>
-                                        <input name="eventType" value={formData.eventType} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
+                                        <input name="eventType" value={formData.eventType} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-gdg-blue" />
                                     </div>
                                     <div>
                                         <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1.5">Theme</label>
-                                        <input name="theme" value={formData.theme} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
+                                        <input name="theme" value={formData.theme} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-gdg-blue" />
                                     </div>
                                     <div>
                                         <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1.5">Start Date</label>
-                                        <input type="date" name="startDate" value={formData.startDate !== 'Nil' ? formData.startDate : ''} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
+                                        <input type="date" name="startDate" value={formData.startDate !== 'Nil' ? formData.startDate : ''} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-gdg-blue" />
                                     </div>
                                     <div>
                                         <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1.5">End Date</label>
-                                        <input type="date" name="endDate" value={formData.endDate !== 'Nil' ? formData.endDate : ''} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
+                                        <input type="date" name="endDate" value={formData.endDate !== 'Nil' ? formData.endDate : ''} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-gdg-blue" />
                                     </div>
                                     <div>
                                         <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1.5">Budget (₹)</label>
-                                        <input type="number" name="budget" value={formData.budget} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
+                                        <input type="number" name="budget" value={formData.budget} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-gdg-blue" />
                                     </div>
                                     <div>
                                         <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1.5">Collaborators (Comma-separated)</label>
-                                        <input name="collaborators" value={formData.collaborators} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
+                                        <input name="collaborators" value={formData.collaborators} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-gdg-blue" />
                                     </div>
                                     <div>
                                         <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1.5">Student Participation</label>
-                                        <input type="number" name="studentParticipation" value={formData.studentParticipation} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
+                                        <input type="number" name="studentParticipation" value={formData.studentParticipation} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-gdg-blue" />
                                     </div>
                                     <div>
                                         <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1.5">Faculty Participation</label>
-                                        <input type="number" name="facultyParticipation" value={formData.facultyParticipation} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
+                                        <input type="number" name="facultyParticipation" value={formData.facultyParticipation} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-gdg-blue" />
                                     </div>
                                 </div>
 
@@ -334,7 +334,7 @@ export default function ManageIqacEvents() {
                                                     value={item}
                                                     onChange={(e) => handleArrayItemChange('description', idx, e.target.value)}
                                                     placeholder={`Paragraph ${idx + 1}`}
-                                                    className="flex-1 px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 resize-none"
+                                                    className="flex-1 px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-gdg-blue resize-none"
                                                 />
                                                 <button
                                                     type="button"
@@ -349,7 +349,7 @@ export default function ManageIqacEvents() {
                                         <button
                                             type="button"
                                             onClick={() => addArrayItem('description')}
-                                            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-blue-600 hover:text-blue-700 hover:bg-blue-50 border border-dashed border-blue-300 rounded-lg transition-colors"
+                                            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-gdg-blue hover:text-[#3367d6] hover:bg-gdg-blue/10 border border-dashed border-blue-300 rounded-lg transition-colors"
                                         >
                                             <Plus className="h-3.5 w-3.5" /> Add paragraph
                                         </button>
@@ -366,7 +366,7 @@ export default function ManageIqacEvents() {
                                                     value={item}
                                                     onChange={(e) => handleArrayItemChange('objectives', idx, e.target.value)}
                                                     placeholder={`Objective ${idx + 1}`}
-                                                    className="flex-1 px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                                                    className="flex-1 px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-gdg-blue"
                                                 />
                                                 <button
                                                     type="button"
@@ -381,7 +381,7 @@ export default function ManageIqacEvents() {
                                         <button
                                             type="button"
                                             onClick={() => addArrayItem('objectives')}
-                                            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-blue-600 hover:text-blue-700 hover:bg-blue-50 border border-dashed border-blue-300 rounded-lg transition-colors"
+                                            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-gdg-blue hover:text-[#3367d6] hover:bg-gdg-blue/10 border border-dashed border-blue-300 rounded-lg transition-colors"
                                         >
                                             <Plus className="h-3.5 w-3.5" /> Add objective
                                         </button>
@@ -398,7 +398,7 @@ export default function ManageIqacEvents() {
                                                     value={item}
                                                     onChange={(e) => handleArrayItemChange('overview', idx, e.target.value)}
                                                     placeholder={`Paragraph ${idx + 1}`}
-                                                    className="flex-1 px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 resize-none"
+                                                    className="flex-1 px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-gdg-blue resize-none"
                                                 />
                                                 <button
                                                     type="button"
@@ -413,7 +413,7 @@ export default function ManageIqacEvents() {
                                         <button
                                             type="button"
                                             onClick={() => addArrayItem('overview')}
-                                            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-blue-600 hover:text-blue-700 hover:bg-blue-50 border border-dashed border-blue-300 rounded-lg transition-colors"
+                                            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-gdg-blue hover:text-[#3367d6] hover:bg-gdg-blue/10 border border-dashed border-blue-300 rounded-lg transition-colors"
                                         >
                                             <Plus className="h-3.5 w-3.5" /> Add paragraph
                                         </button>
@@ -421,7 +421,7 @@ export default function ManageIqacEvents() {
                                 </div>
                                 <div>
                                     <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1.5">Program Outcomes (POs) (Comma-separated)</label>
-                                    <input name="pos" placeholder="e.g. PO1, PO2, PO4" value={formData.pos} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
+                                    <input name="pos" placeholder="e.g. PO1, PO2, PO4" value={formData.pos} onChange={handleInputChange} className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-gdg-blue" />
                                 </div>
                             </form>
                         </div>
@@ -430,7 +430,7 @@ export default function ManageIqacEvents() {
                             <button type="button" onClick={closeModal} className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
                                 Cancel
                             </button>
-                            <button type="submit" form="iqac-form" className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors">
+                            <button type="submit" form="iqac-form" className="px-4 py-2 text-sm font-medium text-white bg-gdg-blue rounded-lg hover:bg-[#3367d6] transition-colors">
                                 {editingEvent ? 'Update Event' : 'Create Event'}
                             </button>
                         </div>

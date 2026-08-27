@@ -50,11 +50,11 @@ export default function SuperOverview({ admin, onNavigate }) {
     const firstName = admin?.role ? admin.role.toUpperCase() : 'Admin';
 
     const stats = [
-        { icon: Building2, label: 'Total Clubs', value: data?.totalClubs ?? 0 },
-        { icon: Users, label: 'Total Members', value: data?.totalMembers ?? 0 },
-        { icon: FileText, label: 'Total Forms', value: data?.totalForms ?? 0 },
-        { icon: ClipboardList, label: 'Total Responses', value: data?.totalResponses ?? 0 },
-        { icon: CalendarDays, label: 'Total Events', value: data?.totalEvents ?? 0 },
+        { icon: Building2, label: 'Total Clubs', value: data?.totalClubs ?? 0, color: 'var(--gdg-blue)' },
+        { icon: Users, label: 'Total Members', value: data?.totalMembers ?? 0, color: 'var(--gdg-green)' },
+        { icon: FileText, label: 'Total Forms', value: data?.totalForms ?? 0, color: 'var(--gdg-yellow)' },
+        { icon: ClipboardList, label: 'Total Responses', value: data?.totalResponses ?? 0, color: 'var(--gdg-blue)' },
+        { icon: CalendarDays, label: 'Total Events', value: data?.totalEvents ?? 0, color: 'var(--gdg-yellow)' },
     ];
 
     const floatingIcons = [
@@ -88,7 +88,7 @@ export default function SuperOverview({ admin, onNavigate }) {
                         }}
                     >
                         Institute<br />
-                        <span style={{ color: '#1d4ed8' }}>Control Center.</span>
+                        <span style={{ color: 'var(--gdg-blue)' }}>Control Center.</span>
                     </h1>
 
                     <p style={{ fontSize: '1rem', color: '#374151', lineHeight: 1.7, maxWidth: '440px', marginBottom: '1.5rem' }}>
@@ -118,10 +118,11 @@ export default function SuperOverview({ admin, onNavigate }) {
                 </div>
 
                 <div className="relative shrink-0" style={{ width: '320px', height: '360px', marginTop: '20px' }}>
-                    <div style={{ position: 'absolute', inset: 0, borderRadius: '24px', background: 'linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%)', transform: 'rotate(4deg)', zIndex: 0 }} />
+                    <div style={{ position: 'absolute', inset: 0, borderRadius: '24px', background: 'linear-gradient(135deg, var(--gdg-blue) 0%, #1e3a8a 100%)', transform: 'rotate(4deg)', zIndex: 0 }} />
                     <div style={{ position: 'relative', borderRadius: '20px', overflow: 'hidden', width: '100%', height: '100%', border: '2px solid #fff', boxShadow: '0 40px 70px rgba(0,0,0,0.12)', zIndex: 1, background: '#0b1220', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <div className="text-center px-6">
-                            <div className="h-20 w-20 rounded-2xl bg-blue-600 flex items-center justify-center mx-auto mb-5 shadow-lg">
+                            <div className="h-20 w-20 rounded-2xl bg-gdg-blue flex items-center justify-center mx-auto mb-5 shadow-lg relative overflow-hidden">
+                                <div className="absolute top-0 left-0 right-0 h-1 flex"><div className="flex-1 bg-gdg-red"></div><div className="flex-1 bg-gdg-yellow"></div><div className="flex-1 bg-gdg-green"></div></div>
                                 <Building2 className="h-10 w-10 text-white" />
                             </div>
                             <div className="text-white text-2xl font-extrabold tracking-tight">{data?.totalClubs ?? 0} Clubs</div>
@@ -130,7 +131,7 @@ export default function SuperOverview({ admin, onNavigate }) {
                     </div>
                     {floatingIcons.map(({ icon: Icon, ...pos }, i) => (
                         <div key={i} style={{ position: 'absolute', zIndex: 10, width: '40px', height: '40px', borderRadius: '12px', background: '#ffffff', border: '1.5px solid #e5e7eb', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', ...pos }}>
-                            <Icon style={{ width: '18px', height: '18px', color: '#1d4ed8' }} />
+                            <Icon style={{ width: '18px', height: '18px', color: 'var(--gdg-blue)' }} />
                         </div>
                     ))}
                 </div>
@@ -146,10 +147,10 @@ export default function SuperOverview({ admin, onNavigate }) {
 
             {/* Stats bar */}
             <div style={{ marginTop: '8px', borderRadius: '16px', background: '#ffffff', border: '1px solid #e2e8f0', padding: '20px 24px', display: 'flex', flexWrap: 'wrap', gap: '0' }}>
-                {stats.map(({ icon: Icon, label, value }, i) => (
+                {stats.map(({ icon: Icon, label, value, color }, i) => (
                     <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '14px', flex: '1 1 150px', padding: '8px 20px', borderRight: i < stats.length - 1 ? '1px solid #e2e8f0' : 'none' }}>
                         <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                            <Icon style={{ width: '18px', height: '18px', color: '#111827' }} />
+                            <Icon style={{ width: '18px', height: '18px', color: color || '#111827' }} />
                         </div>
                         <div>
                             <div style={{ fontSize: '1.5rem', fontWeight: 900, color: '#111827', lineHeight: 1 }}>{loading ? '…' : value}</div>
@@ -162,8 +163,8 @@ export default function SuperOverview({ admin, onNavigate }) {
             {/* ── Club's IQAC Reports ──────────────────────────── */}
             <div className="mt-8">
                 <div className="flex items-center gap-3 mb-4">
-                    <div className="h-10 w-10 rounded-lg bg-blue-600/10 flex items-center justify-center">
-                        <FileBarChart className="h-5 w-5 text-blue-600" />
+                    <div className="h-10 w-10 rounded-lg bg-gdg-blue/10 flex items-center justify-center">
+                        <FileBarChart className="h-5 w-5 text-gdg-blue" />
                     </div>
                     <div>
                         <h2 className="text-lg font-bold text-gray-900">Club's IQAC Reports</h2>
@@ -176,7 +177,7 @@ export default function SuperOverview({ admin, onNavigate }) {
                         <select
                             value={iqacClubSlug}
                             onChange={(e) => { setIqacClubSlug(e.target.value); setIqacData(null); }}
-                            className="flex-1 rounded-lg border border-gray-300 px-3 py-2.5 text-sm bg-white outline-none focus:ring-2 focus:ring-blue-500"
+                            className="flex-1 rounded-lg border border-gray-300 px-3 py-2.5 text-sm bg-white outline-none focus:ring-2 focus:ring-gdg-blue"
                         >
                             <option value="">Select a club...</option>
                             {(data?.clubs || []).map((c) => (
@@ -234,7 +235,7 @@ export default function SuperOverview({ admin, onNavigate }) {
                                         finally { setPdfGenerating(false); }
                                     }}
                                     disabled={pdfGenerating || !iqacData.events?.length}
-                                    className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-bold text-white hover:bg-blue-700 disabled:opacity-50 transition-colors"
+                                    className="inline-flex items-center gap-2 rounded-lg bg-gdg-blue px-4 py-2 text-sm font-bold text-white hover:bg-[#3367d6] disabled:opacity-50 transition-colors"
                                 >
                                     {pdfGenerating ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4" />}
                                     Download IQAC PDF
@@ -275,7 +276,7 @@ export default function SuperOverview({ admin, onNavigate }) {
             <div className="mt-8 mb-12">
                 <div className="flex items-center justify-between mb-5">
                     <h2 className="text-lg font-bold text-gray-900 flex items-center gap-2">
-                        <CalendarDays className="h-5 w-5 text-blue-600" /> Event Calendar
+                        <CalendarDays className="h-5 w-5 text-gdg-blue" /> Event Calendar
                     </h2>
                 </div>
                 <AdminCalendar />

@@ -66,7 +66,7 @@ export default function UserSearchBar() {
                     onChange={(e) => setQuery(e.target.value)}
                     placeholder="Search users by name or registration number..."
                     style={{ colorScheme: 'light' }}
-                    className="w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-200 bg-white text-base text-gray-900 caret-gray-900 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow"
+                    className="w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-200 bg-white text-base text-gray-900 caret-gray-900 shadow-sm focus:outline-none focus:ring-2 focus:ring-gdg-blue focus:border-gdg-blue transition-shadow"
                 />
                 {loading && (
                     <Loader2 className="h-5 w-5 text-gray-400 absolute right-4 top-1/2 -translate-y-1/2 animate-spin" />

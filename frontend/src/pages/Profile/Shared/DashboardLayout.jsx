@@ -102,7 +102,7 @@ export default function SharedDashboardLayout({ children }) {
     }
 
     return (
-        <div className="flex min-h-screen bg-[#f9fafb] text-slate-900 font-sans antialiased selection:bg-blue-600/20" style={{ backgroundImage: "url('/background.svg')", backgroundSize: 'cover', backgroundAttachment: 'fixed', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}>
+        <div className="flex min-h-screen bg-[#f9fafb] text-slate-900 font-sans antialiased selection:bg-gdg-blue/20" style={{ backgroundImage: "url('/background.svg')", backgroundSize: 'cover', backgroundAttachment: 'fixed', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}>
             {/* OLD UI IMPLEMENTATION PRESERVED:
             className="flex min-h-screen bg-gray-50 text-gray-900 font-mono..."
             style={{ backgroundImage: "url('/back.svg')", ... fontFamily: "'JetBrains Mono'..." }}
@@ -136,13 +136,13 @@ export default function SharedDashboardLayout({ children }) {
                     <div className={cn("flex items-center mb-8", isDesktopCollapsed ? "justify-center" : "justify-between px-1")}>
                         <div className="flex items-center gap-3">
                             <div className="h-8 w-8 rounded-lg flex items-center justify-center shrink-0">
-                                <SquareChevronRight className="h-7 w-7 text-blue-600" />
+                                <SquareChevronRight className="h-7 w-7 text-gdg-blue" />
                                 <span className="font-bold text-slate-900 text-sm hidden">{role?.[0]}</span>
                             </div>
                             {!isDesktopCollapsed && (
                                 <div>
                                     <h1 className="font-extrabold text-lg tracking-tight text-slate-900 leading-tight">NEXUS</h1>
-                                    <p className="text-[10px] text-blue-600 font-bold uppercase tracking-wider">{role} Panel</p>
+                                    <p className="text-[10px] text-gdg-blue font-bold uppercase tracking-wider">{role} Panel</p>
                                 </div>
                             )}
                         </div>
@@ -163,7 +163,7 @@ export default function SharedDashboardLayout({ children }) {
                             <select 
                                 value={activeClub?.id || activeClub?._id || ''}
                                 onChange={(e) => switchClub(e.target.value)}
-                                className="w-full bg-slate-50 border border-slate-200 text-slate-900 text-[13px] font-medium rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 block p-2 transition-all hover:border-slate-300 outline-none"
+                                className="w-full bg-slate-50 border border-slate-200 text-slate-900 text-[13px] font-medium rounded-lg focus:ring-2 focus:ring-gdg-blue/20 focus:border-gdg-blue block p-2 transition-all hover:border-slate-300 outline-none"
                             >
                                 {profile.clubs.map(c => (
                                     <option key={c.id || c._id} value={c.id || c._id}>{c.name}</option>
@@ -200,12 +200,12 @@ export default function SharedDashboardLayout({ children }) {
                                         'w-full flex items-center rounded-lg font-medium transition-all duration-200 group relative',
                                         isDesktopCollapsed ? 'justify-center p-3 my-1' : 'gap-3 px-3 py-2.5',
                                         (!isStandalonePage && isActive)
-                                            ? 'bg-blue-50 text-blue-700'
+                                            ? 'bg-gdg-blue/10 text-gdg-blue font-bold'
                                             : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
                                     )}
                                 >
-                                    {!isStandalonePage && isActive && <div className={cn("absolute bg-blue-600 rounded-r-md transition-all duration-300", isDesktopCollapsed ? "left-0 top-2 bottom-2 w-[3px]" : "left-0 top-1.5 bottom-1.5 w-[3px]")} />}
-                                    <tab.icon className={cn('shrink-0 transition-colors', isDesktopCollapsed ? 'h-5 w-5' : 'h-[18px] w-[18px]', !isStandalonePage && isActive ? 'text-blue-600' : 'text-slate-400 group-hover:text-slate-600')} />
+                                    {!isStandalonePage && isActive && <div className={cn("absolute bg-gdg-blue rounded-r-md transition-all duration-300", isDesktopCollapsed ? "left-0 top-2 bottom-2 w-[3px]" : "left-0 top-1.5 bottom-1.5 w-[3px]")} />}
+                                    <tab.icon className={cn('shrink-0 transition-colors', isDesktopCollapsed ? 'h-5 w-5' : 'h-[18px] w-[18px]', !isStandalonePage && isActive ? 'text-gdg-blue' : 'text-slate-400 group-hover:text-slate-600')} />
                                     {!isDesktopCollapsed && <span className="text-[13px]">{tab.label}</span>}
                                     {isDesktopCollapsed && (
                                         <div className="absolute left-full ml-3 px-2.5 py-1.5 bg-slate-900 text-white text-[11px] font-medium rounded opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50">
@@ -235,11 +235,11 @@ export default function SharedDashboardLayout({ children }) {
                                             className={cn(
                                                 'w-full flex items-center rounded-lg font-medium transition-all duration-200 group relative',
                                                 isDesktopCollapsed ? 'justify-center p-3 my-1' : 'gap-3 px-3 py-2.5',
-                                                isActive ? 'bg-blue-50 text-blue-700' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
+                                                isActive ? 'bg-gdg-blue/10 text-gdg-blue font-bold' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
                                             )}
                                         >
-                                            {isActive && <div className={cn("absolute bg-blue-600 rounded-r-md transition-all duration-300", isDesktopCollapsed ? "left-0 top-2 bottom-2 w-[3px]" : "left-0 top-1.5 bottom-1.5 w-[3px]")} />}
-                                            <tab.icon className={cn('shrink-0 transition-colors', isDesktopCollapsed ? 'h-5 w-5' : 'h-[18px] w-[18px]', isActive ? 'text-blue-600' : 'text-slate-400 group-hover:text-slate-600')} />
+                                            {isActive && <div className={cn("absolute bg-gdg-blue rounded-r-md transition-all duration-300", isDesktopCollapsed ? "left-0 top-2 bottom-2 w-[3px]" : "left-0 top-1.5 bottom-1.5 w-[3px]")} />}
+                                            <tab.icon className={cn('shrink-0 transition-colors', isDesktopCollapsed ? 'h-5 w-5' : 'h-[18px] w-[18px]', isActive ? 'text-gdg-blue' : 'text-slate-400 group-hover:text-slate-600')} />
                                             {!isDesktopCollapsed && <span className="text-[13px]">{tab.label}</span>}
                                             {isDesktopCollapsed && (
                                                 <div className="absolute left-full ml-3 px-2.5 py-1.5 bg-slate-900 text-white text-[11px] font-medium rounded opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50">
@@ -259,11 +259,11 @@ export default function SharedDashboardLayout({ children }) {
                                     className={cn(
                                         'w-full flex items-center rounded-lg font-medium transition-all duration-200 group relative',
                                         isDesktopCollapsed ? 'justify-center p-3 my-1' : 'gap-3 px-3 py-2.5',
-                                        activeTab === 'iqac-events' ? 'bg-blue-50 text-blue-700' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
+                                        activeTab === 'iqac-events' ? 'bg-gdg-blue/10 text-gdg-blue font-bold' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
                                     )}
                                 >
-                                    {activeTab === 'iqac-events' && <div className={cn("absolute bg-blue-600 rounded-r-md transition-all duration-300", isDesktopCollapsed ? "left-0 top-2 bottom-2 w-[3px]" : "left-0 top-1.5 bottom-1.5 w-[3px]")} />}
-                                    <FileBarChart className={cn('shrink-0 transition-colors', isDesktopCollapsed ? 'h-5 w-5' : 'h-[18px] w-[18px]', activeTab === 'iqac-events' ? 'text-blue-600' : 'text-slate-400 group-hover:text-slate-600')} />
+                                    {activeTab === 'iqac-events' && <div className={cn("absolute bg-gdg-blue rounded-r-md transition-all duration-300", isDesktopCollapsed ? "left-0 top-2 bottom-2 w-[3px]" : "left-0 top-1.5 bottom-1.5 w-[3px]")} />}
+                                    <FileBarChart className={cn('shrink-0 transition-colors', isDesktopCollapsed ? 'h-5 w-5' : 'h-[18px] w-[18px]', activeTab === 'iqac-events' ? 'text-gdg-blue' : 'text-slate-400 group-hover:text-slate-600')} />
                                     {!isDesktopCollapsed && <span className="text-[13px]">IQAC Reports</span>}
                                     {isDesktopCollapsed && (
                                         <div className="absolute left-full ml-3 px-2.5 py-1.5 bg-slate-900 text-white text-[11px] font-medium rounded opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50">
@@ -292,11 +292,11 @@ export default function SharedDashboardLayout({ children }) {
                                             className={cn(
                                                 'w-full flex items-center rounded-lg font-medium transition-all duration-200 group relative',
                                                 isDesktopCollapsed ? 'justify-center p-3 my-1' : 'gap-3 px-3 py-2.5',
-                                                isActive ? 'bg-blue-50 text-blue-700' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
+                                                isActive ? 'bg-gdg-blue/10 text-gdg-blue font-bold' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
                                             )}
                                         >
-                                            {isActive && <div className={cn("absolute bg-blue-600 rounded-r-md transition-all duration-300", isDesktopCollapsed ? "left-0 top-2 bottom-2 w-[3px]" : "left-0 top-1.5 bottom-1.5 w-[3px]")} />}
-                                            <tab.icon className={cn('shrink-0 transition-colors', isDesktopCollapsed ? 'h-5 w-5' : 'h-[18px] w-[18px]', isActive ? 'text-blue-600' : 'text-slate-400 group-hover:text-slate-600')} />
+                                            {isActive && <div className={cn("absolute bg-gdg-blue rounded-r-md transition-all duration-300", isDesktopCollapsed ? "left-0 top-2 bottom-2 w-[3px]" : "left-0 top-1.5 bottom-1.5 w-[3px]")} />}
+                                            <tab.icon className={cn('shrink-0 transition-colors', isDesktopCollapsed ? 'h-5 w-5' : 'h-[18px] w-[18px]', isActive ? 'text-gdg-blue' : 'text-slate-400 group-hover:text-slate-600')} />
                                             {!isDesktopCollapsed && <span className="text-[13px]">{tab.label}</span>}
                                             {isDesktopCollapsed && (
                                                 <div className="absolute left-full ml-3 px-2.5 py-1.5 bg-slate-900 text-white text-[11px] font-medium rounded opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50">
@@ -323,11 +323,11 @@ export default function SharedDashboardLayout({ children }) {
                                     className={cn(
                                         'w-full flex items-center rounded-lg font-medium transition-all duration-200 group relative',
                                         isDesktopCollapsed ? 'justify-center p-3 my-1' : 'gap-3 px-3 py-2.5',
-                                        activeTab === 'forms' ? 'bg-blue-50 text-blue-700' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
+                                        activeTab === 'forms' ? 'bg-gdg-blue/10 text-gdg-blue font-bold' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
                                     )}
                                 >
-                                    {activeTab === 'forms' && <div className={cn("absolute bg-blue-600 rounded-r-md transition-all duration-300", isDesktopCollapsed ? "left-0 top-2 bottom-2 w-[3px]" : "left-0 top-1.5 bottom-1.5 w-[3px]")} />}
-                                    <FileText className={cn('shrink-0 transition-colors', isDesktopCollapsed ? 'h-5 w-5' : 'h-[18px] w-[18px]', activeTab === 'forms' ? 'text-blue-600' : 'text-slate-400 group-hover:text-slate-600')} />
+                                    {activeTab === 'forms' && <div className={cn("absolute bg-gdg-blue rounded-r-md transition-all duration-300", isDesktopCollapsed ? "left-0 top-2 bottom-2 w-[3px]" : "left-0 top-1.5 bottom-1.5 w-[3px]")} />}
+                                    <FileText className={cn('shrink-0 transition-colors', isDesktopCollapsed ? 'h-5 w-5' : 'h-[18px] w-[18px]', activeTab === 'forms' ? 'text-gdg-blue' : 'text-slate-400 group-hover:text-slate-600')} />
                                     {!isDesktopCollapsed && <span className="text-[13px]">Forms</span>}
                                     {isDesktopCollapsed && (
                                         <div className="absolute left-full ml-3 px-2.5 py-1.5 bg-slate-900 text-white text-[11px] font-medium rounded opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50">
@@ -420,10 +420,10 @@ export default function SharedDashboardLayout({ children }) {
                                     }}
                                     className={cn(
                                         "flex flex-col items-center justify-center w-16 h-full gap-1 transition-colors relative",
-                                        isActive ? "text-blue-600" : "text-slate-500 hover:text-slate-900"
+                                        isActive ? "text-gdg-blue" : "text-slate-500 hover:text-slate-900"
                                     )}
                                 >
-                                    {isActive && <div className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-[3px] bg-blue-600 rounded-b-md" />}
+                                    {isActive && <div className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-[3px] bg-gdg-blue rounded-b-md" />}
                                     <tab.icon className={cn("h-5 w-5 transition-transform", isActive && "transform scale-110")} />
                                     <span className={cn("text-[10px] font-medium tracking-tight", isActive ? "font-bold" : "")}>{tab.label}</span>
                                 </button>
@@ -434,10 +434,10 @@ export default function SharedDashboardLayout({ children }) {
                         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
                         className={cn(
                             "flex flex-col items-center justify-center w-16 h-full gap-1 transition-colors relative",
-                            isSidebarOpen ? "text-blue-600" : "text-slate-500 hover:text-slate-900"
+                            isSidebarOpen ? "text-gdg-blue" : "text-slate-500 hover:text-slate-900"
                         )}
                     >
-                        {isSidebarOpen && <div className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-[3px] bg-blue-600 rounded-b-md" />}
+                        {isSidebarOpen && <div className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-[3px] bg-gdg-blue rounded-b-md" />}
                         <Menu className={cn("h-5 w-5 transition-transform", isSidebarOpen && "transform scale-110")} />
                         <span className={cn("text-[10px] font-medium tracking-tight", isSidebarOpen ? "font-bold" : "")}>More</span>
                     </button>
@@ -468,10 +468,10 @@ export default function SharedDashboardLayout({ children }) {
                                         }}
                                         className="flex flex-col items-center gap-2 p-2 rounded-xl active:bg-slate-50 transition-colors"
                                     >
-                                        <div className={cn("w-12 h-12 rounded-full flex items-center justify-center", activeTab === tab.id ? "bg-blue-100 text-blue-600" : "bg-slate-100 text-slate-600")}>
+                                        <div className={cn("w-12 h-12 rounded-full flex items-center justify-center", activeTab === tab.id ? "bg-blue-100 text-gdg-blue" : "bg-slate-100 text-slate-600")}>
                                             <tab.icon className="h-5 w-5" />
                                         </div>
-                                        <span className={cn("text-[10px] font-medium text-center", activeTab === tab.id ? "text-blue-700 font-bold" : "text-slate-600")}>{tab.label}</span>
+                                        <span className={cn("text-[10px] font-medium text-center", activeTab === tab.id ? "text-gdg-blue font-bold font-bold" : "text-slate-600")}>{tab.label}</span>
                                     </button>
                                 ));
                             })()}
@@ -497,6 +497,7 @@ export default function SharedDashboardLayout({ children }) {
             )}>
                 {/* NEW ENTERPRISE CONTEXT BAR */}
                 <header className="sticky top-0 z-30 flex items-center justify-between px-4 md:px-6 h-14 border-b border-slate-200/60 bg-white/70 backdrop-blur-xl">
+            <div className="absolute top-0 left-0 right-0 flex h-[2px] opacity-80"><div className="flex-1 bg-gdg-red"></div><div className="flex-1 bg-gdg-blue"></div><div className="flex-1 bg-gdg-yellow"></div><div className="flex-1 bg-gdg-green"></div></div>
                     <div className="flex items-center gap-4">
                         {isDesktopCollapsed && (
                             <button
@@ -512,7 +513,7 @@ export default function SharedDashboardLayout({ children }) {
                             <div className="flex items-center gap-2 text-[14px]">
                                 <span className="font-extrabold text-slate-900 tracking-tight hidden sm:inline">NEXUS</span>
                                 <span className="text-slate-300 hidden sm:inline">/</span>
-                                <span className="text-blue-600 font-bold hidden sm:inline">AIT Pune</span>
+                                <span className="text-gdg-blue font-bold hidden sm:inline">AIT Pune</span>
                                 <span className="text-slate-300 hidden sm:inline">/</span>
                                 <span className="text-slate-900 font-bold">
                                     {tabs.find(t => t.id === activeTab)?.label || 
@@ -527,7 +528,7 @@ export default function SharedDashboardLayout({ children }) {
                     
                     <div className="flex items-center gap-4">
                         <div className="hidden sm:flex items-center gap-1.5 opacity-50" title="Built by GDG AIT Pune">
-                            <div className="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-sm"></div>
+                            <div className="w-1.5 h-1.5 rounded-full bg-gdg-blue/100 shadow-sm"></div>
                             <div className="w-1.5 h-1.5 rounded-full bg-red-500 shadow-sm"></div>
                             <div className="w-1.5 h-1.5 rounded-full bg-yellow-500 shadow-sm"></div>
                             <div className="w-1.5 h-1.5 rounded-full bg-green-500 shadow-sm"></div>

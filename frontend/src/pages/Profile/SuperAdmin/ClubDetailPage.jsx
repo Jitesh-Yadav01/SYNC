@@ -299,7 +299,7 @@ export default function ClubDetailPage() {
 
     return (
         <div
-            className="flex min-h-screen bg-gray-50 text-gray-900 font-sans selection:bg-blue-500/30"
+            className="flex min-h-screen bg-gray-50 text-gray-900 font-sans selection:bg-gdg-blue/100/30"
             style={{
                 backgroundImage: "url('/background.svg')",
                 backgroundSize: 'cover',
@@ -376,7 +376,7 @@ export default function ClubDetailPage() {
                                         {admin?.role === 'maintainer' && (
                                             <button 
                                                 onClick={() => setIsAddFacultyOpen(true)}
-                                                className="text-[10px] bg-blue-100 text-blue-700 hover:bg-blue-200 px-2 py-0.5 rounded transition-colors font-medium"
+                                                className="text-[10px] bg-blue-100 text-gdg-blue hover:bg-blue-200 px-2 py-0.5 rounded transition-colors font-medium"
                                             >
                                                 + ADD
                                             </button>
@@ -409,7 +409,7 @@ export default function ClubDetailPage() {
                                         {admin?.role === 'maintainer' && (
                                             <button 
                                                 onClick={() => setIsAddSecretaryOpen(true)}
-                                                className="text-[10px] bg-blue-100 text-blue-700 hover:bg-blue-200 px-2 py-0.5 rounded transition-colors font-medium"
+                                                className="text-[10px] bg-blue-100 text-gdg-blue hover:bg-blue-200 px-2 py-0.5 rounded transition-colors font-medium"
                                             >
                                                 + ADD
                                             </button>
@@ -440,8 +440,8 @@ export default function ClubDetailPage() {
                         <div className="rounded-2xl border border-gray-200 bg-white p-6 mb-6">
                             <div className="flex items-center justify-between mb-5">
                                 <div className="flex items-center gap-3">
-                                    <div className="h-10 w-10 rounded-lg bg-blue-600/10 flex items-center justify-center">
-                                        <FileBarChart className="h-5 w-5 text-blue-600" />
+                                    <div className="h-10 w-10 rounded-lg bg-gdg-blue/10 flex items-center justify-center">
+                                        <FileBarChart className="h-5 w-5 text-gdg-blue" />
                                     </div>
                                     <div>
                                         <h2 className="text-lg font-bold text-gray-900">Club's IQAC Reports</h2>
@@ -451,7 +451,7 @@ export default function ClubDetailPage() {
                                 <button
                                     onClick={handleDownloadIqacPdf}
                                     disabled={pdfGenerating || iqacLoading || !iqacData?.events?.length}
-                                    className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-bold text-white hover:bg-blue-700 disabled:opacity-50 transition-colors"
+                                    className="inline-flex items-center gap-2 rounded-lg bg-gdg-blue px-4 py-2.5 text-sm font-bold text-white hover:bg-[#3367d6] disabled:opacity-50 transition-colors"
                                 >
                                     {pdfGenerating ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4" />}
                                     Download IQAC PDF
@@ -512,13 +512,13 @@ export default function ClubDetailPage() {
                                             onChange={(e) => setSearch(e.target.value)}
                                             placeholder="Search name or regn. no."
                                             style={{ colorScheme: "light" }}
-                                            className="pl-9 pr-3 py-2 rounded-lg border border-gray-300 text-sm text-gray-900 caret-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-56"
+                                            className="pl-9 pr-3 py-2 rounded-lg border border-gray-300 text-sm text-gray-900 caret-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-gdg-blue focus:border-gdg-blue w-56"
                                         />
                                     </div>
                                     <select
                                         value={yearFilter}
                                         onChange={(e) => setYearFilter(e.target.value)}
-                                        className="px-3 py-2 rounded-lg border border-gray-300 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                        className="px-3 py-2 rounded-lg border border-gray-300 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-gdg-blue focus:border-gdg-blue"
                                     >
                                         <option value="all">All years</option>
                                         {years.map((y) => <option key={y} value={y}>{y}</option>)}
@@ -599,7 +599,7 @@ export default function ClubDetailPage() {
                                     value={newName}
                                     onChange={(e) => setNewName(e.target.value)}
                                     placeholder="Enter full name"
-                                    className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 text-sm"
+                                    className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-gdg-blue text-sm"
                                 />
                             </div>
                             <div>
@@ -610,7 +610,7 @@ export default function ClubDetailPage() {
                                     value={newEmail}
                                     onChange={(e) => setNewEmail(e.target.value)}
                                     placeholder="Enter email address"
-                                    className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 text-sm"
+                                    className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-gdg-blue text-sm"
                                 />
                             </div>
                             <div className="flex justify-end gap-3 mt-6">
@@ -628,7 +628,7 @@ export default function ClubDetailPage() {
                                 <button
                                     type="submit"
                                     disabled={isSubmittingRole}
-                                    className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 disabled:opacity-50 transition-colors"
+                                    className="px-4 py-2 bg-gdg-blue text-white rounded-lg text-sm font-medium hover:bg-[#3367d6] disabled:opacity-50 transition-colors"
                                 >
                                     {isSubmittingRole ? 'Saving...' : 'Save'}
                                 </button>

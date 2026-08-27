@@ -147,7 +147,7 @@ export default function Students() {
                     <select
                         value={yearFilter}
                         onChange={(e) => setYearFilter(e.target.value)}
-                        className="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2 shadow-sm"
+                        className="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-gdg-blue focus:border-gdg-blue p-2 shadow-sm"
                     >
                         {['All Years', 'FE', 'SE', 'TE', 'BE'].map(y => (
                             <option key={y} value={y}>{y}</option>
@@ -162,7 +162,7 @@ export default function Students() {
                                 className={cn(
                                     "px-3 py-1.5 text-xs font-medium rounded-md transition-colors",
                                     clubFilter === filter 
-                                        ? "bg-blue-50 text-blue-700" 
+                                        ? "bg-gdg-blue/10 text-[#3367d6]" 
                                         : "text-gray-500 hover:text-gray-900 hover:bg-gray-50"
                                 )}
                             >
@@ -178,7 +178,7 @@ export default function Students() {
                             onChange={(e) => setSearch(e.target.value)}
                             placeholder="Search name or email"
                             style={{ colorScheme: "light" }}
-                            className="pl-9 pr-3 py-2 rounded-lg border border-gray-300 text-sm text-gray-900 caret-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full sm:w-64"
+                            className="pl-9 pr-3 py-2 rounded-lg border border-gray-300 text-sm text-gray-900 caret-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-gdg-blue focus:border-gdg-blue w-full sm:w-64"
                         />
                     </div>
                     
@@ -231,7 +231,7 @@ export default function Students() {
                                     <tr key={student._id} className="hover:bg-gray-50/50 transition-colors">
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <div className="flex items-center gap-3">
-                                                <div className="h-9 w-9 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center font-bold shrink-0">
+                                                <div className="h-9 w-9 rounded-full bg-blue-100 text-[#3367d6] flex items-center justify-center font-bold shrink-0">
                                                     {(student.name || '?').charAt(0).toUpperCase()}
                                                 </div>
                                                 <div>
@@ -251,7 +251,7 @@ export default function Students() {
                                             ) : (
                                                 <div className="flex items-center gap-2">
                                                     {student.clubs.slice(0, 2).map(c => (
-                                                        <span key={c._id} className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-blue-50 text-blue-700 border border-blue-100">
+                                                        <span key={c._id} className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-gdg-blue/10 text-[#3367d6] border border-blue-100">
                                                             {c.name}
                                                         </span>
                                                     ))}
@@ -266,7 +266,7 @@ export default function Students() {
                                         <td className="px-6 py-4 whitespace-nowrap text-right">
                                             <button 
                                                 onClick={() => setSelectedStudent(student)}
-                                                className="text-blue-600 hover:text-blue-800 text-xs font-semibold uppercase tracking-wider"
+                                                className="text-gdg-blue hover:text-blue-800 text-xs font-semibold uppercase tracking-wider"
                                             >
                                                 View
                                             </button>
@@ -291,7 +291,7 @@ export default function Students() {
                         </div>
                         <div className="p-6">
                             <div className="flex items-center gap-4 mb-6">
-                                <div className="h-14 w-14 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-2xl shrink-0">
+                                <div className="h-14 w-14 rounded-full bg-blue-100 text-[#3367d6] flex items-center justify-center font-bold text-2xl shrink-0">
                                     {(selectedStudent.name || '?').charAt(0).toUpperCase()}
                                 </div>
                                 <div>

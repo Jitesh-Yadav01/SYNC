@@ -37,7 +37,7 @@ export default function SharedMessages() {
         <div className="flex-1 overflow-y-auto p-2 space-y-1">
           <button
             onClick={() => { setActiveChat(null); setChatOpen(true); }}
-            className={`w-full flex items-center gap-3 p-3 rounded-lg text-sm font-medium transition-colors ${activeChat === null ? 'bg-blue-50 text-blue-700 border border-blue-100 shadow-sm' : 'hover:bg-gray-100 text-gray-600'}`}
+            className={`w-full flex items-center gap-3 p-3 rounded-lg text-sm font-medium transition-colors ${activeChat === null ? 'bg-gdg-blue/10 text-[#3367d6] border border-blue-100 shadow-sm' : 'hover:bg-gray-100 text-gray-600'}`}
           >
             <div className={`h-10 w-10 rounded-full flex items-center justify-center ${activeChat === null ? 'bg-blue-800 text-white' : 'bg-gray-100 text-gray-400'}`}>
               <MessageSquare className="h-5 w-5" />
@@ -56,7 +56,7 @@ export default function SharedMessages() {
             <button
               key={member.id}
               onClick={() => { setActiveChat(member.id); setChatOpen(true); }}
-              className={`w-full flex items-center gap-3 p-3 rounded-lg text-sm font-medium transition-colors ${activeChat === member.id ? 'bg-blue-50 text-blue-900 border border-blue-100 shadow-sm' : 'hover:bg-gray-100 text-gray-600'}`}
+              className={`w-full flex items-center gap-3 p-3 rounded-lg text-sm font-medium transition-colors ${activeChat === member.id ? 'bg-gdg-blue/10 text-blue-900 border border-blue-100 shadow-sm' : 'hover:bg-gray-100 text-gray-600'}`}
             >
               <div className="h-10 w-10 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-500 font-medium">
                 {member.name.charAt(0)}
@@ -95,7 +95,7 @@ export default function SharedMessages() {
                   <div className="h-8 w-8 rounded-full bg-gray-200 shrink-0 flex items-center justify-center text-xs font-medium text-gray-500">
                     {msg.senderName.charAt(0)}
                   </div>
-                  <div className={`p-3 rounded-2xl text-sm ${isMe ? 'bg-blue-600 text-white rounded-tr-none shadow-sm' : 'bg-white text-gray-700 rounded-tl-none border border-gray-200 shadow-sm'}`}>
+                  <div className={`p-3 rounded-2xl text-sm ${isMe ? 'bg-gdg-blue text-white rounded-tr-none shadow-sm' : 'bg-white text-gray-700 rounded-tl-none border border-gray-200 shadow-sm'}`}>
                     <div className="flex items-baseline gap-2 mb-1 opacity-80 text-xs">
                       <span className="font-bold">{msg.senderName}</span>
                       <span>{new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
@@ -112,7 +112,7 @@ export default function SharedMessages() {
         <div className="p-4 bg-white border-t border-gray-200">
           <form onSubmit={handleSend} className="flex gap-2">
             <input
-              className="flex-1 h-10 rounded-full border border-gray-300 bg-gray-50 px-4 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder:text-gray-400"
+              className="flex-1 h-10 rounded-full border border-gray-300 bg-gray-50 px-4 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-gdg-blue placeholder:text-gray-400"
               placeholder="Type your message..."
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
@@ -120,7 +120,7 @@ export default function SharedMessages() {
             <button
               type="submit"
               disabled={!newMessage.trim()}
-              className="h-10 w-10 rounded-full bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700 disabled:opacity-50 transition-colors shadow-sm"
+              className="h-10 w-10 rounded-full bg-gdg-blue text-white flex items-center justify-center hover:bg-[#3367d6] disabled:opacity-50 transition-colors shadow-sm"
             >
               <Send className="h-4 w-4" />
             </button>

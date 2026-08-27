@@ -170,7 +170,7 @@ export default function SharedMembers() {
                 <div className="bg-white border border-gray-200 rounded-xl shadow-sm">
                     <div className="p-4 border-b border-gray-200 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                         <div className="flex items-center gap-2">
-                            <ShieldCheck className="h-5 w-5 text-blue-600" />
+                            <ShieldCheck className="h-5 w-5 text-gdg-blue" />
                             <h3 className="font-semibold text-gray-900">Secretaries</h3>
                         </div>
                         {isFaculty && (
@@ -187,7 +187,7 @@ export default function SharedMembers() {
                         <form onSubmit={handleAddSecretary} className="p-4 border-b border-gray-200 space-y-4 bg-gray-50/50 animate-in fade-in slide-in-from-top-2">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <input
-                                    className="flex h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    className="flex h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gdg-blue"
                                     placeholder="Secretary name"
                                     value={newSec.name}
                                     onChange={(e) => setNewSec({ ...newSec, name: e.target.value })}
@@ -195,7 +195,7 @@ export default function SharedMembers() {
                                 />
                                 <input
                                     type="email"
-                                    className="flex h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    className="flex h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gdg-blue"
                                     placeholder="Secretary email"
                                     value={newSec.email}
                                     onChange={(e) => setNewSec({ ...newSec, email: e.target.value })}
@@ -213,7 +213,7 @@ export default function SharedMembers() {
                                 <button
                                     type="submit"
                                     disabled={addingSec}
-                                    className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors text-sm inline-flex items-center gap-2 disabled:opacity-60"
+                                    className="bg-gdg-blue text-white px-4 py-2 rounded-md hover:bg-[#3367d6] transition-colors text-sm inline-flex items-center gap-2 disabled:opacity-60"
                                 >
                                     {addingSec && <Loader2 className="h-4 w-4 animate-spin" />} Save Secretary
                                 </button>
@@ -235,7 +235,7 @@ export default function SharedMembers() {
                                     <tr key={s.email} className="bg-white border-b hover:bg-gray-50 transition-colors">
                                         <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                             <div className="flex items-center gap-3">
-                                                <div className="h-8 w-8 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 font-medium border border-blue-100 shrink-0">
+                                                <div className="h-8 w-8 rounded-full bg-gdg-blue/10 flex items-center justify-center text-gdg-blue font-medium border border-blue-100 shrink-0">
                                                     {s.name?.charAt(0) || '?'}
                                                 </div>
                                                 {s.name}
@@ -304,14 +304,14 @@ export default function SharedMembers() {
                     <h3 className="font-semibold text-lg text-gray-900">{isEditing ? 'Edit Member' : 'Add New Member'}</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <input
-                            className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gdg-blue"
                             placeholder="Name"
                             value={newMember.name}
                             onChange={(e) => setNewMember({ ...newMember, name: e.target.value })}
                             required
                         />
                         <input
-                            className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gdg-blue"
                             placeholder="Email"
                             value={newMember.email}
                             onChange={(e) => setNewMember({ ...newMember, email: e.target.value })}
@@ -330,7 +330,7 @@ export default function SharedMembers() {
                         >
                             Cancel
                         </button>
-                        <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">
+                        <button type="submit" className="bg-gdg-blue text-white px-4 py-2 rounded-md hover:bg-[#3367d6] transition-colors">
                             {isEditing ? 'Update Member' : 'Save Member'}
                         </button>
                     </div>
@@ -344,7 +344,7 @@ export default function SharedMembers() {
                         <select
                             value={yearFilter}
                             onChange={(e) => setYearFilter(e.target.value)}
-                            className="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2 shadow-sm"
+                            className="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-gdg-blue focus:border-gdg-blue p-2 shadow-sm"
                         >
                             {['All Years', 'FE', 'SE', 'TE', 'BE'].map(y => (
                                 <option key={y} value={y}>{y}</option>
@@ -354,7 +354,7 @@ export default function SharedMembers() {
                         <div className="relative w-full sm:w-64">
                             <Search className="absolute left-2 top-2.5 h-4 w-4 text-gray-400" />
                             <input
-                                className="pl-8 flex h-9 w-full rounded-md border border-gray-300 bg-transparent px-3 py-1 text-sm text-gray-900 shadow-sm transition-colors focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                className="pl-8 flex h-9 w-full rounded-md border border-gray-300 bg-transparent px-3 py-1 text-sm text-gray-900 shadow-sm transition-colors focus:outline-none focus:ring-1 focus:ring-gdg-blue"
                                 placeholder="Search..."
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
@@ -395,14 +395,14 @@ export default function SharedMembers() {
                                 <tr key={member.id} className="bg-white border-b hover:bg-gray-50 transition-colors">
                                     <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                         <div className="flex items-center gap-3">
-                                            <div className="h-8 w-8 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 font-medium border border-blue-100 shrink-0">
+                                            <div className="h-8 w-8 rounded-full bg-gdg-blue/10 flex items-center justify-center text-gdg-blue font-medium border border-blue-100 shrink-0">
                                                 {member.name?.charAt(0) || '?'}
                                             </div>
                                             {member.name}
                                         </div>
                                     </td>
                                     <td className="px-6 py-4">
-                                        <span className="px-2 py-1 rounded text-xs font-medium bg-blue-50 text-blue-700 border border-blue-200">
+                                        <span className="px-2 py-1 rounded text-xs font-medium bg-gdg-blue/10 text-[#3367d6] border border-blue-200">
                                             {member.year || 'N/A'}
                                         </span>
                                     </td>

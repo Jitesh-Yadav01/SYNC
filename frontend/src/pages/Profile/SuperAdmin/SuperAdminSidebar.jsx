@@ -70,12 +70,12 @@ export default function SuperAdminSidebar({
                                     className={cn(
                                         'w-full flex items-center gap-3 px-3 py-2 rounded-md text-[13px] font-medium transition-colors group relative',
                                         activeTab === tab.id
-                                            ? 'bg-blue-50/80 text-blue-700'
+                                            ? 'bg-gdg-blue/10/80 text-gdg-blue font-bold'
                                             : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/80'
                                     )}
                                 >
-                                    {activeTab === tab.id && <div className="absolute left-0 top-1/2 -translate-y-1/2 h-4 w-[3px] bg-blue-600 rounded-r-md" />}
-                                    <tab.icon className={cn('h-5 w-5 transition-colors', activeTab === tab.id ? 'text-blue-600' : 'text-gray-400 group-hover:text-gray-600')} />
+                                    {activeTab === tab.id && <div className="absolute left-0 top-1/2 -translate-y-1/2 h-4 w-[3px] bg-gdg-blue rounded-r-md" />}
+                                    <tab.icon className={cn('h-5 w-5 transition-colors', activeTab === tab.id ? 'text-gdg-blue' : 'text-gray-400 group-hover:text-gray-600')} />
                                     {tab.label}
                                 </button>
                             </React.Fragment>
@@ -111,6 +111,7 @@ export default function SuperAdminSidebar({
 export function SuperAdminContextHeader({ isDesktopCollapsed, setIsDesktopCollapsed, setIsSidebarOpen, activeTabLabel }) {
     return (
         <header className="sticky top-0 z-30 flex items-center justify-between px-4 md:px-6 h-14 border-b border-slate-200 bg-white/80 backdrop-blur-md">
+            <div className="absolute top-0 left-0 right-0 flex h-[2px] opacity-80"><div className="flex-1 bg-gdg-red"></div><div className="flex-1 bg-gdg-blue"></div><div className="flex-1 bg-gdg-yellow"></div><div className="flex-1 bg-gdg-green"></div></div>
             <div className="flex items-center gap-3">
                 {isDesktopCollapsed && (
                     <button
@@ -136,7 +137,7 @@ export function SuperAdminContextHeader({ isDesktopCollapsed, setIsDesktopCollap
             
             <div className="flex items-center gap-3">
                 <div className="hidden sm:flex items-center gap-1.5 opacity-50" title="Built by GDG AIT Pune">
-                    <div className="w-1.5 h-1.5 rounded-full bg-blue-500"></div>
+                    <div className="w-1.5 h-1.5 rounded-full bg-gdg-blue/100"></div>
                     <div className="w-1.5 h-1.5 rounded-full bg-red-500"></div>
                     <div className="w-1.5 h-1.5 rounded-full bg-yellow-500"></div>
                     <div className="w-1.5 h-1.5 rounded-full bg-green-500"></div>
@@ -175,12 +176,12 @@ export default function SuperAdminSidebar({
                     <div className={cn("flex items-center mb-8", isDesktopCollapsed ? "justify-center" : "justify-between px-1")}>
                         <div className="flex items-center gap-3">
                             <div className="h-8 w-8 rounded-lg flex items-center justify-center shrink-0">
-                                <SquareChevronRight className="h-7 w-7 text-blue-600" />
+                                <SquareChevronRight className="h-7 w-7 text-gdg-blue" />
                             </div>
                             {!isDesktopCollapsed && (
                                 <div>
                                     <h1 className="font-extrabold text-lg tracking-tight text-slate-900 leading-tight">NEXUS</h1>
-                                    <p className="text-[10px] text-blue-600 font-bold uppercase tracking-wider">{roleLabel}</p>
+                                    <p className="text-[10px] text-gdg-blue font-bold uppercase tracking-wider">{roleLabel}</p>
                                 </div>
                             )}
                         </div>
@@ -217,12 +218,12 @@ export default function SuperAdminSidebar({
                                             'w-full flex items-center rounded-lg font-medium transition-all duration-200 group relative',
                                             isDesktopCollapsed ? 'justify-center p-3 my-1' : 'gap-3 px-3 py-2.5',
                                             isActive
-                                                ? 'bg-blue-50 text-blue-700'
+                                                ? 'bg-gdg-blue/10 text-gdg-blue font-bold'
                                                 : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
                                         )}
                                     >
-                                        {isActive && <div className={cn("absolute bg-blue-600 rounded-r-md transition-all duration-300", isDesktopCollapsed ? "left-0 top-2 bottom-2 w-[3px]" : "left-0 top-1.5 bottom-1.5 w-[3px]")} />}
-                                        <tab.icon className={cn('shrink-0 transition-colors', isDesktopCollapsed ? 'h-5 w-5' : 'h-[18px] w-[18px]', isActive ? 'text-blue-600' : 'text-slate-400 group-hover:text-slate-600')} />
+                                        {isActive && <div className={cn("absolute bg-gdg-blue rounded-r-md transition-all duration-300", isDesktopCollapsed ? "left-0 top-2 bottom-2 w-[3px]" : "left-0 top-1.5 bottom-1.5 w-[3px]")} />}
+                                        <tab.icon className={cn('shrink-0 transition-colors', isDesktopCollapsed ? 'h-5 w-5' : 'h-[18px] w-[18px]', isActive ? 'text-gdg-blue' : 'text-slate-400 group-hover:text-slate-600')} />
                                         {!isDesktopCollapsed && <span className="text-[13px]">{tab.label}</span>}
                                         {isDesktopCollapsed && (
                                             <div className="absolute left-full ml-3 px-2.5 py-1.5 bg-slate-900 text-white text-[11px] font-medium rounded opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50">
@@ -241,7 +242,7 @@ export default function SuperAdminSidebar({
                             <>
                                 <div className="flex items-center gap-3 px-2 py-2">
                                     <div className="h-8 w-8 rounded-full border border-slate-200 bg-white shadow-sm flex items-center justify-center shrink-0">
-                                        <SquareChevronRight className="h-5 w-5 text-blue-600" />
+                                        <SquareChevronRight className="h-5 w-5 text-gdg-blue" />
                                         <span className="text-slate-900 text-xs font-bold hidden">{roleLabel[0]}</span>
                                     </div>
                                     <div className="flex-1 min-w-0">
@@ -262,7 +263,7 @@ export default function SuperAdminSidebar({
                         ) : (
                             <div className="flex flex-col items-center gap-2">
                                 <div className="h-8 w-8 rounded-full border border-slate-200 bg-white shadow-sm flex items-center justify-center shrink-0 cursor-help" title={admin?.email}>
-                                    <SquareChevronRight className="h-5 w-5 text-blue-600" />
+                                    <SquareChevronRight className="h-5 w-5 text-gdg-blue" />
                                     <span className="text-slate-900 text-xs font-bold hidden">{roleLabel[0]}</span>
                                 </div>
                                 <button
@@ -293,10 +294,10 @@ export default function SuperAdminSidebar({
                                 onClick={() => { onTabSelect(tab.id); setIsSidebarOpen(false); }}
                                 className={cn(
                                     "flex flex-col items-center justify-center w-16 h-full gap-1 transition-colors relative",
-                                    isActive ? "text-blue-600" : "text-slate-500 hover:text-slate-900"
+                                    isActive ? "text-gdg-blue" : "text-slate-500 hover:text-slate-900"
                                 )}
                             >
-                                {isActive && <div className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-[3px] bg-blue-600 rounded-b-md" />}
+                                {isActive && <div className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-[3px] bg-gdg-blue rounded-b-md" />}
                                 <tab.icon className={cn("h-5 w-5 transition-transform", isActive && "transform scale-110")} />
                                 <span className={cn("text-[10px] font-medium tracking-tight", isActive ? "font-bold" : "")}>{tab.label.split(' ')[0]}</span>
                             </button>
@@ -306,10 +307,10 @@ export default function SuperAdminSidebar({
                         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
                         className={cn(
                             "flex flex-col items-center justify-center w-16 h-full gap-1 transition-colors relative",
-                            isSidebarOpen ? "text-blue-600" : "text-slate-500 hover:text-slate-900"
+                            isSidebarOpen ? "text-gdg-blue" : "text-slate-500 hover:text-slate-900"
                         )}
                     >
-                        {isSidebarOpen && <div className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-[3px] bg-blue-600 rounded-b-md" />}
+                        {isSidebarOpen && <div className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-[3px] bg-gdg-blue rounded-b-md" />}
                         <Menu className={cn("h-5 w-5 transition-transform", isSidebarOpen && "transform scale-110")} />
                         <span className={cn("text-[10px] font-medium tracking-tight", isSidebarOpen ? "font-bold" : "")}>More</span>
                     </button>
@@ -330,10 +331,10 @@ export default function SuperAdminSidebar({
                                     onClick={() => { onTabSelect(tab.id); setIsSidebarOpen(false); }}
                                     className="flex flex-col items-center gap-2 p-2 rounded-xl active:bg-slate-50 transition-colors"
                                 >
-                                    <div className={cn("w-12 h-12 rounded-full flex items-center justify-center", activeTab === tab.id ? "bg-blue-100 text-blue-600" : "bg-slate-100 text-slate-600")}>
+                                    <div className={cn("w-12 h-12 rounded-full flex items-center justify-center", activeTab === tab.id ? "bg-blue-100 text-gdg-blue" : "bg-slate-100 text-slate-600")}>
                                         <tab.icon className="h-5 w-5" />
                                     </div>
-                                    <span className={cn("text-[10px] font-medium text-center", activeTab === tab.id ? "text-blue-700 font-bold" : "text-slate-600")}>{tab.label}</span>
+                                    <span className={cn("text-[10px] font-medium text-center", activeTab === tab.id ? "text-gdg-blue font-bold font-bold" : "text-slate-600")}>{tab.label}</span>
                                 </button>
                             ))}
                             
@@ -357,6 +358,7 @@ export default function SuperAdminSidebar({
 export function SuperAdminContextHeader({ isDesktopCollapsed, setIsDesktopCollapsed, activeTabLabel }) {
     return (
         <header className="sticky top-0 z-30 flex items-center justify-between px-4 md:px-6 h-16 border-b border-slate-200/60 bg-white/70 backdrop-blur-xl">
+            <div className="absolute top-0 left-0 right-0 flex h-[2px] opacity-80"><div className="flex-1 bg-gdg-red"></div><div className="flex-1 bg-gdg-blue"></div><div className="flex-1 bg-gdg-yellow"></div><div className="flex-1 bg-gdg-green"></div></div>
             <div className="flex items-center gap-4">
                 {isDesktopCollapsed && (
                     <button
@@ -372,7 +374,7 @@ export function SuperAdminContextHeader({ isDesktopCollapsed, setIsDesktopCollap
                     <div className="flex items-center gap-2 text-[14px]">
                         <span className="font-extrabold text-slate-900 tracking-tight hidden sm:inline">NEXUS</span>
                         <span className="text-slate-300 hidden sm:inline">/</span>
-                        <span className="text-blue-600 font-bold hidden sm:inline">SuperAdmin</span>
+                        <span className="text-gdg-blue font-bold hidden sm:inline">SuperAdmin</span>
                         <span className="text-slate-300 hidden sm:inline">/</span>
                         <span className="text-slate-900 font-bold">{activeTabLabel || 'Overview'}</span>
                     </div>
@@ -381,7 +383,7 @@ export function SuperAdminContextHeader({ isDesktopCollapsed, setIsDesktopCollap
             
             <div className="flex items-center gap-4">
                 <div className="flex items-center gap-1.5" title="Built by GDG AIT Pune">
-                    <div className="w-1.5 h-1.5 rounded-full bg-blue-500 opacity-90 shadow-sm"></div>
+                    <div className="w-1.5 h-1.5 rounded-full bg-gdg-blue/100 opacity-90 shadow-sm"></div>
                     <div className="w-1.5 h-1.5 rounded-full bg-red-500 opacity-90 shadow-sm hidden sm:block"></div>
                     <div className="w-1.5 h-1.5 rounded-full bg-yellow-500 opacity-90 shadow-sm hidden sm:block"></div>
                     <div className="w-1.5 h-1.5 rounded-full bg-green-500 opacity-90 shadow-sm hidden sm:block"></div>
