@@ -57,7 +57,7 @@
     "globals": "^16.5.0",
     "shadcn": "^3.5.1",
     "shadcn-ui": "^0.9.5",
-    "vite": "^7.2.4",
+    "vite": "^6.3.5",
     "vite-plugin-pwa": "^0.21.1"
   }
 }
