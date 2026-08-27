@@ -1,0 +1,58 @@
+
+> frontend@0.0.0 build
+> vite build
+
+vite v7.3.5 building client environment for production...
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+transforming...
+Browserslist: browsers data (caniuse-lite) is 9 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+✓ 2569 modules transformed.
+✗ Build failed in 1m 23s
+error during build:
+src/pages/Profile/SuperAdmin/ClubDetailPage.jsx (10:52): "SuperAdminExpandButton" is not exported by "src/pages/Profile/SuperAdmin/SuperAdminSidebar.jsx", imported by "src/pages/Profile/SuperAdmin/ClubDetailPage.jsx".
+file: /media/jitesh-yadav/DATA/code_x/webd/contribut./NEXUS/frontend/src/pages/Profile/SuperAdmin/ClubDetailPage.jsx:10:52
+
+ 8: import useDebouncedValue from '@/hooks/useDebouncedValue';
+ 9: import { useAuth } from '@/context/AuthContext';
+10: import SuperAdminSidebar, { SuperAdminMobileHeader, SuperAdminExpandButton } from './SuperAdminSidebar';
+                                                        ^
+11: import UserDetailsModal from './UserDetailsModal';
+
+    at getRollupError (file:///media/jitesh-yadav/DATA/code_x/webd/contribut./NEXUS/frontend/node_modules/rollup/dist/es/shared/parseAst.js:402:41)
+    at error (file:///media/jitesh-yadav/DATA/code_x/webd/contribut./NEXUS/frontend/node_modules/rollup/dist/es/shared/parseAst.js:398:42)
+    at Module.error (file:///media/jitesh-yadav/DATA/code_x/webd/contribut./NEXUS/frontend/node_modules/rollup/dist/es/shared/node-entry.js:17040:16)
+    at Module.traceVariable (file:///media/jitesh-yadav/DATA/code_x/webd/contribut./NEXUS/frontend/node_modules/rollup/dist/es/shared/node-entry.js:17452:29)
+    at ModuleScope.findVariable (file:///media/jitesh-yadav/DATA/code_x/webd/contribut./NEXUS/frontend/node_modules/rollup/dist/es/shared/node-entry.js:15070:39)
+    at FunctionScope.findVariable (file:///media/jitesh-yadav/DATA/code_x/webd/contribut./NEXUS/frontend/node_modules/rollup/dist/es/shared/node-entry.js:5673:38)
+    at FunctionBodyScope.findVariable (file:///media/jitesh-yadav/DATA/code_x/webd/contribut./NEXUS/frontend/node_modules/rollup/dist/es/shared/node-entry.js:5673:38)
+    at Identifier.bind (file:///media/jitesh-yadav/DATA/code_x/webd/contribut./NEXUS/frontend/node_modules/rollup/dist/es/shared/node-entry.js:5447:40)
+    at CallExpression.bind (file:///media/jitesh-yadav/DATA/code_x/webd/contribut./NEXUS/frontend/node_modules/rollup/dist/es/shared/node-entry.js:2825:28)
+    at CallExpression.bind (file:///media/jitesh-yadav/DATA/code_x/webd/contribut./NEXUS/frontend/node_modules/rollup/dist/es/shared/node-entry.js:12179:15)
+    at ArrayExpression.bind (file:///media/jitesh-yadav/DATA/code_x/webd/contribut./NEXUS/frontend/node_modules/rollup/dist/es/shared/node-entry.js:2825:28)
+    at Property.bind (file:///media/jitesh-yadav/DATA/code_x/webd/contribut./NEXUS/frontend/node_modules/rollup/dist/es/shared/node-entry.js:2829:23)
+    at ObjectExpression.bind (file:///media/jitesh-yadav/DATA/code_x/webd/contribut./NEXUS/frontend/node_modules/rollup/dist/es/shared/node-entry.js:2825:28)
+    at CallExpression.bind (file:///media/jitesh-yadav/DATA/code_x/webd/contribut./NEXUS/frontend/node_modules/rollup/dist/es/shared/node-entry.js:2825:28)
+    at CallExpression.bind (file:///media/jitesh-yadav/DATA/code_x/webd/contribut./NEXUS/frontend/node_modules/rollup/dist/es/shared/node-entry.js:12179:15)
+    at ArrayExpression.bind (file:///media/jitesh-yadav/DATA/code_x/webd/contribut./NEXUS/frontend/node_modules/rollup/dist/es/shared/node-entry.js:2825:28)
+    at Property.bind (file:///media/jitesh-yadav/DATA/code_x/webd/contribut./NEXUS/frontend/node_modules/rollup/dist/es/shared/node-entry.js:2829:23)
+    at ObjectExpression.bind (file:///media/jitesh-yadav/DATA/code_x/webd/contribut./NEXUS/frontend/node_modules/rollup/dist/es/shared/node-entry.js:2825:28)
+    at CallExpression.bind (file:///media/jitesh-yadav/DATA/code_x/webd/contribut./NEXUS/frontend/node_modules/rollup/dist/es/shared/node-entry.js:2825:28)
+    at CallExpression.bind (file:///media/jitesh-yadav/DATA/code_x/webd/contribut./NEXUS/frontend/node_modules/rollup/dist/es/shared/node-entry.js:12179:15)
+    at ReturnStatement.bind (file:///media/jitesh-yadav/DATA/code_x/webd/contribut./NEXUS/frontend/node_modules/rollup/dist/es/shared/node-entry.js:2829:23)
+    at BlockStatement.bind (file:///media/jitesh-yadav/DATA/code_x/webd/contribut./NEXUS/frontend/node_modules/rollup/dist/es/shared/node-entry.js:2825:28)
+    at FunctionDeclaration.bind (file:///media/jitesh-yadav/DATA/code_x/webd/contribut./NEXUS/frontend/node_modules/rollup/dist/es/shared/node-entry.js:2829:23)
+    at ExportDefaultDeclaration.bind (file:///media/jitesh-yadav/DATA/code_x/webd/contribut./NEXUS/frontend/node_modules/rollup/dist/es/shared/node-entry.js:2829:23)
+    at ExportDefaultDeclaration.bind (file:///media/jitesh-yadav/DATA/code_x/webd/contribut./NEXUS/frontend/node_modules/rollup/dist/es/shared/node-entry.js:6939:15)
+    at Program.bind (file:///media/jitesh-yadav/DATA/code_x/webd/contribut./NEXUS/frontend/node_modules/rollup/dist/es/shared/node-entry.js:2825:28)
+    at Module.bindReferences (file:///media/jitesh-yadav/DATA/code_x/webd/contribut./NEXUS/frontend/node_modules/rollup/dist/es/shared/node-entry.js:17019:18)
+    at Graph.sortAndBindModules (file:///media/jitesh-yadav/DATA/code_x/webd/contribut./NEXUS/frontend/node_modules/rollup/dist/es/shared/node-entry.js:22866:20)
+    at Graph.build (file:///media/jitesh-yadav/DATA/code_x/webd/contribut./NEXUS/frontend/node_modules/rollup/dist/es/shared/node-entry.js:22764:14)
+    at async file:///media/jitesh-yadav/DATA/code_x/webd/contribut./NEXUS/frontend/node_modules/rollup/dist/es/shared/node-entry.js:23455:13
+    at async catchUnfinishedHookActions (file:///media/jitesh-yadav/DATA/code_x/webd/contribut./NEXUS/frontend/node_modules/rollup/dist/es/shared/node-entry.js:22925:16)
+    at async rollupInternal (file:///media/jitesh-yadav/DATA/code_x/webd/contribut./NEXUS/frontend/node_modules/rollup/dist/es/shared/node-entry.js:23450:5)
+    at async buildEnvironment (file:///media/jitesh-yadav/DATA/code_x/webd/contribut./NEXUS/frontend/node_modules/vite/dist/node/chunks/config.js:33621:12)
+    at async Object.build (file:///media/jitesh-yadav/DATA/code_x/webd/contribut./NEXUS/frontend/node_modules/vite/dist/node/chunks/config.js:33980:19)
+    at async Object.buildApp (file:///media/jitesh-yadav/DATA/code_x/webd/contribut./NEXUS/frontend/node_modules/vite/dist/node/chunks/config.js:33977:153)
+    at async CAC.<anonymous> (file:///media/jitesh-yadav/DATA/code_x/webd/contribut./NEXUS/frontend/node_modules/vite/dist/node/cli.js:629:3)

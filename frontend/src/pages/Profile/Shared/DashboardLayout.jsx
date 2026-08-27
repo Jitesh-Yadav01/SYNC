@@ -167,6 +167,7 @@ export default function SharedDashboardLayout({ children }) {
                     )}
 
                     <nav className="flex-1 space-y-1">
+                        <div className="px-3 mt-4 mb-2 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Workspace</div>
                         {getVisibleTabs().map(tab => (
                             <button
                                 key={tab.id}
@@ -199,6 +200,7 @@ export default function SharedDashboardLayout({ children }) {
                         {/* Admin Exclusive Links */}
                         {role === 'Admin' && (
                             <>
+                                <div className="px-3 mt-6 mb-2 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Operations</div>
                                 <button
                                     onClick={() => {
                                         setActiveTab('manage-forms');
@@ -241,6 +243,7 @@ export default function SharedDashboardLayout({ children }) {
                                     )} />
                                     Responses
                                 </button>
+                                <div className="px-3 mt-6 mb-2 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Reporting</div>
                                 <button
                                     onClick={() => {
                                         setActiveTab('iqac-events');
@@ -267,6 +270,7 @@ export default function SharedDashboardLayout({ children }) {
 
                         {role === 'Member' && profile?.year !== 'FE' && (
                             <>
+                                <div className="px-3 mt-6 mb-2 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Operations</div>
                                 <button
                                     onClick={() => {
                                         setActiveTab('manage-forms');
@@ -314,7 +318,9 @@ export default function SharedDashboardLayout({ children }) {
 
                         {/* Applicant can see & fill public forms */}
                         {role === 'Applicant' && (
-                            <button
+                            <>
+                                <div className="px-3 mt-6 mb-2 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Applications</div>
+                                <button
                                 onClick={() => {
                                     if (isStandalonePage) {
                                         navigate(`/profile/${role}`, { state: { activeTab: 'forms' } });
@@ -339,6 +345,7 @@ export default function SharedDashboardLayout({ children }) {
                                 )} />
                                 Forms
                             </button>
+                            </>
                         )}
                     </nav>
 
@@ -369,6 +376,9 @@ export default function SharedDashboardLayout({ children }) {
                             <LogOut className="h-4 w-4" />
                             Sign Out
                         </button>
+                        <div className="pt-2 text-center text-[10px] text-slate-400/70 font-medium uppercase tracking-wider">
+                            Built by GDG AIT Pune
+                        </div>
                     </div>
                 </div>
             </aside>
@@ -378,28 +388,54 @@ export default function SharedDashboardLayout({ children }) {
                 !isDesktopCollapsed ? "md:ml-64" : "md:ml-0"
             )}>
                 {/* Floating expand button when collapsed */}
+                {/* OLD UI IMPLEMENTATION PRESERVED:
                 {isDesktopCollapsed && (
-                    <button
-                        onClick={() => setIsDesktopCollapsed(false)}
-                        className="hidden md:flex fixed top-3 left-4 z-[60] items-center justify-center w-8 h-8 bg-white border border-slate-200 rounded-md shadow-sm hover:bg-slate-100 hover:text-slate-900 text-slate-600 transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950"
-                        title="Expand Sidebar"
-                    >
-                        <ChevronRight className="w-4 h-4" />
-                    </button>
+                    <button onClick={() => setIsDesktopCollapsed(false)} className="hidden md:flex fixed top-3 left-4 z-[60]..." />
                 )}
-
                 <header className="md:hidden flex items-center justify-between p-4 border-b border-gray-200 bg-white/80 backdrop-blur-md sticky top-0 z-30">
-                    <div className="flex items-center gap-2">
-                        <div className="h-8 w-8 rounded-lg bg-gray-900 flex items-center justify-center shadow-sm">
-                            <span className="font-bold text-white text-xs">{role?.[0]}</span>
-                        </div>
-                        <div>
-                            <h1 className="font-bold text-lg tracking-tight text-gray-900">{role} Panel</h1>
+                    ...
+                </header>
+                */}
+
+                {/* NEW ENTERPRISE CONTEXT BAR */}
+                <header className="sticky top-0 z-30 flex items-center justify-between px-4 md:px-6 h-14 border-b border-slate-200 bg-white/80 backdrop-blur-md">
+                    <div className="flex items-center gap-3">
+                        {isDesktopCollapsed && (
+                            <button
+                                onClick={() => setIsDesktopCollapsed(false)}
+                                className="hidden md:flex p-1.5 -ml-1.5 text-slate-500 hover:text-slate-900 rounded-md hover:bg-slate-100 transition-colors"
+                                title="Expand Sidebar"
+                            >
+                                <ChevronRight className="w-5 h-5" />
+                            </button>
+                        )}
+                        <button onClick={() => setIsSidebarOpen(true)} className="md:hidden p-1.5 -ml-1.5 text-slate-500 hover:text-slate-900 rounded-md hover:bg-slate-100 transition-colors">
+                            <Menu className="w-5 h-5" />
+                        </button>
+
+                        <div className="flex items-center gap-2 text-[13px]">
+                            <span className="font-semibold text-slate-900 tracking-tight">NEXUS</span>
+                            <span className="text-slate-400">/</span>
+                            <span className="text-slate-600 font-medium hidden sm:inline">AIT Pune</span>
+                            <span className="text-slate-400 hidden sm:inline">/</span>
+                            <span className="text-slate-900 font-medium">
+                                {tabs.find(t => t.id === activeTab)?.label || 
+                                 (activeTab === 'manage-forms' ? 'Manage Forms' : 
+                                 activeTab === 'responses' ? 'Responses' : 
+                                 activeTab === 'iqac-events' ? 'IQAC Reports' : 
+                                 activeTab === 'forms' ? 'Forms' : 'Dashboard')}
+                            </span>
                         </div>
                     </div>
-                    <button onClick={() => setIsSidebarOpen(true)} className="p-2 text-gray-500 hover:text-gray-900">
-                        <Menu className="h-6 w-6" />
-                    </button>
+                    
+                    <div className="flex items-center gap-3">
+                        <div className="hidden sm:flex items-center gap-1.5 opacity-50" title="Built by GDG AIT Pune">
+                            <div className="w-1.5 h-1.5 rounded-full bg-blue-500"></div>
+                            <div className="w-1.5 h-1.5 rounded-full bg-red-500"></div>
+                            <div className="w-1.5 h-1.5 rounded-full bg-yellow-500"></div>
+                            <div className="w-1.5 h-1.5 rounded-full bg-green-500"></div>
+                        </div>
+                    </div>
                 </header>
 
                 <div className={`flex-1 overflow-y-auto ${!isStandalonePage && activeTab !== 'responses' ? (activeTab === 'overview' ? 'p-4 md:px-8' : 'p-4 md:p-8') : ''}`}>

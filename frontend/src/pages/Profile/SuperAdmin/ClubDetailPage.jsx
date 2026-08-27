@@ -7,7 +7,7 @@ import { generateIqacPdf } from './generateIqacPdf';
 import useSuperAdminAccess from '@/hooks/useSuperAdminAccess';
 import useDebouncedValue from '@/hooks/useDebouncedValue';
 import { useAuth } from '@/context/AuthContext';
-import SuperAdminSidebar, { SuperAdminMobileHeader, SuperAdminExpandButton } from './SuperAdminSidebar';
+import SuperAdminSidebar, { SuperAdminContextHeader } from './SuperAdminSidebar';
 import UserDetailsModal from './UserDetailsModal';
 
 const API = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
@@ -320,9 +320,12 @@ export default function ClubDetailPage() {
             />
 
             <main className={`flex-1 flex flex-col min-w-0 bg-transparent relative transition-all duration-300 ${!isDesktopCollapsed ? 'md:ml-68' : 'md:ml-0'}`}>
-                <SuperAdminExpandButton isDesktopCollapsed={isDesktopCollapsed} setIsDesktopCollapsed={setIsDesktopCollapsed} />
-
-                <SuperAdminMobileHeader setIsSidebarOpen={setIsSidebarOpen} />
+                <SuperAdminContextHeader 
+                    isDesktopCollapsed={isDesktopCollapsed} 
+                    setIsDesktopCollapsed={setIsDesktopCollapsed} 
+                    setIsSidebarOpen={setIsSidebarOpen}
+                    activeTabLabel={club?.name || 'Club Details'}
+                />
 
                 <div className="flex-1 overflow-y-auto p-4 md:p-8">
                 <div className="max-w-4xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500">

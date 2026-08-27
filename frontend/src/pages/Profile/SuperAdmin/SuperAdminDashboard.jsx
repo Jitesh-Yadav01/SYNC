@@ -6,7 +6,7 @@ import { useAuth } from '@/context/AuthContext';
 import SuperOverview from './SuperOverview';
 import ManageClubs from './ManageClubs';
 import IqacReports from './IqacReports';
-import SuperAdminSidebar, { SuperAdminMobileHeader, SuperAdminExpandButton } from './SuperAdminSidebar';
+import SuperAdminSidebar, { SuperAdminContextHeader } from './SuperAdminSidebar';
 
 const Students = React.lazy(() => import('./Students'));
 
@@ -91,9 +91,16 @@ export default function SuperAdminDashboard({ admin }) {
             />
 
             <main className={`flex-1 flex flex-col min-w-0 bg-transparent relative transition-all duration-300 ${!isDesktopCollapsed ? 'md:ml-64' : 'md:ml-0'}`}>
-                <SuperAdminExpandButton isDesktopCollapsed={isDesktopCollapsed} setIsDesktopCollapsed={setIsDesktopCollapsed} />
-
-                <SuperAdminMobileHeader setIsSidebarOpen={setIsSidebarOpen} />
+                <SuperAdminContextHeader 
+                    isDesktopCollapsed={isDesktopCollapsed} 
+                    setIsDesktopCollapsed={setIsDesktopCollapsed} 
+                    setIsSidebarOpen={setIsSidebarOpen}
+                    activeTabLabel={
+                        activeTab === 'clubs' ? 'Manage Clubs' :
+                        activeTab === 'students' ? 'Students' :
+                        activeTab === 'reports' ? 'Reports' : 'Overview'
+                    }
+                />
 
                 <div className="flex-1 overflow-y-auto p-4 md:p-8">
                     <div className="max-w-6xl mx-auto w-full animate-in fade-in slide-in-from-bottom-4 duration-500">
