@@ -318,7 +318,7 @@ export default function ClubDetailPage() {
                 onLogout={handleLogout}
             />
 
-            <main className={`flex-1 flex flex-col min-w-0 bg-transparent relative transition-all duration-300 ${!isDesktopCollapsed ? 'md:ml-68' : 'md:ml-0'}`}>
+            <main className={`flex-1 flex flex-col min-w-0 bg-transparent relative transition-all duration-300 ${!isDesktopCollapsed ? 'md:ml-64' : 'md:ml-20'} pb-20 md:pb-0`}>
                 <SuperAdminContextHeader 
                     isDesktopCollapsed={isDesktopCollapsed} 
                     setIsDesktopCollapsed={setIsDesktopCollapsed} 
