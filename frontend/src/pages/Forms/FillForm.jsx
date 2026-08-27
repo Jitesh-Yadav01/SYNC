@@ -44,6 +44,18 @@ export default function FillForm() {
     Object.values(filesRef.current).forEach((fileGroup) => revokeSelectedFiles(fileGroup));
   }, []);
 
+  const handleBack = () => {
+    if (window.history.length > 2) {
+      navigate(-1);
+    } else {
+      if (user) {
+        navigate(`/profile/${user.role === 'member' ? 'Member' : 'Applicant'}`, { state: { activeTab: 'forms' } });
+      } else {
+        navigate('/');
+      }
+    }
+  };
+
   const fetchForm = useCallback(async () => {
     setLoading(true);
     try {
@@ -287,7 +299,7 @@ export default function FillForm() {
         <div className="max-w-sm rounded-xl border bg-white p-8 text-center shadow-sm">
           <h2 className="mb-2 text-xl font-bold text-red-600">Error</h2>
           <p className="mb-4 text-gray-600">{error}</p>
-          <button onClick={() => navigate(-1)} className="rounded-lg bg-gray-100 px-4 py-2 text-sm transition hover:bg-gray-200">
+          <button onClick={handleBack} className="rounded-lg bg-gray-100 px-4 py-2 text-sm transition hover:bg-gray-200">
             Go Back
           </button>
         </div>
@@ -395,7 +407,7 @@ export default function FillForm() {
     return (
       <div className="min-h-screen bg-gray-50 px-4 py-10">
         <div className="mx-auto max-w-2xl">
-          <button onClick={() => navigate(-1)} className="mb-6 inline-flex items-center gap-2 text-sm text-blue-600 hover:underline">
+          <button onClick={handleBack} className="mb-6 inline-flex items-center gap-2 text-sm text-blue-600 hover:underline">
             ← Back
           </button>
 
@@ -495,7 +507,7 @@ export default function FillForm() {
           <p className="mb-6 text-gray-500">
             Your response for <span className="font-medium text-gray-700">{form?.title}</span> has been recorded.
           </p>
-          <button onClick={() => navigate(-1)} className="rounded-lg bg-blue-600 px-6 py-2.5 text-sm font-medium text-white transition hover:bg-blue-700">
+          <button onClick={handleBack} className="rounded-lg bg-blue-600 px-6 py-2.5 text-sm font-medium text-white transition hover:bg-blue-700">
             Back to Dashboard
           </button>
         </div>
@@ -506,7 +518,7 @@ export default function FillForm() {
   return (
     <div className="min-h-screen bg-gray-50 px-4 py-10">
       <div className="mx-auto max-w-2xl">
-        <button onClick={() => navigate(-1)} className="mb-6 inline-flex items-center gap-2 text-sm text-blue-600 hover:underline">
+        <button onClick={handleBack} className="mb-6 inline-flex items-center gap-2 text-sm text-blue-600 hover:underline">
           ← Back
         </button>
 
