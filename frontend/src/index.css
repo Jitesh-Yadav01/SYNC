@@ -28,6 +28,10 @@
 
 @theme {
   --font-jersey-20: "Jersey 20", sans-serif;
+  --color-gdg-blue: var(--gdg-blue);
+  --color-gdg-red: var(--gdg-red);
+  --color-gdg-yellow: var(--gdg-yellow);
+  --color-gdg-green: var(--gdg-green);
 }
 
 *,

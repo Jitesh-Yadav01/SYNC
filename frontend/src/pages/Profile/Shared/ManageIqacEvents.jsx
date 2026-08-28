@@ -189,7 +189,7 @@ export default function ManageIqacEvents() {
                 </div>
                 <button
                     onClick={() => openModal()}
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-gdg-blue text-white text-sm font-medium rounded-lg hover:bg-[#3367d6] transition-colors"
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-gdg-blue text-white text-sm font-medium rounded-lg hover:bg-[#3367d6] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gdg-blue focus-visible:ring-offset-2 transition-colors"
                 >
                     <Plus className="h-4 w-4" /> Create Event
                 </button>

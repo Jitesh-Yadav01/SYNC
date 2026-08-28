@@ -202,7 +202,7 @@ export default function SharedDashboardLayout({ children }) {
                                     )}
                                 >
                                     {!isStandalonePage && isActive && <div className={cn("absolute bg-gdg-blue rounded-r-md transition-all duration-300", isDesktopCollapsed ? "left-0 top-2 bottom-2 w-[3px]" : "left-0 top-1.5 bottom-1.5 w-[3px]")} />}
-                                    <tab.icon className={cn('shrink-0 transition-colors', isDesktopCollapsed ? 'h-5 w-5' : 'h-[18px] w-[18px]', !isStandalonePage && isActive ? 'text-gdg-blue' : 'text-slate-400 group-hover:text-slate-600')} />
+                                    <tab.icon className={cn('shrink-0 transition-colors', isDesktopCollapsed ? 'h-5 w-5' : 'h-[18px] w-[18px]', !isStandalonePage && isActive ? 'text-gdg-blue' : 'text-slate-500 group-hover:text-slate-700')} />
                                     {!isDesktopCollapsed && <span className="text-[13px]">{tab.label}</span>}
                                     {isDesktopCollapsed && (
                                         <div className="absolute left-full ml-3 px-2.5 py-1.5 bg-slate-900 text-white text-[11px] font-medium rounded opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50">
@@ -236,7 +236,7 @@ export default function SharedDashboardLayout({ children }) {
                                             )}
                                         >
                                             {isActive && <div className={cn("absolute bg-gdg-blue rounded-r-md transition-all duration-300", isDesktopCollapsed ? "left-0 top-2 bottom-2 w-[3px]" : "left-0 top-1.5 bottom-1.5 w-[3px]")} />}
-                                            <tab.icon className={cn('shrink-0 transition-colors', isDesktopCollapsed ? 'h-5 w-5' : 'h-[18px] w-[18px]', isActive ? 'text-gdg-blue' : 'text-slate-400 group-hover:text-slate-600')} />
+                                            <tab.icon className={cn('shrink-0 transition-colors', isDesktopCollapsed ? 'h-5 w-5' : 'h-[18px] w-[18px]', isActive ? 'text-gdg-blue' : 'text-slate-500 group-hover:text-slate-700')} />
                                             {!isDesktopCollapsed && <span className="text-[13px]">{tab.label}</span>}
                                             {isDesktopCollapsed && (
                                                 <div className="absolute left-full ml-3 px-2.5 py-1.5 bg-slate-900 text-white text-[11px] font-medium rounded opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50">
@@ -260,7 +260,7 @@ export default function SharedDashboardLayout({ children }) {
                                     )}
                                 >
                                     {activeTab === 'iqac-events' && <div className={cn("absolute bg-gdg-blue rounded-r-md transition-all duration-300", isDesktopCollapsed ? "left-0 top-2 bottom-2 w-[3px]" : "left-0 top-1.5 bottom-1.5 w-[3px]")} />}
-                                    <FileBarChart className={cn('shrink-0 transition-colors', isDesktopCollapsed ? 'h-5 w-5' : 'h-[18px] w-[18px]', activeTab === 'iqac-events' ? 'text-gdg-blue' : 'text-slate-400 group-hover:text-slate-600')} />
+                                    <FileBarChart className={cn('shrink-0 transition-colors', isDesktopCollapsed ? 'h-5 w-5' : 'h-[18px] w-[18px]', activeTab === 'iqac-events' ? 'text-gdg-blue' : 'text-slate-500 group-hover:text-slate-700')} />
                                     {!isDesktopCollapsed && <span className="text-[13px]">IQAC Reports</span>}
                                     {isDesktopCollapsed && (
                                         <div className="absolute left-full ml-3 px-2.5 py-1.5 bg-slate-900 text-white text-[11px] font-medium rounded opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50">
@@ -293,7 +293,7 @@ export default function SharedDashboardLayout({ children }) {
                                             )}
                                         >
                                             {isActive && <div className={cn("absolute bg-gdg-blue rounded-r-md transition-all duration-300", isDesktopCollapsed ? "left-0 top-2 bottom-2 w-[3px]" : "left-0 top-1.5 bottom-1.5 w-[3px]")} />}
-                                            <tab.icon className={cn('shrink-0 transition-colors', isDesktopCollapsed ? 'h-5 w-5' : 'h-[18px] w-[18px]', isActive ? 'text-gdg-blue' : 'text-slate-400 group-hover:text-slate-600')} />
+                                            <tab.icon className={cn('shrink-0 transition-colors', isDesktopCollapsed ? 'h-5 w-5' : 'h-[18px] w-[18px]', isActive ? 'text-gdg-blue' : 'text-slate-500 group-hover:text-slate-700')} />
                                             {!isDesktopCollapsed && <span className="text-[13px]">{tab.label}</span>}
                                             {isDesktopCollapsed && (
                                                 <div className="absolute left-full ml-3 px-2.5 py-1.5 bg-slate-900 text-white text-[11px] font-medium rounded opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50">
@@ -324,7 +324,7 @@ export default function SharedDashboardLayout({ children }) {
                                     )}
                                 >
                                     {activeTab === 'forms' && <div className={cn("absolute bg-gdg-blue rounded-r-md transition-all duration-300", isDesktopCollapsed ? "left-0 top-2 bottom-2 w-[3px]" : "left-0 top-1.5 bottom-1.5 w-[3px]")} />}
-                                    <FileText className={cn('shrink-0 transition-colors', isDesktopCollapsed ? 'h-5 w-5' : 'h-[18px] w-[18px]', activeTab === 'forms' ? 'text-gdg-blue' : 'text-slate-400 group-hover:text-slate-600')} />
+                                    <FileText className={cn('shrink-0 transition-colors', isDesktopCollapsed ? 'h-5 w-5' : 'h-[18px] w-[18px]', activeTab === 'forms' ? 'text-gdg-blue' : 'text-slate-500 group-hover:text-slate-700')} />
                                     {!isDesktopCollapsed && <span className="text-[13px]">Forms</span>}
                                     {isDesktopCollapsed && (
                                         <div className="absolute left-full ml-3 px-2.5 py-1.5 bg-slate-900 text-white text-[11px] font-medium rounded opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50">

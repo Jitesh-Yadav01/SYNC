@@ -220,7 +220,9 @@ export default function MyForms() {
                                         <div
                                             key={form._id}
                                             onClick={() => setEditingForm(form)}
-                                            className="group relative bg-white rounded-xl shadow-sm border border-gray-100 p-5 flex flex-col gap-3 cursor-pointer hover:shadow-md hover:border-blue-100 transition-all duration-200 w-full sm:w-[calc(50%-10px)] lg:w-[calc(33.333%-14px)]"
+                                            onKeyDown={(e) => { if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setEditingForm(form); } }}
+                                            tabIndex={0}
+                                            className="group relative bg-white rounded-xl shadow-sm border border-gray-100 p-5 flex flex-col gap-3 cursor-pointer hover:shadow-md hover:border-blue-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:border-transparent transition-all duration-200 w-full sm:w-[calc(50%-10px)] lg:w-[calc(33.333%-14px)]"
                                         >
                                             {/* Action buttons */}
                                             <div className="absolute top-3 right-3 flex items-center gap-2">
@@ -232,14 +234,14 @@ export default function MyForms() {
                                                             navigator.clipboard.writeText(linksText);
                                                             toast.success("Link copied to clipboard.");
                                                         }}
-                                                        className="text-gray-300 hover:text-blue-500 transition-colors opacity-0 group-hover:opacity-100"
+                                                        className="text-gray-400 hover:text-blue-600 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded p-1"
                                                         title="Share form"
                                                     >
                                                         <Share2 className="h-4 w-4" />
                                                     </button>
                                                 )}
                                                 {/* Edit hint */}
-                                                <div className="text-gray-300 hover:text-blue-500 transition-colors opacity-0 group-hover:opacity-100" title="Edit form">
+                                                <div className="text-gray-400 hover:text-blue-600 transition-colors p-1" title="Edit form">
                                                     <Pencil className="h-3.5 w-3.5" />
                                                 </div>
                                                 {/* Delete button */}
