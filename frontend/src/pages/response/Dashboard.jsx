@@ -453,7 +453,7 @@ const Dashboard = ({ viewerRole = 'admin', isEmbedded = false }) => {
       </div>
 
          <main className="flex flex-col flex-1 min-h-0 overflow-hidden">
-         <div className="z-20 flex shrink-0 flex-col items-center justify-between gap-3 border-b border-slate-200 bg-white px-4 py-3 sm:flex-row w-full">
+         <div className="z-20 flex shrink-0 flex-col gap-3 border-b border-slate-200 bg-white px-4 py-3 sm:flex-row sm:items-center sm:justify-between w-full">
               <div className="flex items-center gap-3 w-full sm:w-auto">
                   <h2 className="text-base font-semibold tracking-tight text-slate-900 hidden md:block">
                     {selectedForm ? selectedForm.title : 'Responses'}
@@ -474,13 +474,25 @@ const Dashboard = ({ viewerRole = 'admin', isEmbedded = false }) => {
                      </select>
                   )}
               </div>
-              <div className="flex items-center gap-3 w-full sm:w-auto">
-                 {forms.length > 0 && (
-                    <>
+              
+              {forms.length > 0 && (
+                 <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
+                    <div className="relative w-full sm:w-56">
+                      <Search className="absolute left-2.5 top-2 h-4 w-4 text-slate-500" />
+                      <input
+                        type="text"
+                        placeholder="Search applicants..."
+                        value={searchTerm}
+                        onChange={e => setSearchTerm(e.target.value)}
+                        className="flex h-8 w-full rounded border border-slate-200 bg-transparent px-3 py-1 pl-8 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm placeholder:text-slate-500 text-slate-900 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950"
+                      />
+                    </div>
+                    
+                    <div className="grid grid-cols-3 gap-2 w-full sm:flex sm:w-auto sm:items-center sm:gap-3">
                       <select
                         value={filterStatus}
                         onChange={e => setFilterStatus(e.target.value)}
-                        className="h-8 w-full sm:w-36 rounded border border-slate-200 bg-white px-2 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950 text-slate-900"
+                        className="h-8 w-full sm:w-36 rounded border border-slate-200 bg-white px-1 py-1 text-[11px] sm:px-2 sm:text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950 text-slate-900"
                       >
                         <option value="all">All Statuses</option>
                         <option value="pending">Pending</option>
@@ -492,7 +504,7 @@ const Dashboard = ({ viewerRole = 'admin', isEmbedded = false }) => {
                       <select
                         value={filterBranch}
                         onChange={e => setFilterBranch(e.target.value)}
-                        className="h-8 w-full sm:w-36 rounded border border-slate-200 bg-white px-2 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950 text-slate-900"
+                        className="h-8 w-full sm:w-36 rounded border border-slate-200 bg-white px-1 py-1 text-[11px] sm:px-2 sm:text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950 text-slate-900"
                       >
                         <option value="all">All Branches</option>
                         <option value="COMP">COMP</option>
@@ -502,37 +514,26 @@ const Dashboard = ({ viewerRole = 'admin', isEmbedded = false }) => {
                         <option value="AI&DS">AI&DS</option>
                       </select>
                       
-                      <div className="relative w-full sm:w-56">
-                        <Search className="absolute left-2.5 top-2 h-4 w-4 text-slate-500" />
-                        <input
-                          type="text"
-                          placeholder="Search applicants..."
-                          value={searchTerm}
-                          onChange={e => setSearchTerm(e.target.value)}
-                          className="flex h-8 w-full rounded border border-slate-200 bg-transparent px-3 py-1 pl-8 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm placeholder:text-slate-500 text-slate-900 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950"
-                        />
-                      </div>
-                      
                       <button
                         onClick={handleExport}
                         disabled={exporting || filteredResponses.length === 0}
-                        className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950 disabled:pointer-events-none disabled:opacity-50 border border-slate-200 bg-white shadow-sm hover:bg-slate-100 hover:text-slate-900 text-slate-900 h-8 px-3 gap-2"
+                        className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-[11px] sm:text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950 disabled:pointer-events-none disabled:opacity-50 border border-slate-200 bg-white shadow-sm hover:bg-slate-100 hover:text-slate-900 text-slate-900 h-8 px-1 sm:px-3 gap-1 sm:gap-2"
                       >
                         {exporting ? (
                             <>
-                                <div className="h-4 w-4 animate-spin rounded-full border-2 border-slate-200 border-t-slate-900" />
-                                Exporting...
+                                <div className="h-3 w-3 sm:h-4 sm:w-4 animate-spin rounded-full border-2 border-slate-200 border-t-slate-900" />
+                                <span className="hidden sm:inline">Exporting...</span>
                             </>
                         ) : (
                             <>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                                Export CSV
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="sm:w-3.5 sm:h-3.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                Export
                             </>
                         )}
                       </button>
-                    </>
-                 )}
-              </div>
+                    </div>
+                 </div>
+              )}
          </div>
          <div className="flex flex-1 min-h-0 overflow-hidden">
         

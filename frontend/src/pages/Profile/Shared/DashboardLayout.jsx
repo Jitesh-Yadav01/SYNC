@@ -520,7 +520,7 @@ export default function SharedDashboardLayout({ children }) {
                 !isDesktopCollapsed ? "md:ml-64" : "md:ml-20"
             )}>
                 {/* NEW ENTERPRISE CONTEXT BAR */}
-                <header className="sticky top-0 z-30 flex items-center justify-between px-4 md:px-6 h-14 border-b border-mongo-border bg-mongo-elevated/90 backdrop-blur-xl shadow-sm">
+                <header className="hidden md:flex sticky top-0 z-30 items-center justify-between px-4 md:px-6 h-14 border-b border-mongo-border bg-mongo-elevated/90 backdrop-blur-xl shadow-sm">
             <div className="absolute top-0 left-0 right-0 flex h-[2px] opacity-80"><div className="flex-1 bg-gdg-red"></div><div className="flex-1 bg-gdg-blue"></div><div className="flex-1 bg-gdg-yellow"></div><div className="flex-1 bg-gdg-green"></div></div>
                     <div className="flex items-center gap-4">
                         {isDesktopCollapsed && (
