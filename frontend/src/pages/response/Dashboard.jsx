@@ -511,7 +511,7 @@ const Dashboard = ({ viewerRole = 'admin', isEmbedded = false }) => {
                         <option value="IT">IT</option>
                         <option value="ENTC">ENTC</option>
                         <option value="MECH">MECH</option>
-                        <option value="AI&DS">AI&DS</option>
+                        <option value="AI&DS">ARE</option>
                       </select>
                       
                       <button

@@ -164,7 +164,7 @@ export default function Students() {
                         onChange={(e) => setBranchFilter(e.target.value)}
                         className="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-gdg-blue focus:border-gdg-blue p-2 shadow-sm"
                     >
-                        {['All Branches', 'COMP', 'IT', 'ENTC', 'MECH', 'AI&DS'].map(b => (
+                        {['All Branches', 'COMP', 'IT', 'ENTC', 'MECH', 'ARE'].map(b => (
                             <option key={b} value={b}>{b}</option>
                         ))}
                     </select>
