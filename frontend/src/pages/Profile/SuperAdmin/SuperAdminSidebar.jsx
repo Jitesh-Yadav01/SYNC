@@ -1,5 +1,5 @@
 import React from 'react';
-import { LayoutDashboard, Building2, FileBarChart, LogOut, Menu, X, ChevronRight, ShieldCheck, Users, MoreHorizontal, SquareChevronRight } from 'lucide-react';
+import { LayoutDashboard, Building2, FileBarChart, LogOut, Menu, X, ChevronRight, Ghost, Users, MoreHorizontal, SquareChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const ROLE_LABEL = { director: 'Director', principal: 'Principal', jd: 'Joint Director', maintainer: 'Maintainer' };
@@ -40,7 +40,7 @@ export default function SuperAdminSidebar({
                     <div className="flex items-center justify-between mb-8">
                         <div className="flex items-center gap-3">
                             <div className="h-8 w-8 rounded-md bg-slate-900 flex items-center justify-center shadow-sm">
-                                <ShieldCheck className="h-4 w-4 text-white" />
+                                <Ghost className="h-4 w-4 text-white" />
                             </div>
                             <div>
                                 <h1 className="font-bold text-lg tracking-tight text-gray-900">SuperAdmin</h1>

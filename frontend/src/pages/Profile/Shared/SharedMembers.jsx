@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useProfile } from './ProfileContext';
-import { Plus, Trash2, Search, Pencil, ShieldCheck, Loader2 } from 'lucide-react';
+import { Plus, Trash2, Search, Pencil, Ghost, Loader2 } from 'lucide-react';
 
 const API = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
 
@@ -170,7 +170,7 @@ export default function SharedMembers() {
                 <div className="bg-white border border-gray-200 rounded-xl shadow-sm">
                     <div className="p-4 border-b border-gray-200 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                         <div className="flex items-center gap-2">
-                            <ShieldCheck className="h-5 w-5 text-gdg-blue" />
+                            <Ghost className="h-5 w-5 text-gdg-blue" />
                             <h3 className="font-semibold text-gray-900">Secretaries</h3>
                         </div>
                         {isFaculty && (

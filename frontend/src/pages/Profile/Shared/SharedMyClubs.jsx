@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAuth } from '@/context/AuthContext';
-import { Building, ShieldCheck, ChevronRight } from 'lucide-react';
+import { Building, Ghost, ChevronRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
@@ -69,7 +69,7 @@ export default function SharedMyClubs() {
             <div className="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
                 <div className="p-4 border-b border-gray-200 bg-gray-50/50">
                     <h3 className="font-semibold text-gray-900 flex items-center gap-2">
-                        <ShieldCheck className="w-5 h-5 text-green-600" />
+                        <Ghost className="w-5 h-5 text-green-600" />
                         Official Memberships
                     </h3>
                 </div>

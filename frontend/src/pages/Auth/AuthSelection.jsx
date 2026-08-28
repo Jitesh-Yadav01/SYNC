@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Building, User, ChevronRight, ShieldCheck } from "lucide-react";
+import { ArrowLeft, Building, User, ChevronRight, Ghost } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "react-toastify";
 import axios from "axios";
@@ -442,7 +442,7 @@ const AuthSelection = () => {
               className="w-full group relative flex items-center gap-4 p-5 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all text-left mt-4"
             >
               <div className="h-10 w-10 rounded-full bg-white/5 flex items-center justify-center shrink-0 border border-white/10 group-hover:scale-105 transition-transform">
-                <ShieldCheck className="h-5 w-5 text-slate-300" />
+                <Ghost className="h-5 w-5 text-slate-300" />
               </div>
               <div className="flex-1 min-w-0">
                 <h3 className="text-lg font-medium text-white">

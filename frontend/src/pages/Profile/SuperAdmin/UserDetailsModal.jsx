@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { X, Mail, Hash, GraduationCap, Layers, ShieldCheck, Phone, FileText, Calendar } from 'lucide-react';
+import { X, Mail, Hash, GraduationCap, Layers, Ghost, Phone, FileText, Calendar } from 'lucide-react';
 
 export default function UserDetailsModal({ user, onClose }) {
     useEffect(() => {
@@ -18,7 +18,7 @@ export default function UserDetailsModal({ user, onClose }) {
         { icon: Hash, label: 'Regn. No.', value: user.regnNo ?? '—' },
         { icon: GraduationCap, label: 'Year', value: user.year || '—' },
         { icon: Layers, label: 'Branch', value: user.branch || '—' },
-        { icon: ShieldCheck, label: 'Role', value: user.role || '—' },
+        { icon: Ghost, label: 'Role', value: user.role || '—' },
         { icon: Phone, label: 'Number', value: user.number ?? '—' },
         { icon: FileText, label: 'Auth Provider', value: user.authProvider || '—' },
         { icon: Calendar, label: 'Joined', value: user.createdAt ? new Date(user.createdAt).toLocaleDateString() : '—' },
