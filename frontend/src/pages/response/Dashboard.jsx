@@ -12,7 +12,7 @@ import { ExternalLink, ImageIcon } from 'lucide-react';
 import { isImageUrl, isUploadUrl } from '@/lib/fileUpload';
 
 const API = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
-import { Search, Star, MessageSquare, Trophy, Plus } from 'lucide-react';
+import { Search, Star, MessageSquare, Trophy, Plus, ArrowLeft } from 'lucide-react';
 
 const Dashboard = ({ viewerRole = 'admin', isEmbedded = false }) => {
    const location = useLocation();
@@ -32,6 +32,7 @@ const Dashboard = ({ viewerRole = 'admin', isEmbedded = false }) => {
   const [updatingDecision, setUpdatingDecision] = useState(false);
   const [exporting, setExporting] = useState(false);
    const [expandedFile, setExpandedFile] = useState(null);
+   const [showMobileList, setShowMobileList] = useState(true);
 
    const fetchClubRef = useRef("");
    const fetchFormRef = useRef("");
@@ -417,9 +418,26 @@ const Dashboard = ({ viewerRole = 'admin', isEmbedded = false }) => {
     });
   }, [rankedResponses, filterStatus, searchTerm, getDisplayName]);
 
+  const currentApplicantIndex = useMemo(() => {
+    if (!selectedResponseId || filteredResponses.length === 0) return -1;
+    return filteredResponses.findIndex(r => r._id === selectedResponseId);
+  }, [selectedResponseId, filteredResponses]);
+
+  const handlePreviousApplicant = () => {
+    if (currentApplicantIndex > 0) {
+      setSelectedResponseId(filteredResponses[currentApplicantIndex - 1]._id);
+    }
+  };
+
+  const handleNextApplicant = () => {
+    if (currentApplicantIndex !== -1 && currentApplicantIndex < filteredResponses.length - 1) {
+      setSelectedResponseId(filteredResponses[currentApplicantIndex + 1]._id);
+    }
+  };
+
    return (
-      <div className="flex h-screen flex-col overflow-hidden bg-white text-slate-950 font-mono">
-      <div className="sticky top-0 z-30 shrink-0 bg-white">
+      <div className="flex h-screen flex-col overflow-hidden bg-slate-50 text-slate-900 font-sans">
+      <div className="sticky top-0 z-30 shrink-0 bg-white border-b border-slate-200 shadow-sm">
          <DashboardHeader />
       </div>
 
@@ -427,11 +445,11 @@ const Dashboard = ({ viewerRole = 'admin', isEmbedded = false }) => {
         
         {/* LEFT PANE - Applicant List - Shows only if forms exist and are loaded */}
         {!loadingResponses && forms.length > 0 && selectedForm && (
-               <div className="w-64 shrink-0 overflow-y-auto border-r border-slate-200 bg-slate-50/30 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-            <div className="px-4 py-3 border-b border-slate-200 bg-slate-50/80 backdrop-blur sticky top-0 z-10 flex items-center justify-between">
+               <div className={`shrink-0 overflow-y-auto border-r border-slate-200 bg-slate-50/50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] ${showMobileList ? 'flex flex-col w-full md:w-80' : 'hidden md:flex md:w-80 flex-col'}`}>
+            <div className="px-4 py-3 border-b border-slate-200 bg-slate-50/90 backdrop-blur sticky top-0 z-10 flex items-center justify-between">
               <h3 className="text-sm font-semibold tracking-tight text-slate-900">Applicants</h3>
               {filteredResponses.length > 0 && (
-                  <span className="inline-flex items-center rounded-full border border-slate-200 px-2 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-slate-950 focus:ring-offset-2 bg-slate-100 text-slate-900">
+                  <span className="inline-flex items-center rounded-full border border-slate-200 px-2 py-0.5 text-xs font-semibold transition-colors bg-white text-slate-700">
                     {filteredResponses.length}
                   </span>
               )}
@@ -443,7 +461,10 @@ const Dashboard = ({ viewerRole = 'admin', isEmbedded = false }) => {
                   applicant={r}
                   rank={r.rank}
                   isSelected={selectedResponseId === r._id}
-                  onClick={() => setSelectedResponseId(r._id)}
+                  onClick={() => {
+                     setSelectedResponseId(r._id);
+                     setShowMobileList(false);
+                  }}
                 />
               ))}
               {filteredResponses.length === 0 && (
@@ -454,10 +475,18 @@ const Dashboard = ({ viewerRole = 'admin', isEmbedded = false }) => {
         )}
 
         {/* RIGHT PANE - Main Details Workspace */}
-      <div className="relative flex min-w-0 flex-1 flex-col bg-white">
+      <div className={`relative min-w-0 flex-1 flex-col bg-white ${showMobileList ? 'hidden md:flex' : 'flex'}`}>
+          
+          {/* Mobile Back Button */}
+          <div className="md:hidden border-b border-slate-200 bg-slate-50 px-4 py-3 flex items-center shrink-0">
+             <button onClick={() => setShowMobileList(true)} className="flex items-center gap-2 text-slate-700 font-semibold hover:text-slate-900 transition-colors">
+                 <ArrowLeft className="w-5 h-5" />
+                 <span>Applicants</span>
+             </button>
+          </div>
           
           {/* Top Action Bar */}
-          <div className="sticky top-0 z-20 flex shrink-0 flex-col items-center justify-between gap-3 border-b border-slate-200 bg-white/95 px-4 py-2 backdrop-blur sm:flex-row">
+          <div className="sticky top-0 z-20 flex shrink-0 flex-col items-center justify-between gap-3 border-b border-slate-200 bg-white/95 px-4 py-3 backdrop-blur sm:flex-row">
               <div className="flex items-center gap-3 w-full sm:w-auto">
                   <h2 className="text-base font-semibold tracking-tight text-slate-900 hidden md:block">
                     {selectedForm ? selectedForm.title : 'Responses'}
@@ -470,7 +499,7 @@ const Dashboard = ({ viewerRole = 'admin', isEmbedded = false }) => {
                      <select
                        value={selectedFormId}
                        onChange={e => setSelectedFormId(e.target.value)}
-                       className="h-8 w-full sm:w-56 rounded border border-slate-200 bg-white px-2 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950"
+                       className="h-8 w-full sm:w-56 rounded border border-slate-200 bg-white px-2 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950 text-slate-900"
                      >
                        {forms.map(f => (
                          <option key={f._id} value={f._id}>{f.title}</option>
@@ -484,7 +513,7 @@ const Dashboard = ({ viewerRole = 'admin', isEmbedded = false }) => {
                       <select
                         value={filterStatus}
                         onChange={e => setFilterStatus(e.target.value)}
-                        className="h-8 w-full sm:w-36 rounded border border-slate-200 bg-white px-2 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950"
+                        className="h-8 w-full sm:w-36 rounded border border-slate-200 bg-white px-2 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950 text-slate-900"
                       >
                         <option value="all">All Statuses</option>
                         <option value="pending">Pending</option>
@@ -500,14 +529,14 @@ const Dashboard = ({ viewerRole = 'admin', isEmbedded = false }) => {
                           placeholder="Search applicants..."
                           value={searchTerm}
                           onChange={e => setSearchTerm(e.target.value)}
-                          className="flex h-8 w-full rounded border border-slate-200 bg-transparent px-3 py-1 pl-8 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm placeholder:text-slate-500 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950"
+                          className="flex h-8 w-full rounded border border-slate-200 bg-transparent px-3 py-1 pl-8 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm placeholder:text-slate-500 text-slate-900 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950"
                         />
                       </div>
                       
                       <button
                         onClick={handleExport}
                         disabled={exporting || filteredResponses.length === 0}
-                        className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950 disabled:pointer-events-none disabled:opacity-50 border border-slate-200 bg-white shadow-sm hover:bg-slate-100 hover:text-slate-900 h-8 px-3 gap-2"
+                        className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950 disabled:pointer-events-none disabled:opacity-50 border border-slate-200 bg-white shadow-sm hover:bg-slate-100 hover:text-slate-900 text-slate-900 h-8 px-3 gap-2"
                       >
                         {exporting ? (
                             <>
@@ -526,7 +555,7 @@ const Dashboard = ({ viewerRole = 'admin', isEmbedded = false }) => {
               </div>
           </div>
 
-          <div className="min-h-0 flex-1 overflow-y-auto overflow-x-hidden bg-white text-slate-950 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+          <div className="min-h-0 flex-1 overflow-y-auto overflow-x-hidden bg-white text-slate-900 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
              {loadingResponses ? (
                 <div className="flex h-full items-center justify-center">
                   <div className="flex flex-col items-center gap-3">
@@ -564,16 +593,16 @@ const Dashboard = ({ viewerRole = 'admin', isEmbedded = false }) => {
                    const { textAnswers, uploadedAnswers } = getResponseAnswerGroups(answers, displayPriority);
 
                    return (
-                      <div className="w-full p-6 pb-8 space-y-6">
+                        <div className="w-full p-6 pb-8 space-y-6">
                          {/* Header Profile Area */}
                          <div className="pb-4 border-b border-slate-200 flex flex-col sm:flex-row justify-between items-start gap-4">
                             <div className="flex gap-4 items-center">
-                               <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-slate-100 border border-slate-200 text-lg font-semibold text-slate-900 shadow-sm">
+                               <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-slate-100 border border-slate-200 text-lg font-semibold text-slate-700 shadow-sm">
                                   {getInitials(selectedApplicant)}
                                </div>
                                <div>
-                                  <h2 className="text-xl font-bold tracking-tight">{getDisplayName(selectedApplicant)}</h2>
-                                  <div className="flex items-center gap-3 text-xs text-muted-foreground text-slate-500 mt-1">
+                                  <h2 className="text-xl font-bold tracking-tight text-slate-900">{getDisplayName(selectedApplicant)}</h2>
+                                  <div className="flex items-center gap-3 text-xs text-slate-500 mt-1">
                                      <span>{selectedApplicant.userId?.email || getAnswerValue(answers, 'Email')}</span>
                                      <span className="text-slate-300">•</span>
                                      <span>{selectedApplicant.userId?.number || getAnswerValue(answers, 'Phone')}</span>
@@ -590,79 +619,102 @@ const Dashboard = ({ viewerRole = 'admin', isEmbedded = false }) => {
                             </div>
                             
                             <div className="flex flex-col gap-3 w-full sm:w-auto items-start sm:items-end">
-                               <div className="flex items-center gap-2">
-                                 <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">Status</span>
-                                 <div className={`inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold capitalize shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-slate-950 focus:ring-offset-2
-                                     ${currentDecision === 'accepted' ? 'border-transparent bg-emerald-600 text-slate-50 hover:bg-emerald-600/80' :
-                                       currentDecision === 'reviewLater' ? 'border-transparent bg-amber-500 text-slate-50 hover:bg-amber-500/80' :
-                                       currentDecision === 'rejected' ? 'border-transparent bg-red-600 text-slate-50 hover:bg-red-600/80' :
-                                       'border-transparent bg-slate-100 text-slate-900 hover:bg-slate-100/80'}`}>
-                                   {currentDecision === 'reviewLater' ? 'Review Later' : currentDecision}
-                                 </div>
+                                <div className="flex items-center gap-2 w-full justify-between sm:justify-end">
+                                  <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">Status</span>
+                                  <div className={`inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold capitalize shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-slate-950 focus:ring-offset-2
+                                      ${currentDecision === 'accepted' ? 'border-transparent bg-emerald-600 text-white' :
+                                        currentDecision === 'reviewLater' ? 'border-transparent bg-amber-500 text-white' :
+                                        currentDecision === 'rejected' ? 'border-transparent bg-red-600 text-white' :
+                                        'border-transparent bg-slate-100 text-slate-900'}`}>
+                                    {currentDecision === 'reviewLater' ? 'Review Later' : currentDecision}
+                                  </div>
                                 </div>
-                                 <div className="flex gap-2 mt-1">
-                                    <button 
-                                       onClick={() => handleUpdateDecision(selectedApplicant._id, 'accepted')}
-                                       disabled={updatingDecision || currentDecision === 'accepted'}
-                                       className={`inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950 disabled:pointer-events-none disabled:opacity-50 h-9 px-4 py-2
-                                          ${currentDecision === 'accepted' ? 'bg-slate-900 text-slate-50 shadow hover:bg-slate-900/90' : 'border border-slate-200 bg-white shadow-sm hover:bg-slate-100 hover:text-slate-900 text-slate-900'}`}
-                                    >
-                                       Accept
-                                    </button>
-                                    <button 
-                                       onClick={() => handleUpdateDecision(selectedApplicant._id, 'reviewLater')}
-                                       disabled={updatingDecision || currentDecision === 'reviewLater'}
-                                       className={`inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950 disabled:pointer-events-none disabled:opacity-50 h-9 px-4 py-2
-                                          ${currentDecision === 'reviewLater' ? 'bg-slate-900 text-slate-50 shadow hover:bg-slate-900/90' : 'border border-slate-200 bg-white shadow-sm hover:bg-slate-100 hover:text-slate-900 text-slate-900'}`}
-                                    >
-                                       Hold
-                                    </button>
-                                    <button 
-                                       onClick={() => handleUpdateDecision(selectedApplicant._id, 'rejected')}
-                                       disabled={updatingDecision || currentDecision === 'rejected'}
-                                       className={`inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950 disabled:pointer-events-none disabled:opacity-50 h-9 px-4 py-2
-                                          ${currentDecision === 'rejected' ? 'bg-slate-900 text-slate-50 shadow hover:bg-slate-900/90' : 'border border-slate-200 bg-white shadow-sm hover:bg-slate-100 hover:text-slate-900 text-slate-900'}`}
-                                    >
-                                       Reject
-                                    </button>
+                                <div className="flex items-center w-full justify-between sm:justify-end mt-1">
+                                    <div className="flex gap-1 border border-slate-200 rounded-md p-0.5 bg-slate-50 shadow-sm sm:mr-2 shrink-0">
+                                      <button 
+                                        onClick={handlePreviousApplicant} 
+                                        disabled={currentApplicantIndex <= 0}
+                                        className="p-1 text-slate-600 hover:text-slate-900 hover:bg-white rounded disabled:opacity-30 disabled:pointer-events-none transition-colors"
+                                        title="Previous Applicant"
+                                      >
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                                      </button>
+                                      <div className="flex items-center px-1.5 text-[10px] font-semibold text-slate-400 select-none">
+                                        {currentApplicantIndex + 1} / {filteredResponses.length}
+                                      </div>
+                                      <button 
+                                        onClick={handleNextApplicant} 
+                                        disabled={currentApplicantIndex === -1 || currentApplicantIndex >= filteredResponses.length - 1}
+                                        className="p-1 text-slate-600 hover:text-slate-900 hover:bg-white rounded disabled:opacity-30 disabled:pointer-events-none transition-colors"
+                                        title="Next Applicant"
+                                      >
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                                      </button>
+                                    </div>
+                                    <div className="flex gap-2">
+                                       <button 
+                                          onClick={() => handleUpdateDecision(selectedApplicant._id, 'accepted')}
+                                          disabled={updatingDecision || currentDecision === 'accepted'}
+                                          className={`inline-flex items-center justify-center whitespace-nowrap rounded-md text-xs sm:text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950 disabled:pointer-events-none disabled:opacity-50 h-8 sm:h-9 px-3 sm:px-4 py-2
+                                             ${currentDecision === 'accepted' ? 'bg-slate-900 text-white shadow' : 'border border-slate-200 bg-white shadow-sm hover:bg-slate-50 text-slate-900'}`}
+                                       >
+                                          Accept
+                                       </button>
+                                       <button 
+                                          onClick={() => handleUpdateDecision(selectedApplicant._id, 'reviewLater')}
+                                          disabled={updatingDecision || currentDecision === 'reviewLater'}
+                                          className={`inline-flex items-center justify-center whitespace-nowrap rounded-md text-xs sm:text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950 disabled:pointer-events-none disabled:opacity-50 h-8 sm:h-9 px-3 sm:px-4 py-2
+                                             ${currentDecision === 'reviewLater' ? 'bg-slate-900 text-white shadow' : 'border border-slate-200 bg-white shadow-sm hover:bg-slate-50 text-slate-900'}`}
+                                       >
+                                          Hold
+                                       </button>
+                                       <button 
+                                          onClick={() => handleUpdateDecision(selectedApplicant._id, 'rejected')}
+                                          disabled={updatingDecision || currentDecision === 'rejected'}
+                                          className={`inline-flex items-center justify-center whitespace-nowrap rounded-md text-xs sm:text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950 disabled:pointer-events-none disabled:opacity-50 h-8 sm:h-9 px-3 sm:px-4 py-2
+                                             ${currentDecision === 'rejected' ? 'bg-slate-900 text-white shadow' : 'border border-slate-200 bg-white shadow-sm hover:bg-slate-50 text-slate-900'}`}
+                                       >
+                                          Reject
+                                       </button>
+                                    </div>
                                  </div>
                             </div>
                          </div>
 
                          {/* Middle Info Stats using generic shadcn styling */}
-                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <div className="rounded border border-slate-200 bg-white text-slate-950 shadow-sm p-4 flex flex-row items-center justify-between space-y-0">
-                               <div className="flex flex-col space-y-1">
-                                   <div className="text-xs font-semibold tracking-tight text-slate-900 uppercase">Avg Score</div>
-                                   <div className="text-xl font-bold">
+                         <div className="grid grid-cols-3 gap-2 md:gap-4">
+                            <div className="rounded border border-slate-200 bg-white text-slate-900 shadow-sm p-3 md:p-4 flex flex-row items-center justify-between space-y-0">
+                               <div className="flex flex-col space-y-0.5 md:space-y-1">
+                                   <div className="text-[10px] md:text-xs font-semibold tracking-tight text-slate-900 uppercase">Avg Score</div>
+                                   <div className="text-base md:text-xl font-bold">
                                       {(Math.round(averageScore * 10) / 10).toFixed(1)}
-                                      <span className="text-sm text-slate-500 font-medium ml-1">/ 10</span>
+                                      <span className="text-xs md:text-sm text-slate-500 font-medium ml-1">/ 10</span>
                                    </div>
                                </div>
-                               <Star className="text-slate-400 w-5 h-5 fill-slate-100" />
+                               <Star className="text-yellow-400 w-4 h-4 md:w-5 md:h-5 fill-yellow-400 hidden sm:block" />
                             </div>
-                            <div className="rounded border border-slate-200 bg-white text-slate-950 shadow-sm p-4 flex flex-row items-center justify-between space-y-0">
-                               <div className="flex flex-col space-y-1">
-                                   <div className="text-xs font-semibold tracking-tight text-slate-900 uppercase">Reviews</div>
-                                   <div className="text-xl font-bold">{selectedApplicant.review?.length || 0}</div>
+                            <div className="rounded border border-slate-200 bg-white text-slate-900 shadow-sm p-3 md:p-4 flex flex-row items-center justify-between space-y-0">
+                               <div className="flex flex-col space-y-0.5 md:space-y-1">
+                                   <div className="text-[10px] md:text-xs font-semibold tracking-tight text-slate-900 uppercase">Reviews</div>
+                                   <div className="text-base md:text-xl font-bold">{selectedApplicant.review?.length || 0}</div>
                                </div>
-                               <MessageSquare className="text-slate-400 w-5 h-5" />
+                               <MessageSquare className="text-slate-300 w-4 h-4 md:w-5 md:h-5 hidden sm:block" />
                             </div>
-                            <div className="rounded border border-slate-200 bg-white text-slate-950 shadow-sm p-4 flex flex-row items-center justify-between space-y-0">
-                               <div className="flex flex-col space-y-1">
-                                   <div className="text-xs font-semibold tracking-tight text-slate-900 uppercase">Rank</div>
-                                   <div className="text-xl font-bold">
+                            <div className="rounded border border-slate-200 bg-white text-slate-900 shadow-sm p-3 md:p-4 flex flex-row items-center justify-between space-y-0">
+                               <div className="flex flex-col space-y-0.5 md:space-y-1">
+                                   <div className="text-[10px] md:text-xs font-semibold tracking-tight text-slate-900 uppercase">Rank</div>
+                                   <div className="text-base md:text-xl font-bold">
                                       #{selectedApplicant.rank}
-                                      <span className="text-xs text-slate-500 font-medium ml-1">of {rankedResponses.length}</span>
+                                      <span className="text-[10px] md:text-xs text-slate-500 font-medium ml-1">of {rankedResponses.length}</span>
                                    </div>
                                </div>
-                               <Trophy className="text-slate-400 w-5 h-5" />
+                               <Trophy className="text-slate-300 w-4 h-4 md:w-5 md:h-5 hidden sm:block" />
                             </div>
                          </div>
 
                          {/* Form Answers Section */}
                          <div>
-                            <h3 className="text-base font-semibold tracking-tight mb-3">Application Details</h3>
+                            <h3 className="text-base font-semibold tracking-tight text-slate-900 mb-3">Application Details</h3>
                             <div className="rounded-lg border border-slate-200 bg-white shadow-sm overflow-hidden">
                                <table className="w-full text-sm">
                                   <thead>
@@ -680,8 +732,8 @@ const Dashboard = ({ viewerRole = 'admin', isEmbedded = false }) => {
                                         }
                                         const answerStr = String(actualVal || '-');
                                         return (
-                                           <tr key={key} className={`border-b border-slate-100 last:border-0 ${i % 2 === 0 ? 'bg-white' : 'bg-slate-50/50'}`}>
-                                              <td className="px-4 py-3 font-semibold text-slate-600 uppercase text-[11px] tracking-wider align-top">{key}</td>
+                                           <tr key={key} className={`border-b border-slate-200 last:border-0 ${i % 2 === 0 ? 'bg-white' : 'bg-slate-50/50'}`}>
+                                              <td className="px-4 py-3 font-semibold text-slate-700 uppercase text-[11px] tracking-wider align-top">{key}</td>
                                               <td className="px-4 py-3 text-[13px] font-medium text-slate-900 whitespace-pre-wrap leading-relaxed align-top">{answerStr}</td>
                                            </tr>
                                         );
@@ -694,7 +746,7 @@ const Dashboard = ({ viewerRole = 'admin', isEmbedded = false }) => {
                          {/* User Details Section */}
                          {selectedApplicant.userId && (
                             <div>
-                               <h3 className="text-base font-semibold tracking-tight mb-3">User Details</h3>
+                               <h3 className="text-base font-semibold tracking-tight text-slate-900 mb-3">User Details</h3>
                                <div className="rounded-lg border border-slate-200 bg-white shadow-sm overflow-hidden">
                                   <table className="w-full table-fixed text-sm">
                                      <thead>
@@ -715,8 +767,8 @@ const Dashboard = ({ viewerRole = 'admin', isEmbedded = false }) => {
                                            ['Hobbies', selectedApplicant.userId?.hobbies],
                                            ['Bio', selectedApplicant.userId?.bio],
                                         ].map(([key, val], i) => (
-                                           <tr key={key} className={`border-b border-slate-100 last:border-0 ${i % 2 === 0 ? 'bg-white' : 'bg-slate-50/50'}`}>
-                                              <td className="px-4 py-3 font-semibold text-slate-600 uppercase text-[11px] tracking-wider align-top break-words">{key}</td>
+                                           <tr key={key} className={`border-b border-slate-200 last:border-0 ${i % 2 === 0 ? 'bg-white' : 'bg-slate-50/50'}`}>
+                                              <td className="px-4 py-3 font-semibold text-slate-700 uppercase text-[11px] tracking-wider align-top break-words">{key}</td>
                                               <td className="px-4 py-3 text-[13px] font-medium text-slate-900 whitespace-pre-wrap break-words leading-relaxed align-top">{String(val ?? '') || '-'}</td>
                                            </tr>
                                         ))}
@@ -728,7 +780,7 @@ const Dashboard = ({ viewerRole = 'admin', isEmbedded = false }) => {
 
                                      {uploadedAnswers.length > 0 && (
                                         <div>
-                                           <h3 className="mb-3 text-base font-semibold tracking-tight">Uploaded Files</h3>
+                                           <h3 className="mb-3 text-base font-semibold tracking-tight text-slate-900">Uploaded Files</h3>
                                            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                                               {uploadedAnswers.map(([key, fileInfo]) => {
                                                  const imageFile = fileInfo?.type === 'image';
@@ -739,13 +791,13 @@ const Dashboard = ({ viewerRole = 'admin', isEmbedded = false }) => {
                                                        {imageFile && hasUrl ? (
                                                           <img src={fileInfo.url} alt={fileInfo.name} className="h-16 w-full object-cover" />
                                                        ) : (
-                                                          <div className="flex h-16 items-center justify-center bg-slate-50 text-slate-500">
+                                                          <div className="flex h-16 items-center justify-center bg-slate-50 text-slate-400">
                                                              <ImageIcon className="h-10 w-10" />
                                                           </div>
                                                        )}
                                                        <div className="space-y-2 p-4">
                                                           <div className="flex items-center gap-2">
-                                                             <ImageIcon className="h-4 w-4 text-slate-500" />
+                                                             <ImageIcon className="h-4 w-4 text-slate-400" />
                                                              <p className="truncate text-sm font-medium text-slate-900">{fileInfo.name}</p>
                                                           </div>
                                                           {hasUrl ? (
@@ -758,23 +810,23 @@ const Dashboard = ({ viewerRole = 'admin', isEmbedded = false }) => {
                                                                 <ExternalLink className="h-3.5 w-3.5" />
                                                              </button>
                                                           ) : (
-                                                             <p className="text-xs font-medium text-slate-500">Image uploaded (preview unavailable for older record)</p>
+                                                             <p className="text-xs font-medium text-slate-500">Image uploaded (preview unavailable)</p>
                                                           )}
                                                        </div>
                                                     </div>
                                                  );
                                               })}
                                            </div>
-                                        </div>
+                                         </div>
                                      )}
 
                          {/* Review Table Section */}
                          <div>
                             <div className="flex justify-between items-center mb-3">
-                               <h3 className="text-base font-semibold tracking-tight">Reviews</h3>
+                               <h3 className="text-base font-semibold tracking-tight text-slate-900">Reviews</h3>
                                <button 
                                   onClick={() => setIsReviewModalOpen(true)}
-                                  className="inline-flex items-center justify-center whitespace-nowrap rounded w-auto text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950 disabled:pointer-events-none disabled:opacity-50 bg-slate-900 text-slate-50 shadow hover:bg-slate-900/90 h-8 px-3 gap-1.5"
+                                  className="inline-flex items-center justify-center whitespace-nowrap rounded w-auto text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950 disabled:pointer-events-none disabled:opacity-50 bg-slate-900 text-white shadow hover:bg-slate-800 h-8 px-3 gap-1.5"
                                >
                                   <Plus className="w-3.5 h-3.5" />
                                   Add Review

@@ -6,7 +6,7 @@ const ReviewTable = ({ reviews }) => {
   }
 
   return (
-    <div className="overflow-x-auto rounded border-t border-slate-200 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+    <div className="overflow-x-auto rounded border-t border-slate-200">
       <table className="min-w-full divide-y divide-slate-200 text-sm">
         <thead className="bg-slate-50">
           <tr>
@@ -24,7 +24,7 @@ const ReviewTable = ({ reviews }) => {
           {reviews.map((r, i) => (
             <React.Fragment key={i}>
               <tr className="hover:bg-slate-50 transition-colors">
-                <td className="px-4 py-2 whitespace-nowrap text-slate-900 font-medium">{r.reviewerName || 'Unknown'}</td>
+                <td className="px-4 py-2 whitespace-nowrap text-slate-900 font-medium max-w-[120px] sm:max-w-[200px] truncate" title={r.reviewerName || 'Unknown'}>{r.reviewerName || 'Unknown'}</td>
                 <td className="px-4 py-2 whitespace-nowrap text-slate-600">{r.reviewerRole || '-'}</td>
                 <td className="px-4 py-2 whitespace-nowrap text-slate-600">{r.scores?.communication ?? '-'}</td>
                 <td className="px-4 py-2 whitespace-nowrap text-slate-600">{r.scores?.technical ?? '-'}</td>

@@ -144,12 +144,12 @@ export default function SharedDashboardLayout({ children }) {
                     <div className={cn("flex items-center mb-8", isDesktopCollapsed ? "justify-center" : "justify-between px-1")}>
                         {isDesktopCollapsed ? (
                             <div className="flex items-center justify-center p-3">
-                                <SquareChevronRight className="h-7 w-7 text-mongo-green" />
+                                <SquareChevronRight className="h-7 w-7 text-slate-900" />
                             </div>
                         ) : (
                             <div className="px-3 py-4 flex items-center gap-3">
                                 <div className="flex items-center justify-center bg-mongo-surface-soft p-1.5 rounded-lg border border-mongo-border shadow-sm">
-                                    <SquareChevronRight className="h-6 w-6 text-mongo-green" />
+                                    <SquareChevronRight className="h-6 w-6 text-slate-900" />
                                 </div>
                                 <div className="flex flex-col">
                                     <h2 className="text-[16px] font-extrabold tracking-tight text-slate-900 leading-none">NEXUS</h2>
