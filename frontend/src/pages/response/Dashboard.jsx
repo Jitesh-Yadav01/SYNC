@@ -25,6 +25,7 @@ const Dashboard = ({ viewerRole = 'admin', isEmbedded = false }) => {
   const [responses, setResponses] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState("all");
+  const [filterBranch, setFilterBranch] = useState("all");
   const [loadingForms, setLoadingForms] = useState(true);
   const [loadingResponses, setLoadingResponses] = useState(false);
   const [selectedResponseId, setSelectedResponseId] = useState(null);
@@ -401,6 +402,16 @@ const Dashboard = ({ viewerRole = 'admin', isEmbedded = false }) => {
         if (filterStatus !== currentDecision) return false;
       }
 
+      // Branch Filter
+      if (filterBranch !== 'all') {
+        let branch = r.userId?.branch;
+        if (!branch && r.answers) {
+          const branchKey = Object.keys(r.answers).find(k => k.toLowerCase().includes('branch') || k.toLowerCase().includes('department'));
+          if (branchKey) branch = r.answers[branchKey];
+        }
+        if (!branch || String(branch).toLowerCase() !== filterBranch.toLowerCase()) return false;
+      }
+
       // Search Filter
       if (!searchTerm.trim()) return true;
       const q = searchTerm.toLowerCase();
@@ -416,7 +427,7 @@ const Dashboard = ({ viewerRole = 'admin', isEmbedded = false }) => {
       const answers = r.answers || {};
       return Object.values(answers).some(v => String(v).toLowerCase().includes(q));
     });
-  }, [rankedResponses, filterStatus, searchTerm, getDisplayName]);
+  }, [rankedResponses, filterStatus, filterBranch, searchTerm, getDisplayName]);
 
   const currentApplicantIndex = useMemo(() => {
     if (!selectedResponseId || filteredResponses.length === 0) return -1;
@@ -441,7 +452,89 @@ const Dashboard = ({ viewerRole = 'admin', isEmbedded = false }) => {
          <DashboardHeader />
       </div>
 
-         <main className="flex flex-1 min-h-0 overflow-hidden">
+         <main className="flex flex-col flex-1 min-h-0 overflow-hidden">
+         <div className="z-20 flex shrink-0 flex-col items-center justify-between gap-3 border-b border-slate-200 bg-white px-4 py-3 sm:flex-row w-full">
+              <div className="flex items-center gap-3 w-full sm:w-auto">
+                  <h2 className="text-base font-semibold tracking-tight text-slate-900 hidden md:block">
+                    {selectedForm ? selectedForm.title : 'Responses'}
+                  </h2>
+                  {loadingForms ? (
+                     <span className="text-sm text-slate-500">Loading forms...</span>
+                  ) : forms.length === 0 ? (
+                     <span className="text-sm text-slate-500">No forms...</span>
+                  ) : (
+                     <select
+                       value={selectedFormId}
+                       onChange={e => setSelectedFormId(e.target.value)}
+                       className="h-8 w-full sm:w-56 rounded border border-slate-200 bg-white px-2 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950 text-slate-900"
+                     >
+                       {forms.map(f => (
+                         <option key={f._id} value={f._id}>{f.title}</option>
+                       ))}
+                     </select>
+                  )}
+              </div>
+              <div className="flex items-center gap-3 w-full sm:w-auto">
+                 {forms.length > 0 && (
+                    <>
+                      <select
+                        value={filterStatus}
+                        onChange={e => setFilterStatus(e.target.value)}
+                        className="h-8 w-full sm:w-36 rounded border border-slate-200 bg-white px-2 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950 text-slate-900"
+                      >
+                        <option value="all">All Statuses</option>
+                        <option value="pending">Pending</option>
+                        <option value="accepted">Accepted</option>
+                        <option value="reviewLater">Hold</option>
+                        <option value="rejected">Rejected</option>
+                      </select>
+                      
+                      <select
+                        value={filterBranch}
+                        onChange={e => setFilterBranch(e.target.value)}
+                        className="h-8 w-full sm:w-36 rounded border border-slate-200 bg-white px-2 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950 text-slate-900"
+                      >
+                        <option value="all">All Branches</option>
+                        <option value="COMP">COMP</option>
+                        <option value="IT">IT</option>
+                        <option value="ENTC">ENTC</option>
+                        <option value="MECH">MECH</option>
+                        <option value="AI&DS">AI&DS</option>
+                      </select>
+                      
+                      <div className="relative w-full sm:w-56">
+                        <Search className="absolute left-2.5 top-2 h-4 w-4 text-slate-500" />
+                        <input
+                          type="text"
+                          placeholder="Search applicants..."
+                          value={searchTerm}
+                          onChange={e => setSearchTerm(e.target.value)}
+                          className="flex h-8 w-full rounded border border-slate-200 bg-transparent px-3 py-1 pl-8 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm placeholder:text-slate-500 text-slate-900 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950"
+                        />
+                      </div>
+                      
+                      <button
+                        onClick={handleExport}
+                        disabled={exporting || filteredResponses.length === 0}
+                        className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950 disabled:pointer-events-none disabled:opacity-50 border border-slate-200 bg-white shadow-sm hover:bg-slate-100 hover:text-slate-900 text-slate-900 h-8 px-3 gap-2"
+                      >
+                        {exporting ? (
+                            <>
+                                <div className="h-4 w-4 animate-spin rounded-full border-2 border-slate-200 border-t-slate-900" />
+                                Exporting...
+                            </>
+                        ) : (
+                            <>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                Export CSV
+                            </>
+                        )}
+                      </button>
+                    </>
+                 )}
+              </div>
+         </div>
+         <div className="flex flex-1 min-h-0 overflow-hidden">
         
         {/* LEFT PANE - Applicant List - Shows only if forms exist and are loaded */}
         {!loadingResponses && forms.length > 0 && selectedForm && (
@@ -485,75 +578,7 @@ const Dashboard = ({ viewerRole = 'admin', isEmbedded = false }) => {
              </button>
           </div>
           
-          {/* Top Action Bar */}
-          <div className="sticky top-0 z-20 flex shrink-0 flex-col items-center justify-between gap-3 border-b border-slate-200 bg-white/95 px-4 py-3 backdrop-blur sm:flex-row">
-              <div className="flex items-center gap-3 w-full sm:w-auto">
-                  <h2 className="text-base font-semibold tracking-tight text-slate-900 hidden md:block">
-                    {selectedForm ? selectedForm.title : 'Responses'}
-                  </h2>
-                  {loadingForms ? (
-                     <span className="text-sm text-slate-500">Loading forms...</span>
-                  ) : forms.length === 0 ? (
-                     <span className="text-sm text-slate-500">No forms...</span>
-                  ) : (
-                     <select
-                       value={selectedFormId}
-                       onChange={e => setSelectedFormId(e.target.value)}
-                       className="h-8 w-full sm:w-56 rounded border border-slate-200 bg-white px-2 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950 text-slate-900"
-                     >
-                       {forms.map(f => (
-                         <option key={f._id} value={f._id}>{f.title}</option>
-                       ))}
-                     </select>
-                  )}
-              </div>
-              <div className="flex items-center gap-3 w-full sm:w-auto">
-                 {forms.length > 0 && (
-                    <>
-                      <select
-                        value={filterStatus}
-                        onChange={e => setFilterStatus(e.target.value)}
-                        className="h-8 w-full sm:w-36 rounded border border-slate-200 bg-white px-2 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950 text-slate-900"
-                      >
-                        <option value="all">All Statuses</option>
-                        <option value="pending">Pending</option>
-                        <option value="accepted">Accepted</option>
-                        <option value="reviewLater">Hold</option>
-                        <option value="rejected">Rejected</option>
-                      </select>
-                      
-                      <div className="relative w-full sm:w-56">
-                        <Search className="absolute left-2.5 top-2 h-4 w-4 text-slate-500" />
-                        <input
-                          type="text"
-                          placeholder="Search applicants..."
-                          value={searchTerm}
-                          onChange={e => setSearchTerm(e.target.value)}
-                          className="flex h-8 w-full rounded border border-slate-200 bg-transparent px-3 py-1 pl-8 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm placeholder:text-slate-500 text-slate-900 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950"
-                        />
-                      </div>
-                      
-                      <button
-                        onClick={handleExport}
-                        disabled={exporting || filteredResponses.length === 0}
-                        className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950 disabled:pointer-events-none disabled:opacity-50 border border-slate-200 bg-white shadow-sm hover:bg-slate-100 hover:text-slate-900 text-slate-900 h-8 px-3 gap-2"
-                      >
-                        {exporting ? (
-                            <>
-                                <div className="h-4 w-4 animate-spin rounded-full border-2 border-slate-200 border-t-slate-900" />
-                                Exporting...
-                            </>
-                        ) : (
-                            <>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                                Export CSV
-                            </>
-                        )}
-                      </button>
-                    </>
-                 )}
-              </div>
-          </div>
+
 
           <div className="min-h-0 flex-1 overflow-y-auto overflow-x-hidden bg-white text-slate-900 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
              {loadingResponses ? (
@@ -848,6 +873,7 @@ const Dashboard = ({ viewerRole = 'admin', isEmbedded = false }) => {
                 })()
              )}
           </div>
+        </div>
         </div>
       </main>
 

@@ -15,6 +15,7 @@ export default function Students() {
     const [search, setSearch] = useState('');
     const [clubFilter, setClubFilter] = useState('all'); // 'all', '0', '1', '2', '3+'
     const [yearFilter, setYearFilter] = useState('All Years');
+    const [branchFilter, setBranchFilter] = useState('All Branches');
     const [exporting, setExporting] = useState(false);
     const [selectedStudent, setSelectedStudent] = useState(null);
 
@@ -48,6 +49,7 @@ export default function Students() {
         try {
             const params = new URLSearchParams();
             if (yearFilter !== 'All Years') params.append('year', yearFilter);
+            if (branchFilter !== 'All Branches') params.append('branch', branchFilter);
             if (clubFilter !== 'all') params.append('clubFilter', clubFilter);
             if (search.trim()) params.append('search', search.trim());
             
@@ -87,9 +89,12 @@ export default function Students() {
             if (yearFilter !== 'All Years' && s.year !== yearFilter) {
                 return false;
             }
+            if (branchFilter !== 'All Branches' && String(s.branch).toLowerCase() !== branchFilter.toLowerCase()) {
+                return false;
+            }
             return true;
         }).sort((a, b) => (a.name || '').localeCompare(b.name || ''));
-    }, [data.students, debouncedSearch, clubFilter, yearFilter]);
+    }, [data.students, debouncedSearch, clubFilter, yearFilter, branchFilter]);
 
     if (loading) {
         return (
@@ -151,6 +156,16 @@ export default function Students() {
                     >
                         {['All Years', 'FE', 'SE', 'TE', 'BE'].map(y => (
                             <option key={y} value={y}>{y}</option>
+                        ))}
+                    </select>
+
+                    <select
+                        value={branchFilter}
+                        onChange={(e) => setBranchFilter(e.target.value)}
+                        className="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-gdg-blue focus:border-gdg-blue p-2 shadow-sm"
+                    >
+                        {['All Branches', 'COMP', 'IT', 'ENTC', 'MECH', 'AI&DS'].map(b => (
+                            <option key={b} value={b}>{b}</option>
                         ))}
                     </select>
 
