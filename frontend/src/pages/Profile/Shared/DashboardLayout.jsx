@@ -101,9 +101,14 @@ export default function SharedDashboardLayout({ children }) {
         return <Navigate to="/" replace />;
     }
 
-    // <div className="flex min-h-screen bg-[#f9fafb] text-slate-900 font-sans antialiased selection:bg-gdg-blue/20" style={{ backgroundImage: "url('/background.svg')", backgroundSize: 'cover', backgroundAttachment: 'fixed', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}>
+    // return (
+    //     <div className="flex h-screen overflow-hidden bg-[#f9fafb] text-slate-900 font-sans antialiased selection:bg-gdg-blue/20" style={{ backgroundImage: "url('/background.svg')", backgroundSize: 'cover', backgroundAttachment: 'fixed', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}>
+    
     return (
-        <div className="flex h-screen overflow-hidden bg-[#f9fafb] text-slate-900 font-sans antialiased selection:bg-gdg-blue/20" style={{ backgroundImage: "url('/background.svg')", backgroundSize: 'cover', backgroundAttachment: 'fixed', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}>
+        <div 
+            className="flex h-screen overflow-hidden text-slate-900 font-sans antialiased selection:bg-mongo-green/20 bg-mongo-surface"
+            style={{ backgroundImage: "url('/background.svg')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}
+        >
             {/* 
             className="flex min-h-screen bg-gray-50 text-gray-900 font-mono..."
             style={{ backgroundImage: "url('/back.svg')", ... fontFamily: "'JetBrains Mono'..." }}
@@ -124,25 +129,34 @@ export default function SharedDashboardLayout({ children }) {
             </aside>
             */}
 
-            {/* Desktop Sidebar (Expanded & Collapsed) */}
+            {/* 
             <aside className={cn(
                 'hidden md:flex flex-col fixed inset-y-0 left-0 z-50 bg-white border-r border-slate-200 shadow-[4px_0_24px_rgba(0,0,0,0.02)] transition-all duration-300 ease-in-out',
+                isDesktopCollapsed ? 'w-20' : 'w-64'
+            )}> 
+            */}
+         
+            <aside className={cn(
+                'hidden md:flex flex-col fixed inset-y-0 left-0 z-50 bg-mongo-elevated border-r border-mongo-border transition-all duration-300 ease-in-out',
                 isDesktopCollapsed ? 'w-20' : 'w-64'
             )}>
                 <div className="flex flex-col h-full p-3">
                     <div className={cn("flex items-center mb-8", isDesktopCollapsed ? "justify-center" : "justify-between px-1")}>
-                        <div className="flex items-center gap-3">
-                            <div className="h-8 w-8 rounded-lg flex items-center justify-center shrink-0">
-                                <SquareChevronRight className="h-7 w-7 text-gdg-blue" />
-                                <span className="font-bold text-slate-900 text-sm hidden">{role?.[0]}</span>
+                        {isDesktopCollapsed ? (
+                            <div className="flex items-center justify-center p-3">
+                                <SquareChevronRight className="h-7 w-7 text-mongo-green" />
                             </div>
-                            {!isDesktopCollapsed && (
-                                <div>
-                                    <h1 className="font-extrabold text-lg tracking-tight text-slate-900 leading-tight">NEXUS</h1>
-                                    <p className="text-[10px] text-gdg-blue font-bold uppercase tracking-wider">{role} Panel</p>
+                        ) : (
+                            <div className="px-3 py-4 flex items-center gap-3">
+                                <div className="flex items-center justify-center bg-mongo-surface-soft p-1.5 rounded-lg border border-mongo-border shadow-sm">
+                                    <SquareChevronRight className="h-6 w-6 text-mongo-green" />
                                 </div>
-                            )}
-                        </div>
+                                <div className="flex flex-col">
+                                    <h2 className="text-[16px] font-extrabold tracking-tight text-slate-900 leading-none">NEXUS</h2>
+                                    <p className="text-[10px] text-mongo-deep-green font-bold uppercase tracking-wider">{role} Panel</p>
+                                </div>
+                            </div>
+                        )}
                         {!isDesktopCollapsed && (
                             <button
                                 onClick={() => setIsDesktopCollapsed(true)}
@@ -157,10 +171,10 @@ export default function SharedDashboardLayout({ children }) {
                     {!isDesktopCollapsed && profile?.clubs?.length > 1 && (
                         <div className="mb-6 px-1">
                             <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5 block">Active Club</label>
-                            <select 
-                                value={activeClub?.id || activeClub?._id || ''}
-                                onChange={(e) => switchClub(e.target.value)}
-                                className="w-full bg-slate-50 border border-slate-200 text-slate-900 text-[13px] font-medium rounded-lg focus:ring-2 focus:ring-gdg-blue/20 focus:border-gdg-blue block p-2 transition-all hover:border-slate-300 outline-none"
+                            <select
+                                value={profile?.clubs?.[0]?.$id || ''}
+                                disabled
+                                className="w-full bg-mongo-surface-soft border border-mongo-border text-slate-900 text-[13px] font-medium rounded-lg focus:ring-2 focus:ring-mongo-green/20 focus:border-mongo-green block p-2 transition-all hover:border-mongo-border outline-none"
                             >
                                 {profile.clubs.map(c => (
                                     <option key={c.id || c._id} value={c.id || c._id}>{c.name}</option>
@@ -183,6 +197,7 @@ export default function SharedDashboardLayout({ children }) {
                         {getVisibleTabs().map(tab => {
                             const isActive = activeTab === tab.id;
                             return (
+
                                 <button
                                     key={tab.id}
                                     title={isDesktopCollapsed ? tab.label : undefined}
@@ -194,15 +209,15 @@ export default function SharedDashboardLayout({ children }) {
                                         }
                                     }}
                                     className={cn(
-                                        'w-full flex items-center rounded-lg font-medium transition-all duration-200 group relative',
-                                        isDesktopCollapsed ? 'justify-center p-3 my-1' : 'gap-3 px-3 py-2.5',
+                                        'w-full flex items-center rounded-md font-medium transition-all duration-200 group relative outline-none focus-visible:ring-2 focus-visible:ring-mongo-green',
+                                        isDesktopCollapsed ? 'justify-center p-3 my-1' : 'gap-3 px-3 py-2',
                                         (!isStandalonePage && isActive)
-                                            ? 'bg-gdg-blue/10 text-gdg-blue font-bold'
-                                            : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
+                                            ? 'bg-mongo-surface-soft text-mongo-deep-green font-semibold shadow-sm'
+                                            : 'text-mongo-muted hover:text-mongo-ink hover:bg-mongo-surface-soft'
                                     )}
                                 >
-                                    {!isStandalonePage && isActive && <div className={cn("absolute bg-gdg-blue rounded-r-md transition-all duration-300", isDesktopCollapsed ? "left-0 top-2 bottom-2 w-[3px]" : "left-0 top-1.5 bottom-1.5 w-[3px]")} />}
-                                    <tab.icon className={cn('shrink-0 transition-colors', isDesktopCollapsed ? 'h-5 w-5' : 'h-[18px] w-[18px]', !isStandalonePage && isActive ? 'text-gdg-blue' : 'text-slate-500 group-hover:text-slate-700')} />
+                                    {!isStandalonePage && isActive && <div className={cn("absolute bg-mongo-green rounded-r-sm shadow-[0_0_8px_rgba(0,237,100,0.4)] transition-all duration-300", isDesktopCollapsed ? "left-0 top-2 bottom-2 w-[4px]" : "left-0 top-1.5 bottom-1.5 w-[4px]")} />}
+                                    <tab.icon className={cn('shrink-0 transition-colors', isDesktopCollapsed ? 'h-5 w-5' : 'h-[18px] w-[18px]', !isStandalonePage && isActive ? 'text-mongo-deep-green' : 'text-mongo-muted group-hover:text-mongo-ink')} />
                                     {!isDesktopCollapsed && <span className="text-[13px]">{tab.label}</span>}
                                     {isDesktopCollapsed && (
                                         <div className="absolute left-full ml-3 px-2.5 py-1.5 bg-slate-900 text-white text-[11px] font-medium rounded opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50">
@@ -225,18 +240,21 @@ export default function SharedDashboardLayout({ children }) {
                                 ].map(tab => {
                                     const isActive = activeTab === tab.id;
                                     return (
+        
                                         <button
                                             key={tab.id}
                                             title={isDesktopCollapsed ? tab.label : undefined}
                                             onClick={() => setActiveTab(tab.id)}
                                             className={cn(
-                                                'w-full flex items-center rounded-lg font-medium transition-all duration-200 group relative',
-                                                isDesktopCollapsed ? 'justify-center p-3 my-1' : 'gap-3 px-3 py-2.5',
-                                                isActive ? 'bg-gdg-blue/10 text-gdg-blue font-bold' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
+                                                'w-full flex items-center rounded-md font-medium transition-all duration-200 group relative outline-none focus-visible:ring-2 focus-visible:ring-mongo-green',
+                                                isDesktopCollapsed ? 'justify-center p-3 my-1' : 'gap-3 px-3 py-2',
+                                                isActive 
+                                                    ? 'bg-mongo-surface-soft text-mongo-deep-green font-semibold shadow-sm'
+                                                    : 'text-mongo-muted hover:text-mongo-ink hover:bg-mongo-surface-soft'
                                             )}
                                         >
-                                            {isActive && <div className={cn("absolute bg-gdg-blue rounded-r-md transition-all duration-300", isDesktopCollapsed ? "left-0 top-2 bottom-2 w-[3px]" : "left-0 top-1.5 bottom-1.5 w-[3px]")} />}
-                                            <tab.icon className={cn('shrink-0 transition-colors', isDesktopCollapsed ? 'h-5 w-5' : 'h-[18px] w-[18px]', isActive ? 'text-gdg-blue' : 'text-slate-500 group-hover:text-slate-700')} />
+                                            {isActive && <div className={cn("absolute bg-mongo-green rounded-r-sm shadow-[0_0_8px_rgba(0,237,100,0.4)] transition-all duration-300", isDesktopCollapsed ? "left-0 top-2 bottom-2 w-[4px]" : "left-0 top-1.5 bottom-1.5 w-[4px]")} />}
+                                            <tab.icon className={cn('shrink-0 transition-colors', isDesktopCollapsed ? 'h-5 w-5' : 'h-[18px] w-[18px]', isActive ? 'text-mongo-deep-green' : 'text-mongo-muted group-hover:text-mongo-ink')} />
                                             {!isDesktopCollapsed && <span className="text-[13px]">{tab.label}</span>}
                                             {isDesktopCollapsed && (
                                                 <div className="absolute left-full ml-3 px-2.5 py-1.5 bg-slate-900 text-white text-[11px] font-medium rounded opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50">
@@ -250,17 +268,20 @@ export default function SharedDashboardLayout({ children }) {
 
                                 {!isDesktopCollapsed && <div className="px-3 mt-6 mb-2 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Reporting</div>}
                                 {isDesktopCollapsed && <div className="h-[1px] w-8 mx-auto bg-slate-100 my-4" />}
+
                                 <button
                                     title={isDesktopCollapsed ? 'IQAC Reports' : undefined}
                                     onClick={() => setActiveTab('iqac-events')}
                                     className={cn(
-                                        'w-full flex items-center rounded-lg font-medium transition-all duration-200 group relative',
-                                        isDesktopCollapsed ? 'justify-center p-3 my-1' : 'gap-3 px-3 py-2.5',
-                                        activeTab === 'iqac-events' ? 'bg-gdg-blue/10 text-gdg-blue font-bold' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
+                                        'w-full flex items-center rounded-md font-medium transition-all duration-200 group relative outline-none focus-visible:ring-2 focus-visible:ring-mongo-green',
+                                        isDesktopCollapsed ? 'justify-center p-3 my-1' : 'gap-3 px-3 py-2',
+                                        activeTab === 'iqac-events' 
+                                            ? 'bg-mongo-surface-soft text-mongo-deep-green font-semibold shadow-sm'
+                                            : 'text-mongo-muted hover:text-mongo-ink hover:bg-mongo-surface-soft'
                                     )}
                                 >
-                                    {activeTab === 'iqac-events' && <div className={cn("absolute bg-gdg-blue rounded-r-md transition-all duration-300", isDesktopCollapsed ? "left-0 top-2 bottom-2 w-[3px]" : "left-0 top-1.5 bottom-1.5 w-[3px]")} />}
-                                    <FileBarChart className={cn('shrink-0 transition-colors', isDesktopCollapsed ? 'h-5 w-5' : 'h-[18px] w-[18px]', activeTab === 'iqac-events' ? 'text-gdg-blue' : 'text-slate-500 group-hover:text-slate-700')} />
+                                    {activeTab === 'iqac-events' && <div className={cn("absolute bg-mongo-green rounded-r-sm shadow-[0_0_8px_rgba(0,237,100,0.4)] transition-all duration-300", isDesktopCollapsed ? "left-0 top-2 bottom-2 w-[4px]" : "left-0 top-1.5 bottom-1.5 w-[4px]")} />}
+                                    <FileBarChart className={cn('shrink-0 transition-colors', isDesktopCollapsed ? 'h-5 w-5' : 'h-[18px] w-[18px]', activeTab === 'iqac-events' ? 'text-mongo-deep-green' : 'text-mongo-muted group-hover:text-mongo-ink')} />
                                     {!isDesktopCollapsed && <span className="text-[13px]">IQAC Reports</span>}
                                     {isDesktopCollapsed && (
                                         <div className="absolute left-full ml-3 px-2.5 py-1.5 bg-slate-900 text-white text-[11px] font-medium rounded opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50">
@@ -282,18 +303,21 @@ export default function SharedDashboardLayout({ children }) {
                                 ].map(tab => {
                                     const isActive = activeTab === tab.id;
                                     return (
+        
                                         <button
                                             key={tab.id}
                                             title={isDesktopCollapsed ? tab.label : undefined}
                                             onClick={() => setActiveTab(tab.id)}
                                             className={cn(
-                                                'w-full flex items-center rounded-lg font-medium transition-all duration-200 group relative',
-                                                isDesktopCollapsed ? 'justify-center p-3 my-1' : 'gap-3 px-3 py-2.5',
-                                                isActive ? 'bg-gdg-blue/10 text-gdg-blue font-bold' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
+                                                'w-full flex items-center rounded-md font-medium transition-all duration-200 group relative outline-none focus-visible:ring-2 focus-visible:ring-mongo-green',
+                                                isDesktopCollapsed ? 'justify-center p-3 my-1' : 'gap-3 px-3 py-2',
+                                                isActive 
+                                                    ? 'bg-mongo-surface-soft text-mongo-deep-green font-semibold shadow-sm'
+                                                    : 'text-mongo-muted hover:text-mongo-ink hover:bg-mongo-surface-soft'
                                             )}
                                         >
-                                            {isActive && <div className={cn("absolute bg-gdg-blue rounded-r-md transition-all duration-300", isDesktopCollapsed ? "left-0 top-2 bottom-2 w-[3px]" : "left-0 top-1.5 bottom-1.5 w-[3px]")} />}
-                                            <tab.icon className={cn('shrink-0 transition-colors', isDesktopCollapsed ? 'h-5 w-5' : 'h-[18px] w-[18px]', isActive ? 'text-gdg-blue' : 'text-slate-500 group-hover:text-slate-700')} />
+                                            {isActive && <div className={cn("absolute bg-mongo-green rounded-r-sm shadow-[0_0_8px_rgba(0,237,100,0.4)] transition-all duration-300", isDesktopCollapsed ? "left-0 top-2 bottom-2 w-[4px]" : "left-0 top-1.5 bottom-1.5 w-[4px]")} />}
+                                            <tab.icon className={cn('shrink-0 transition-colors', isDesktopCollapsed ? 'h-5 w-5' : 'h-[18px] w-[18px]', isActive ? 'text-mongo-deep-green' : 'text-mongo-muted group-hover:text-mongo-ink')} />
                                             {!isDesktopCollapsed && <span className="text-[13px]">{tab.label}</span>}
                                             {isDesktopCollapsed && (
                                                 <div className="absolute left-full ml-3 px-2.5 py-1.5 bg-slate-900 text-white text-[11px] font-medium rounded opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50">
@@ -311,6 +335,7 @@ export default function SharedDashboardLayout({ children }) {
                             <>
                                 {!isDesktopCollapsed && <div className="px-3 mt-6 mb-2 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Applications</div>}
                                 {isDesktopCollapsed && <div className="h-[1px] w-8 mx-auto bg-slate-100 my-4" />}
+
                                 <button
                                     title={isDesktopCollapsed ? 'Forms' : undefined}
                                     onClick={() => {
@@ -318,13 +343,15 @@ export default function SharedDashboardLayout({ children }) {
                                         else setActiveTab('forms');
                                     }}
                                     className={cn(
-                                        'w-full flex items-center rounded-lg font-medium transition-all duration-200 group relative',
-                                        isDesktopCollapsed ? 'justify-center p-3 my-1' : 'gap-3 px-3 py-2.5',
-                                        activeTab === 'forms' ? 'bg-gdg-blue/10 text-gdg-blue font-bold' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
+                                        'w-full flex items-center rounded-md font-medium transition-all duration-200 group relative outline-none focus-visible:ring-2 focus-visible:ring-mongo-green',
+                                        isDesktopCollapsed ? 'justify-center p-3 my-1' : 'gap-3 px-3 py-2',
+                                        activeTab === 'forms' 
+                                            ? 'bg-mongo-surface-soft text-mongo-deep-green font-semibold shadow-sm' 
+                                            : 'text-mongo-muted hover:text-mongo-ink hover:bg-mongo-surface-soft'
                                     )}
                                 >
-                                    {activeTab === 'forms' && <div className={cn("absolute bg-gdg-blue rounded-r-md transition-all duration-300", isDesktopCollapsed ? "left-0 top-2 bottom-2 w-[3px]" : "left-0 top-1.5 bottom-1.5 w-[3px]")} />}
-                                    <FileText className={cn('shrink-0 transition-colors', isDesktopCollapsed ? 'h-5 w-5' : 'h-[18px] w-[18px]', activeTab === 'forms' ? 'text-gdg-blue' : 'text-slate-500 group-hover:text-slate-700')} />
+                                    {activeTab === 'forms' && <div className={cn("absolute bg-mongo-green rounded-r-sm shadow-[0_0_8px_rgba(0,237,100,0.4)] transition-all duration-300", isDesktopCollapsed ? "left-0 top-2 bottom-2 w-[4px]" : "left-0 top-1.5 bottom-1.5 w-[4px]")} />}
+                                    <FileText className={cn('shrink-0 transition-colors', isDesktopCollapsed ? 'h-5 w-5' : 'h-[18px] w-[18px]', activeTab === 'forms' ? 'text-mongo-deep-green' : 'text-mongo-muted group-hover:text-mongo-ink')} />
                                     {!isDesktopCollapsed && <span className="text-[13px]">Forms</span>}
                                     {isDesktopCollapsed && (
                                         <div className="absolute left-full ml-3 px-2.5 py-1.5 bg-slate-900 text-white text-[11px] font-medium rounded opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50">
@@ -416,11 +443,11 @@ export default function SharedDashboardLayout({ children }) {
                                         setIsSidebarOpen(false);
                                     }}
                                     className={cn(
-                                        "flex flex-col items-center justify-center w-16 h-full gap-1 transition-colors relative",
-                                        isActive ? "text-gdg-blue" : "text-slate-500 hover:text-slate-900"
+                                        "relative flex flex-col items-center justify-center w-full h-full space-y-1 transition-colors",
+                                        isActive ? "text-mongo-deep-green" : "text-mongo-muted hover:text-mongo-ink"
                                     )}
                                 >
-                                    {isActive && <div className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-[3px] bg-gdg-blue rounded-b-md" />}
+                                    {isActive && <div className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-[3px] bg-mongo-green rounded-b-md shadow-[0_0_8px_rgba(0,237,100,0.4)]" />}
                                     <tab.icon className={cn("h-5 w-5 transition-transform", isActive && "transform scale-110")} />
                                     <span className={cn("text-[10px] font-medium tracking-tight", isActive ? "font-bold" : "")}>{tab.label}</span>
                                 </button>
@@ -430,11 +457,11 @@ export default function SharedDashboardLayout({ children }) {
                     <button
                         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
                         className={cn(
-                            "flex flex-col items-center justify-center w-16 h-full gap-1 transition-colors relative",
-                            isSidebarOpen ? "text-gdg-blue" : "text-slate-500 hover:text-slate-900"
+                            "relative flex flex-col items-center justify-center w-full h-full space-y-1 transition-colors",
+                            isSidebarOpen ? "text-mongo-deep-green" : "text-mongo-muted hover:text-mongo-ink"
                         )}
                     >
-                        {isSidebarOpen && <div className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-[3px] bg-gdg-blue rounded-b-md" />}
+                        {isSidebarOpen && <div className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-[3px] bg-mongo-green rounded-b-md shadow-[0_0_8px_rgba(0,237,100,0.4)]" />}
                         <Menu className={cn("h-5 w-5 transition-transform", isSidebarOpen && "transform scale-110")} />
                         <span className={cn("text-[10px] font-medium tracking-tight", isSidebarOpen ? "font-bold" : "")}>More</span>
                     </button>
@@ -463,12 +490,12 @@ export default function SharedDashboardLayout({ children }) {
                                             else setActiveTab(tab.id);
                                             setIsSidebarOpen(false);
                                         }}
-                                        className="flex flex-col items-center gap-2 p-2 rounded-xl active:bg-slate-50 transition-colors"
+                                        className="flex flex-col items-center gap-2 p-2 rounded-xl active:bg-mongo-surface-soft transition-colors"
                                     >
-                                        <div className={cn("w-12 h-12 rounded-full flex items-center justify-center", activeTab === tab.id ? "bg-gdg-blue/10 text-gdg-blue" : "bg-slate-100 text-slate-600")}>
+                                        <div className={cn("w-12 h-12 rounded-full flex items-center justify-center", activeTab === tab.id ? "bg-mongo-surface text-mongo-deep-green border border-mongo-green/20" : "bg-mongo-surface-soft text-mongo-muted border border-mongo-border")}>
                                             <tab.icon className="h-5 w-5" />
                                         </div>
-                                        <span className={cn("text-[10px] font-medium text-center", activeTab === tab.id ? "text-gdg-blue font-bold font-bold" : "text-slate-600")}>{tab.label}</span>
+                                        <span className={cn("text-[10px] font-medium text-center", activeTab === tab.id ? "text-mongo-deep-green font-bold" : "text-mongo-muted")}>{tab.label}</span>
                                     </button>
                                 ));
                             })()}
@@ -493,7 +520,7 @@ export default function SharedDashboardLayout({ children }) {
                 !isDesktopCollapsed ? "md:ml-64" : "md:ml-20"
             )}>
                 {/* NEW ENTERPRISE CONTEXT BAR */}
-                <header className="sticky top-0 z-30 flex items-center justify-between px-4 md:px-6 h-14 border-b border-slate-200/60 bg-white/70 backdrop-blur-xl">
+                <header className="sticky top-0 z-30 flex items-center justify-between px-4 md:px-6 h-14 border-b border-mongo-border bg-mongo-elevated/90 backdrop-blur-xl shadow-sm">
             <div className="absolute top-0 left-0 right-0 flex h-[2px] opacity-80"><div className="flex-1 bg-gdg-red"></div><div className="flex-1 bg-gdg-blue"></div><div className="flex-1 bg-gdg-yellow"></div><div className="flex-1 bg-gdg-green"></div></div>
                     <div className="flex items-center gap-4">
                         {isDesktopCollapsed && (
@@ -508,11 +535,11 @@ export default function SharedDashboardLayout({ children }) {
 
                         <div className="flex items-center gap-3">
                             <div className="flex items-center gap-2 text-[14px]">
-                                <span className="font-extrabold text-slate-900 tracking-tight hidden sm:inline">NEXUS</span>
-                                <span className="text-slate-300 hidden sm:inline">/</span>
-                                <span className="text-gdg-blue font-bold hidden sm:inline">AIT Pune</span>
-                                <span className="text-slate-300 hidden sm:inline">/</span>
-                                <span className="text-slate-900 font-bold">
+                                <span className="font-extrabold text-mongo-ink tracking-tight hidden sm:inline">NEXUS</span>
+                                <span className="text-mongo-muted hidden sm:inline">/</span>
+                                <span className="text-mongo-deep-green font-bold hidden sm:inline">AIT Pune</span>
+                                <span className="text-mongo-muted hidden sm:inline">/</span>
+                                <span className="text-mongo-ink font-bold">
                                     {tabs.find(t => t.id === activeTab)?.label || 
                                      (activeTab === 'manage-forms' ? 'Manage Forms' : 
                                      activeTab === 'responses' ? 'Responses' : 

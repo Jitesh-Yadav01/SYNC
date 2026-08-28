@@ -264,7 +264,7 @@ export default function SharedOverview() {
                             zIndex: 0,
                         }}
                     />
-                    <div className="absolute top-2 left-2 right-2 h-1 z-10 flex rounded-full overflow-hidden opacity-90"><div className="flex-1 bg-gdg-red"></div><div className="flex-1 bg-gdg-yellow"></div><div className="flex-1 bg-gdg-green"></div><div className="flex-1 bg-gdg-blue"></div></div>
+
                     <div
                         style={{
                             position: 'relative',

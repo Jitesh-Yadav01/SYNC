@@ -32,6 +32,24 @@
   --color-gdg-red: var(--gdg-red);
   --color-gdg-yellow: var(--gdg-yellow);
   --color-gdg-green: var(--gdg-green);
+
+  
+  --color-mongo-green: var(--mongo-green);
+  --color-mongo-green-hover: var(--mongo-green-hover);
+  --color-mongo-green-pressed: var(--mongo-green-pressed);
+  --color-mongo-deep-green: var(--mongo-deep-green);
+  --color-mongo-ink: var(--mongo-ink);
+  --color-mongo-teal: var(--mongo-teal);
+  --color-mongo-surface: var(--mongo-surface);
+  --color-mongo-surface-soft: var(--mongo-surface-soft);
+  --color-mongo-elevated: var(--mongo-elevated);
+  --color-mongo-border: var(--mongo-border);
+  --color-mongo-muted: var(--mongo-muted);
+  --color-mongo-text-secondary: var(--mongo-text-secondary);
+  --color-mongo-focus: var(--mongo-focus);
+  --color-mongo-success: var(--mongo-success);
+  --color-mongo-warning: var(--mongo-warning);
+  --color-mongo-error: var(--mongo-error);
 }
 
 *,
@@ -82,6 +100,24 @@ svg {
   --gdg-red: #EA4335;
   --gdg-yellow: #FBBC04;
   --gdg-green: #34A853;
+
+ 
+  --mongo-green: #00ED64;
+  --mongo-green-hover: #00D65A;
+  --mongo-green-pressed: #00BA4E;
+  --mongo-deep-green: #00684A;
+  --mongo-ink: #001E2B;
+  --mongo-teal: #003D4F;
+  --mongo-surface: #F9FBFA;
+  --mongo-surface-soft: #F4F7F6;
+  --mongo-elevated: #FFFFFF;
+  --mongo-border: #E1E5E8;
+  --mongo-muted: #A8B3BC;
+  --mongo-text-secondary: #5C6F7A;
+  --mongo-focus: rgba(0, 237, 100, 0.4);
+  --mongo-success: #00ED64;
+  --mongo-warning: #F5A623;
+  --mongo-error: #D0021B;
 }
 
 .dark {
