@@ -47,7 +47,7 @@ const MemberRoute = ({ children }) => {
     : memberClubs[0] || null;
 
   const initialData = {
-    profile: { clubs: resolvedSelectedClub ? [resolvedSelectedClub] : memberClubs },
+    profile: { ...user, clubs: resolvedSelectedClub ? [resolvedSelectedClub] : memberClubs },
     members: [],
     tasks: [],
     messages: [],

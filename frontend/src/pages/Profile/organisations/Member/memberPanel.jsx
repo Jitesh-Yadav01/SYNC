@@ -37,7 +37,7 @@ const MemberPanel = () => {
     const clubs = resolvedSelectedClub ? [resolvedSelectedClub] : memberClubs;
 
     const initialData = {
-        profile: { clubs },
+        profile: { ...user, clubs },
         members: [],
         tasks: [],
         messages: [],

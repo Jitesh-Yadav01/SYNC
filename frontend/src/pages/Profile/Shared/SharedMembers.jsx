@@ -16,7 +16,14 @@ export default function SharedMembers() {
     const [currentMemberId, setCurrentMemberId] = useState(null);
     const [newMember, setNewMember] = useState({ name: '', email: '', role: 'Applicant', domain: '', status: 'Active' });
 
-    const canManageMembers = role === 'Admin' || role === 'Member';
+    const isStudentManager = ['SE', 'TE'].includes(profile?.year);
+    const canManageMembers = role === 'Admin' || isStudentManager;
+    
+    const canRemoveMemberTarget = (targetMember) => {
+        if (role === 'Admin') return true;
+        if (isStudentManager) return targetMember.year === 'FE';
+        return false;
+    };
 
     // ── Secretaries: org admins with role "secretary". Only a faculty of the
     // club may add/remove them; the backend reports `isFaculty` authoritatively.
@@ -409,7 +416,7 @@ export default function SharedMembers() {
                                     <td className="px-6 py-4 text-gray-500">
                                         {member.email}
                                     </td>
-                                    {canManageMembers && (
+                                    {canRemoveMemberTarget(member) ? (
                                         <td className="px-6 py-4 text-right">
                                             <button
                                                 onClick={() => {
@@ -423,7 +430,9 @@ export default function SharedMembers() {
                                                 Remove
                                             </button>
                                         </td>
-                                    )}
+                                    ) : canManageMembers ? (
+                                        <td className="px-6 py-4 text-right"></td>
+                                    ) : null}
                                 </tr>
                             ))}
                             {filteredMembers.length === 0 && (

@@ -98,9 +98,9 @@ export const ProfileProvider = ({ children, initialData, role }) => {
     // Fetch members from API
     useEffect(() => {
         const fetchMembers = async () => {
-            if (role !== 'Admin' || !activeClub) return;
+            if (!activeClub) return;
             try {
-                const res = await axios.get(`${API}/api/admin/get-club-members`, 
+                const res = await axios.get(`${API}/api/admin/get-club-members?club=${encodeURIComponent(activeClub.name)}`,
                     { withCredentials: true }
                 );
 
@@ -172,7 +172,7 @@ export const ProfileProvider = ({ children, initialData, role }) => {
     const addMember = async (member) => {
         try {
             const res = await axios.post(`${API}/api/admin/add-member`,
-                { name: member.name, memberEmail: member.email },
+                { name: member.name, memberEmail: member.email, club: activeClub.name },
                 { withCredentials: true }
             );
             if (res.data.success) {
@@ -194,7 +194,7 @@ export const ProfileProvider = ({ children, initialData, role }) => {
     const removeMember = async (member) => {
         try {
             const res = await axios.post(`${API}/api/admin/remove-member`, 
-                { name: member.name, memberEmail: member.email },
+                { name: member.name, memberEmail: member.email, club: activeClub.name },
                 { withCredentials: true }
             );
             if (res.data.success) {

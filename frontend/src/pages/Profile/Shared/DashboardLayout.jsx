@@ -65,7 +65,7 @@ export default function SharedDashboardLayout({ children }) {
             return tabs.filter(t => t.id !== 'profile' && t.id !== 'my-clubs');
         }
         if (role === 'Member') {
-            return tabs.filter(t => ['overview', 'my-clubs', 'calendar'].includes(t.id));
+            return tabs.filter(t => ['overview', 'members', 'my-clubs', 'calendar'].includes(t.id));
         }
         return tabs.filter(t => t.id !== 'profile');
     };
@@ -479,7 +479,7 @@ export default function SharedDashboardLayout({ children }) {
                             {(() => {
                                 let moreTabs = [];
                                 if (role === 'Admin') moreTabs = [{id:'calendar',label:'Calendar',icon:CalendarDays},{id:'iqac-events',label:'Reports',icon:FileBarChart},{id:'profile',label:'Profile',icon:Users}];
-                                else if (role === 'Member') moreTabs = [{id:'my-clubs',label:'My Clubs',icon:Building},{id:'profile',label:'Profile',icon:Users}];
+                                else if (role === 'Member') moreTabs = [{id:'members',label:'Members',icon:Users},{id:'my-clubs',label:'My Clubs',icon:Building},{id:'profile',label:'Profile',icon:Users}];
                                 else if (role === 'Applicant') moreTabs = [{id:'my-clubs',label:'My Clubs',icon:Building},{id:'profile',label:'Profile',icon:Users}];
 
                                 return moreTabs.map(tab => (
