@@ -317,7 +317,7 @@ const Dashboard = ({ viewerRole = 'admin', isEmbedded = false }) => {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     credentials: 'include',
-                    body: JSON.stringify({ name, memberEmail: email })
+                    body: JSON.stringify({ name, memberEmail: email, club: currentClubName })
                   });
                   const addData = await addRes.json();
                   if (!addData.success) {
@@ -329,12 +329,7 @@ const Dashboard = ({ viewerRole = 'admin', isEmbedded = false }) => {
              }
            }
 
-           if (newDecision === 'rejected' || newDecision === 'accepted') {
-              setResponses(prev => prev.filter(r => r._id !== responseId));
-              setSelectedResponseId(prevId => prevId === responseId ? null : prevId);
-           } else {
-              setResponses(prev => prev.map(r => r._id === responseId ? { ...r, decision: newDecision } : r));
-           }
+           setResponses(prev => prev.map(r => r._id === responseId ? { ...r, decision: newDecision } : r));
         } else {
            toast.error(data.message || 'Failed to update decision');
         }
@@ -409,7 +404,7 @@ const Dashboard = ({ viewerRole = 'admin', isEmbedded = false }) => {
           const branchKey = Object.keys(r.answers).find(k => k.toLowerCase().includes('branch') || k.toLowerCase().includes('department'));
           if (branchKey) branch = r.answers[branchKey];
         }
-        if (!branch || String(branch).toLowerCase() !== filterBranch.toLowerCase()) return false;
+        if (!branch || String(branch).toLowerCase().trim() !== filterBranch.toLowerCase().trim()) return false;
       }
 
       // Search Filter
@@ -445,6 +440,17 @@ const Dashboard = ({ viewerRole = 'admin', isEmbedded = false }) => {
       setSelectedResponseId(filteredResponses[currentApplicantIndex + 1]._id);
     }
   };
+
+  useEffect(() => {
+    if (selectedResponseId) {
+      const exists = filteredResponses.some(r => r._id === selectedResponseId);
+      if (!exists) {
+        setSelectedResponseId(filteredResponses.length > 0 ? filteredResponses[0]._id : null);
+      }
+    } else if (filteredResponses.length > 0) {
+      setSelectedResponseId(filteredResponses[0]._id);
+    }
+  }, [filteredResponses, selectedResponseId]);
 
    return (
       <div className="flex h-screen flex-col overflow-hidden bg-slate-50 text-slate-900 font-sans">
@@ -511,7 +517,7 @@ const Dashboard = ({ viewerRole = 'admin', isEmbedded = false }) => {
                         <option value="IT">IT</option>
                         <option value="ENTC">ENTC</option>
                         <option value="MECH">MECH</option>
-                        <option value="AI&DS">ARE</option>
+                        <option value="ARE">ARE</option>
                       </select>
                       
                       <button
