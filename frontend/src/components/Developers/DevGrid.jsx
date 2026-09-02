@@ -35,7 +35,7 @@ const allDevelopers = [
     name: "Sanya singh",
     role: "UI/UX Designer",
     image: "/clubprofiles/mam.jpeg",
-    username: "@peush_btw",
+    username: "@sanyasingh5290",
     github: "https://github.com/PeushYadav",
     linkedin: "https://www.linkedin.com/in/peush-yadav-8b4357335/",
   },
