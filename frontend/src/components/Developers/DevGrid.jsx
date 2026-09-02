@@ -76,7 +76,6 @@ const allDevelopers = [
 ];
 
 const DevGrid = () => {
-  const gridRef = useRef(null);
   const containerRef = useRef(null);
   const revealImgRef = useRef(null);
   const cardWrapRef = useRef(null);
@@ -103,7 +102,7 @@ const DevGrid = () => {
 
   useEffect(() => {
     ScrollTrigger.getAll().forEach(t => {
-      if (t.vars.trigger === gridRef.current) {
+      if (t.vars.trigger === containerRef.current) {
         t.kill();
       }
     });
@@ -120,12 +119,12 @@ const DevGrid = () => {
           stagger: 0.15,
           ease: "power2.out",
           scrollTrigger: {
-            trigger: gridRef.current,
+            trigger: containerRef.current,
             start: "top 85%",
           },
         }
       );
-    }, gridRef);
+    }, containerRef);
 
     return () => ctx.revert();
   }, []);
@@ -211,18 +210,43 @@ const DevGrid = () => {
       />
 
 
-      <div className="relative z-10 w-full px-4 sm:px-6 lg:px-8 mt-20 flex justify-center">
+      <div className="relative z-10 w-full px-4 sm:px-6 lg:px-8 mt-20">
+        <div className="w-full max-w-300 mx-auto flex flex-col items-center">
+          
+          <div ref={cardWrapRef} className="w-full bg-zinc-900 rounded-3xl border border-[#f4f4f5] shadow-[0_-10px_60px_rgba(255,255,255,0.02)] relative overflow-hidden px-3 py-4 sm:px-4 sm:py-5 lg:px-5 lg:py-6 z-10">
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[70%] h-0.5 bg-linear-to-r from-transparent via-[#f4f4f5] to-transparent shadow-[0_0_15px_rgba(244,244,245,0.4)] z-[2]" />
 
-        <div ref={cardWrapRef} className="w-full max-w-300 mx-auto bg-zinc-900 rounded-3xl border border-[#f4f4f5] shadow-[0_-10px_60px_rgba(255,255,255,0.02)] relative overflow-hidden px-3 py-4 sm:px-4 sm:py-5 lg:px-5 lg:py-6">
-
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[70%] h-0.5 bg-linear-to-r from-transparent via-[#f4f4f5] to-transparent shadow-[0_0_15px_rgba(244,244,245,0.4)] z-[2]" />
-
-          {/* Cards Grid */}
-          <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5 relative z-10">
-            {allDevelopers.map((dev, index) => {
-              return <DevCard key={`${dev.username}-${index}`} dev={dev} />;
-            })}
+            {/* Cards Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5 relative z-10">
+              {allDevelopers.slice(0, 6).map((dev, index) => {
+                return <DevCard key={`${dev.username}-${index}`} dev={dev} />;
+              })}
+            </div>
           </div>
+
+          {allDevelopers.length > 6 && (
+            <div className="mx-auto bg-zinc-900 rounded-b-3xl border border-[#f4f4f5] border-t-0 relative px-3 pb-4 sm:px-4 sm:pb-5 md:px-4 lg:px-2.5 lg:pb-6 pt-0 z-20 w-full md:w-[calc(50%+8px)] lg:w-[calc(33.333%-6.66px)] -mt-[1px]">
+              
+              {/* Left inner rounded corner (fillet) */}
+              <svg width="25" height="25" viewBox="0 0 25 25" className="absolute top-0 -left-[24px] z-30 pointer-events-none hidden sm:block">
+                <path d="M 0.5,0.5 A 24,24 0 0,1 24.5,24.5 L 25,24.5 L 25,0 L 0,0 Z" fill="#18181b" />
+                <path d="M 0.5,0.5 A 24,24 0 0,1 24.5,24.5" fill="none" stroke="#f4f4f5" strokeWidth="1" />
+              </svg>
+
+              {/* Right inner rounded corner (fillet) */}
+              <svg width="25" height="25" viewBox="0 0 25 25" className="absolute top-0 -right-[24px] z-30 pointer-events-none hidden sm:block">
+                <path d="M 24.5,0.5 A 24,24 0 0,0 0.5,24.5 L 0,24.5 L 0,0 L 25,0 Z" fill="#18181b" />
+                <path d="M 24.5,0.5 A 24,24 0 0,0 0.5,24.5" fill="none" stroke="#f4f4f5" strokeWidth="1" />
+              </svg>
+
+              <div className="relative z-10">
+                {allDevelopers.slice(6).map((dev, index) => {
+                  return <DevCard key={`${dev.username}-${index + 6}`} dev={dev} />;
+                })}
+              </div>
+            </div>
+          )}
+          
         </div>
       </div>
     </div>
