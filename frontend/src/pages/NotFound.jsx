@@ -1,9 +1,8 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
 export default function NotFound() {
-  const navigate = useNavigate();
   
   return (
     <div className="min-h-screen bg-black flex flex-col items-center justify-center font-mono text-white p-4" style={{ overflowX: 'clip' }}>
@@ -19,12 +18,12 @@ export default function NotFound() {
           The page you're looking for doesn't exist or has been moved.
         </p>
         
-        <button
-          onClick={() => navigate('/')}
-          className="inline-flex items-center justify-center w-full gap-2 px-6 py-3 text-sm font-bold bg-white text-black hover:bg-gray-200 transition-all active:scale-95 duration-300 rounded-lg"
+        <Link
+          to="/"
+          className="inline-flex items-center justify-center w-full gap-2 px-6 py-3 text-sm font-bold bg-white text-black hover:bg-gray-200 transition-all active:scale-95 duration-300 rounded-lg cursor-pointer"
         >
           Return to Homepage
-        </button>
+        </Link>
       </div>
     </div>
   );

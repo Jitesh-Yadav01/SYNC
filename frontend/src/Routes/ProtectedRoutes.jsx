@@ -1,13 +1,14 @@
-import React from "react";
+import React, { lazy } from "react";
 import { Navigate, useLocation } from "react-router-dom";
-import AdminPanel from "@/pages/Profile/organisations/Admin/adminpanel";
-import ApplicantPanel from "@/pages/Profile/Applicant/applicantpanel";
-import MemberPanel from "@/pages/Profile/organisations/Member/memberPanel";
-import SuperAdminPanel from "@/pages/Profile/SuperAdmin/SuperAdminPanel";
-import ClubDetailPage from "@/pages/Profile/SuperAdmin/ClubDetailPage";
-import MyForms from "@/pages/Forms/MyForms";
-import FillForm from "@/pages/Forms/FillForm";
-import ResponseDashboard from "@/pages/response/Dashboard";
+
+const AdminPanel = lazy(() => import("@/pages/Profile/organisations/Admin/adminpanel"));
+const ApplicantPanel = lazy(() => import("@/pages/Profile/Applicant/applicantpanel"));
+const MemberPanel = lazy(() => import("@/pages/Profile/organisations/Member/memberPanel"));
+const SuperAdminPanel = lazy(() => import("@/pages/Profile/SuperAdmin/SuperAdminPanel"));
+const ClubDetailPage = lazy(() => import("@/pages/Profile/SuperAdmin/ClubDetailPage"));
+const MyForms = lazy(() => import("@/pages/Forms/MyForms"));
+const FillForm = lazy(() => import("@/pages/Forms/FillForm"));
+const ResponseDashboard = lazy(() => import("@/pages/response/Dashboard"));
 import { useAuth } from "@/context/AuthContext";
 
 import { ProfileProvider } from "@/pages/Profile/Shared/ProfileContext";

@@ -1,13 +1,14 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, Suspense } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
 import NavBar from "./NavBar.jsx";
 import Hero from "./Hero.jsx";
-import Section from "./Section.jsx";
 import CustomScrollbar from "./CustomScrollbar.jsx";
 import CustomCursor from "./CustomCursor.jsx";
 import "./landing.css";
+
+const Section = React.lazy(() => import("./Section.jsx"));
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -82,7 +83,9 @@ export default function Landing() {
       <CustomScrollbar />
       <NavBar entered={entered} />
       <Hero entered={entered} />
-      <Section />
+      <Suspense fallback={<div className="w-full" style={{ height: "100vh" }}></div>}>
+        <Section />
+      </Suspense>
     </div>
   );
 }

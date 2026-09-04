@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react";
 import { useRoutes, useLocation } from "react-router-dom";
 import ClickSpark from "./styles/ClickSpark";
 import TargetCursor from "./styles/TargetCursor";
@@ -26,7 +26,9 @@ function AppContent({ isSidebarOpen, setIsSidebarOpen }) {
 
       <div>
         <main className="main">
-          {routing}
+          <Suspense fallback={<div className="h-screen w-full bg-black flex items-center justify-center font-mono text-gray-500">Loading...</div>}>
+            {routing}
+          </Suspense>
         </main>
       </div>
     </div>

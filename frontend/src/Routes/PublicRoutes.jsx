@@ -1,17 +1,15 @@
-import React from "react";
+import React, { lazy } from "react";
 import MainContent from "../components/MainContent";
-import Login from "../pages/Auth/Login";
-import Clubs from "../components/Clubs/Clubs";
-import SignUp from "@/pages/Auth/SignUp";
+
+const Login = lazy(() => import("../pages/Auth/Login"));
+const Clubs = lazy(() => import("../components/Clubs/Clubs"));
+const SignUp = lazy(() => import("@/pages/Auth/SignUp"));
 // [EMAIL/PASSWORD AUTH — INTENTIONALLY DISABLED]
-// VerifyAccount is the OTP email-verification page used after email/password
-// registration. It is unreachable while email/password auth is disabled.
-// To re-enable: uncomment the import and the route below.
-// import VerifyAccount from "@/pages/Auth/VerifyAccount";
-import AuthSelection from "@/pages/Auth/AuthSelection";
-import EventsPage from "@/pages/Events";
-import Developers from "../pages/Developers";
-import NotFound from "@/pages/NotFound";
+// const VerifyAccount = lazy(() => import("@/pages/Auth/VerifyAccount"));
+const AuthSelection = lazy(() => import("@/pages/Auth/AuthSelection"));
+const EventsPage = lazy(() => import("@/pages/Events"));
+const Developers = lazy(() => import("../pages/Developers"));
+const NotFound = lazy(() => import("@/pages/NotFound"));
 
 
 export const publicRoutes = [

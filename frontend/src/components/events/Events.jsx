@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import EventCard from './EventCard';
 import { Loader2, CalendarX, AlertCircle, ArrowLeft, Grid, Calendar } from 'lucide-react';
 import ElectricBorder from '../Clubs/ElectricBorder';
@@ -105,12 +105,12 @@ export default function Events() {
       <section className="w-full flex justify-center flex-col items-center" id="events" aria-label="Events list">
         {/* Back Button Section */}
         <div className="w-full max-w-[1200px] flex items-center justify-start mt-6 mb-4 px-6 sm:px-8">
-          <button
-            onClick={() => navigate('/')}
-            className="flex items-center gap-2 px-5 py-2.5 text-sm font-semibold bg-white/5 hover:bg-white/10 text-gray-300 border border-white/10 transition-all hover:-translate-y-0.5 active:scale-95 duration-300 rounded-lg"
+          <Link
+            to="/"
+            className="flex w-max items-center gap-2 px-5 py-2.5 text-sm font-semibold bg-white/5 hover:bg-white/10 text-gray-300 border border-white/10 transition-all hover:-translate-y-0.5 active:scale-95 duration-300 rounded-lg cursor-pointer"
           >
             <ArrowLeft className="h-4 w-4" /> Back to Home
-          </button>
+          </Link>
         </div>
 
         {/* Header & View Toggle Section */}

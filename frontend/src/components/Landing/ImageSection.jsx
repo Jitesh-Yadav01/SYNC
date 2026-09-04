@@ -28,7 +28,7 @@ const cards = [
         expandedContent: (
             <div className="c-expanded-content c-expanded-with-image">
                 <div className="c-expanded-image-container">
-                    <img src={cardImages.communities} alt="Communities" className="c-expanded-image" />
+                    <img src={cardImages.communities} alt="Communities" loading="lazy" className="c-expanded-image" />
                     <div className="c-expanded-image-overlay"></div>
                 </div>
                 <div className="c-expanded-text-content">
@@ -66,7 +66,7 @@ const cards = [
         expandedContent: (
             <div className="c-expanded-content c-expanded-with-image">
                 <div className="c-expanded-image-container">
-                    <img src={cardImages.events} alt="Events" className="c-expanded-image" />
+                    <img src={cardImages.events} alt="Events" loading="lazy" className="c-expanded-image" />
                     <div className="c-expanded-image-overlay"></div>
                 </div>
                 <div className="c-expanded-text-content">
@@ -101,7 +101,7 @@ const cards = [
         expandedContent: (
             <div className="c-expanded-content c-expanded-with-image">
                 <div className="c-expanded-image-container">
-                    <img src={cardImages.announcements} alt="Announcements" className="c-expanded-image" />
+                    <img src={cardImages.announcements} alt="Announcements" loading="lazy" className="c-expanded-image" />
                     <div className="c-expanded-image-overlay"></div>
                 </div>
                 <div className="c-expanded-text-content">
@@ -138,7 +138,7 @@ const cards = [
         expandedContent: (
             <div className="c-expanded-content c-expanded-with-image">
                 <div className="c-expanded-image-container">
-                    <img src={cardImages.recruitment} alt="Recruitment" className="c-expanded-image" />
+                    <img src={cardImages.recruitment} alt="Recruitment" loading="lazy" className="c-expanded-image" />
                     <div className="c-expanded-image-overlay"></div>
                 </div>
                 <div className="c-expanded-text-content">
@@ -175,7 +175,7 @@ const cards = [
         expandedContent: (
             <div className="c-expanded-content c-expanded-with-image">
                 <div className="c-expanded-image-container">
-                    <img src={cardImages.dashboards} alt="Dashboards" className="c-expanded-image" />
+                    <img src={cardImages.dashboards} alt="Dashboards" loading="lazy" className="c-expanded-image" />
                     <div className="c-expanded-image-overlay"></div>
                 </div>
                 <div className="c-expanded-text-content">
@@ -224,7 +224,7 @@ const ImageCard = ({ title, subtitle, description, tags, bottomContent, frontCla
                     </div>
                     {imageSrc && (
                         <div className="c-image-card_mobile-img">
-                            <img src={imageSrc} alt="Vision" />
+                            <img src={imageSrc} alt="Vision" loading="lazy" />
                         </div>
                     )}
                 </>
@@ -249,7 +249,7 @@ const ImageCard = ({ title, subtitle, description, tags, bottomContent, frontCla
                     </div>
                     {imageSrc && (
                         <div className="c-image-card_mobile-img">
-                            <img src={imageSrc} alt={title} />
+                            <img src={imageSrc} alt={title} loading="lazy" />
                         </div>
                     )}
                 </>
@@ -422,6 +422,7 @@ export default function ImageSection() {
                         <div id="hero-image" className="c-image-wrapper">
                             <img
                                 src="/assets/images/banner.png"
+                                loading="lazy"
                                 className="c-image-section_banner-image"
                                 alt="Banner"
                             />

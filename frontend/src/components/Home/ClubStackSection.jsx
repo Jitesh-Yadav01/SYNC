@@ -80,6 +80,7 @@ export function ClubStackSection() {
                   <img
                     src={club.src}
                     alt={club.name}
+                    loading="lazy"
                     className="w-full max-h-12 object-contain opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300 relative z-10 grayscale brightness-200"
                   />
                 </div>

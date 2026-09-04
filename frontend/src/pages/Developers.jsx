@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import gsap from "gsap";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import DevGrid from "../components/Developers/DevGrid";
 import { Helmet } from "react-helmet-async";
@@ -37,12 +37,12 @@ const Developers = () => {
         <section className="w-full flex justify-center flex-col items-center">
           {/* Back Button Section */}
           <div className="w-full max-w-[1200px] flex items-center justify-start mt-6 mb-4 px-6 sm:px-8 header-anim relative z-20">
-            <button
-              onClick={() => navigate('/')}
-              className="flex items-center gap-2 px-5 py-2.5 text-sm font-semibold bg-white/5 hover:bg-white/10 text-gray-300 border border-white/10 transition-all hover:-translate-y-0.5 active:scale-95 duration-300 rounded-lg"
+            <Link
+              to="/"
+              className="flex w-max items-center gap-2 px-5 py-2.5 text-sm font-semibold bg-white/5 hover:bg-white/10 text-gray-300 border border-white/10 transition-all hover:-translate-y-0.5 active:scale-95 duration-300 rounded-lg cursor-pointer"
             >
               <ArrowLeft className="h-4 w-4" /> Back to Home
-            </button>
+            </Link>
           </div>
 
           {/* Header Section */}
