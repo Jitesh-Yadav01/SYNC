@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/AuthContext";
 import { toast } from "react-toastify";
 import GoogleAuthButton from "@/components/GoogleAuthButton";
+import { Helmet } from "react-helmet-async";
 
 const Login = () => {
   // [EMAIL/PASSWORD AUTH — INTENTIONALLY DISABLED]
@@ -95,6 +96,11 @@ const Login = () => {
         backgroundSize: "cover",
       }}
     >
+      <Helmet>
+        <title>Login | NEXUS</title>
+        <meta name="description" content="Sign in to your NEXUS account to access your AIT Pune student platform." />
+        <link rel="canonical" href="https://aitnexus.in/login" />
+      </Helmet>
       <div className="w-full max-w-md bg-black/40 backdrop-blur-2xl border border-white/10 rounded-2xl shadow-2xl px-8 py-10 relative overflow-hidden">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-px bg-linear-to-r from-transparent via-white/30 to-transparent"></div>
         <Button

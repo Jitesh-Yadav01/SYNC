@@ -7,6 +7,7 @@ import axios from "axios";
 import ClubSelectDropdown from "./ClubSelectDropdown";
 import { useAuth } from "@/context/AuthContext";
 import GoogleAuthButton from "@/components/GoogleAuthButton";
+import { Helmet } from "react-helmet-async";
 
 const API = import.meta.env.VITE_BACKEND_URL || "http://localhost:8000";
 
@@ -298,6 +299,11 @@ const AuthSelection = () => {
         backgroundSize: "cover",
       }}
     >
+      <Helmet>
+        <title>Get Started with NEXUS | AIT Pune</title>
+        <meta name="description" content="Learn how to get started with NEXUS and access the platform's student community features." />
+        <link rel="canonical" href="https://aitnexus.in/get-started" />
+      </Helmet>
       <div className="w-full max-w-md bg-[#0a0a0a]/80 backdrop-blur-xl border border-white/10 rounded-2xl shadow-xl px-8 py-10 relative overflow-visible">
         <Button
           variant="ghost"

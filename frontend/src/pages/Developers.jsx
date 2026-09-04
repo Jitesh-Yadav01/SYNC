@@ -3,6 +3,7 @@ import gsap from "gsap";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import DevGrid from "../components/Developers/DevGrid";
+import { Helmet } from "react-helmet-async";
 
 const Developers = () => {
   const navigate = useNavigate();
@@ -17,6 +18,11 @@ const Developers = () => {
 
   return (
     <div className="relative min-h-screen bg-black font-sans text-white" style={{ overflowX: 'clip' }}>
+      <Helmet>
+        <title>NEXUS Developers | AIT Pune</title>
+        <meta name="description" content="Meet the developers and contributors building NEXUS for the AIT Pune student community." />
+        <link rel="canonical" href="https://aitnexus.in/developers" />
+      </Helmet>
       <main className="relative flex w-full min-h-screen pt-5 pb-12 font-mono flex-col items-center z-10">
         <section className="w-full flex justify-center flex-col items-center">
           {/* Back Button Section */}

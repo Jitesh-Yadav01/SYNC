@@ -4,6 +4,7 @@ import ClubCard from './ClubCard'
 import { ArrowLeft, X, Instagram } from 'lucide-react'
 import ElectricBorder from './ElectricBorder';
 // import { useView } from '../../context/ViewContext';
+import { Helmet } from 'react-helmet-async';
 
 export default function MainContent() {
   const navigate = useNavigate();
@@ -85,6 +86,11 @@ export default function MainContent() {
 
   return (
     <main className="relative flex w-full min-h-screen pt-5 pb-12 font-mono flex-col items-center" style={{ overflowX: 'clip' }}>
+      <Helmet>
+        <title>AIT Pune Clubs | NEXUS</title>
+        <meta name="description" content="Explore student clubs and communities at Army Institute of Technology Pune through NEXUS." />
+        <link rel="canonical" href="https://aitnexus.in/clubs" />
+      </Helmet>
       <section className="w-full flex justify-center flex-col items-center" id="clubs" aria-label="Clubs list">
         <div className="w-full max-w-[1200px] flex items-center justify-start mt-6 mb-4 px-6 sm:px-8">
           <button
