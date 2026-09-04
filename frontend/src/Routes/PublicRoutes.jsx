@@ -11,6 +11,7 @@ import SignUp from "@/pages/Auth/SignUp";
 import AuthSelection from "@/pages/Auth/AuthSelection";
 import EventsPage from "@/pages/Events";
 import Developers from "../pages/Developers";
+import NotFound from "@/pages/NotFound";
 
 
 export const publicRoutes = [
@@ -23,4 +24,5 @@ export const publicRoutes = [
   // { path: "/verify-account", element: <VerifyAccount /> },
   { path: "/events", element: <EventsPage /> },
   { path: "/developers", element: <Developers /> },
+  { path: "*", element: <NotFound /> },
 ];

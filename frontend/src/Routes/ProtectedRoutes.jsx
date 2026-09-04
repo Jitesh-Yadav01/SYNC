@@ -66,20 +66,22 @@ const ResponseRedirect = () => {
   return <Navigate to={isAdmin ? "/admin/responses" : "/member/responses"} replace />;
 };
 
+import PrivateRouteSEO from "@/components/SEO/PrivateRouteSEO";
+
 export const protectedRoutes = [
-  { path: "/profile/Admin", element: <AdminPanel /> },
-  { path: "/profile/Member", element: <MemberPanel /> },
-  { path: "/profile/Applicant", element: <ApplicantPanel /> },
-  { path: "/profile/SuperAdmin", element: <SuperAdminPanel /> },
-  { path: "/profile/superadmin/detail/:slug", element: <ClubDetailPage /> },
+  { path: "/profile/Admin", element: <PrivateRouteSEO><AdminPanel /></PrivateRouteSEO> },
+  { path: "/profile/Member", element: <PrivateRouteSEO><MemberPanel /></PrivateRouteSEO> },
+  { path: "/profile/Applicant", element: <PrivateRouteSEO><ApplicantPanel /></PrivateRouteSEO> },
+  { path: "/profile/SuperAdmin", element: <PrivateRouteSEO><SuperAdminPanel /></PrivateRouteSEO> },
+  { path: "/profile/superadmin/detail/:slug", element: <PrivateRouteSEO><ClubDetailPage /></PrivateRouteSEO> },
 
-  { path: "/my-forms", element: <AdminRoute><MyForms /></AdminRoute> },
-  { path: "/response", element: <ResponseRedirect /> },
-  { path: "/admin/responses", element: <AdminRoute><ResponseDashboard viewerRole="admin" /></AdminRoute> },
-  { path: "/admin/responses/:formId", element: <AdminRoute><ResponseDashboard viewerRole="admin" /></AdminRoute> },
-  { path: "/member/responses", element: <MemberRoute><ResponseDashboard viewerRole="member" /></MemberRoute> },
-  { path: "/member/responses/:formId", element: <MemberRoute><ResponseDashboard viewerRole="member" /></MemberRoute> },
+  { path: "/my-forms", element: <PrivateRouteSEO><AdminRoute><MyForms /></AdminRoute></PrivateRouteSEO> },
+  { path: "/response", element: <PrivateRouteSEO><ResponseRedirect /></PrivateRouteSEO> },
+  { path: "/admin/responses", element: <PrivateRouteSEO><AdminRoute><ResponseDashboard viewerRole="admin" /></AdminRoute></PrivateRouteSEO> },
+  { path: "/admin/responses/:formId", element: <PrivateRouteSEO><AdminRoute><ResponseDashboard viewerRole="admin" /></AdminRoute></PrivateRouteSEO> },
+  { path: "/member/responses", element: <PrivateRouteSEO><MemberRoute><ResponseDashboard viewerRole="member" /></MemberRoute></PrivateRouteSEO> },
+  { path: "/member/responses/:formId", element: <PrivateRouteSEO><MemberRoute><ResponseDashboard viewerRole="member" /></MemberRoute></PrivateRouteSEO> },
 
 
-  { path: "/forms/:formId", element: <FillForm /> },
+  { path: "/forms/:formId", element: <PrivateRouteSEO><FillForm /></PrivateRouteSEO> },
 ];

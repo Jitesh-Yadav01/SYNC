@@ -22,6 +22,24 @@ export default function MainContent() {
         <meta name="twitter:title" content="NEXUS — AIT Pune Student Community" />
         <meta name="twitter:description" content="NEXUS is the digital platform for AIT Pune clubs, events, student activities, and campus communities." />
         <meta name="twitter:image" content="https://aitnexus.in/image.png" />
+        <script type="application/ld+json">
+          {JSON.stringify([
+            {
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "name": "NEXUS",
+              "url": "https://aitnexus.in/",
+              "logo": "https://aitnexus.in/image.png",
+              "description": "NEXUS is the digital platform for AIT Pune clubs, events, student activities, and campus communities."
+            },
+            {
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              "name": "NEXUS",
+              "url": "https://aitnexus.in/"
+            }
+          ])}
+        </script>
       </Helmet>
       <Landing />
     </>
