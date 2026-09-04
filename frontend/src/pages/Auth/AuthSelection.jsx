@@ -303,6 +303,16 @@ const AuthSelection = () => {
         <title>Get Started with NEXUS | AIT Pune</title>
         <meta name="description" content="Learn how to get started with NEXUS and access the platform's student community features." />
         <link rel="canonical" href="https://aitnexus.in/get-started" />
+        <meta property="og:title" content="Get Started with NEXUS | AIT Pune" />
+        <meta property="og:description" content="Learn how to get started with NEXUS and access the platform's student community features." />
+        <meta property="og:url" content="https://aitnexus.in/get-started" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://aitnexus.in/image.png" />
+        <meta property="og:site_name" content="NEXUS" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Get Started with NEXUS | AIT Pune" />
+        <meta name="twitter:description" content="Learn how to get started with NEXUS and access the platform's student community features." />
+        <meta name="twitter:image" content="https://aitnexus.in/image.png" />
       </Helmet>
       <div className="w-full max-w-md bg-[#0a0a0a]/80 backdrop-blur-xl border border-white/10 rounded-2xl shadow-xl px-8 py-10 relative overflow-visible">
         <Button

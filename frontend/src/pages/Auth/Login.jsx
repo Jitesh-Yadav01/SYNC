@@ -100,6 +100,16 @@ const Login = () => {
         <title>Login | NEXUS</title>
         <meta name="description" content="Sign in to your NEXUS account to access your AIT Pune student platform." />
         <link rel="canonical" href="https://aitnexus.in/login" />
+        <meta property="og:title" content="Login | NEXUS" />
+        <meta property="og:description" content="Sign in to your NEXUS account to access your AIT Pune student platform." />
+        <meta property="og:url" content="https://aitnexus.in/login" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://aitnexus.in/image.png" />
+        <meta property="og:site_name" content="NEXUS" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Login | NEXUS" />
+        <meta name="twitter:description" content="Sign in to your NEXUS account to access your AIT Pune student platform." />
+        <meta name="twitter:image" content="https://aitnexus.in/image.png" />
       </Helmet>
       <div className="w-full max-w-md bg-black/40 backdrop-blur-2xl border border-white/10 rounded-2xl shadow-2xl px-8 py-10 relative overflow-hidden">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-px bg-linear-to-r from-transparent via-white/30 to-transparent"></div>

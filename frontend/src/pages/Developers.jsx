@@ -22,6 +22,16 @@ const Developers = () => {
         <title>NEXUS Developers | AIT Pune</title>
         <meta name="description" content="Meet the developers and contributors building NEXUS for the AIT Pune student community." />
         <link rel="canonical" href="https://aitnexus.in/developers" />
+        <meta property="og:title" content="NEXUS Developers | AIT Pune" />
+        <meta property="og:description" content="Meet the developers and contributors building NEXUS for the AIT Pune student community." />
+        <meta property="og:url" content="https://aitnexus.in/developers" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://aitnexus.in/image.png" />
+        <meta property="og:site_name" content="NEXUS" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="NEXUS Developers | AIT Pune" />
+        <meta name="twitter:description" content="Meet the developers and contributors building NEXUS for the AIT Pune student community." />
+        <meta name="twitter:image" content="https://aitnexus.in/image.png" />
       </Helmet>
       <main className="relative flex w-full min-h-screen pt-5 pb-12 font-mono flex-col items-center z-10">
         <section className="w-full flex justify-center flex-col items-center">

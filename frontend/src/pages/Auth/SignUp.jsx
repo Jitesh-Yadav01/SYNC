@@ -284,6 +284,16 @@ const SignUp = () => {
         <title>Create Your NEXUS Account | AIT Pune</title>
         <meta name="description" content="Create your NEXUS account to access the AIT Pune student community platform." />
         <link rel="canonical" href="https://aitnexus.in/signup" />
+        <meta property="og:title" content="Create Your NEXUS Account | AIT Pune" />
+        <meta property="og:description" content="Create your NEXUS account to access the AIT Pune student community platform." />
+        <meta property="og:url" content="https://aitnexus.in/signup" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://aitnexus.in/image.png" />
+        <meta property="og:site_name" content="NEXUS" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Create Your NEXUS Account | AIT Pune" />
+        <meta name="twitter:description" content="Create your NEXUS account to access the AIT Pune student community platform." />
+        <meta name="twitter:image" content="https://aitnexus.in/image.png" />
       </Helmet>
       <div className="w-full max-w-md bg-black/40 backdrop-blur-2xl border border-white/10 rounded-2xl shadow-2xl px-8 py-10 relative overflow-hidden">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-px bg-linear-to-r from-transparent via-white/30 to-transparent"></div>

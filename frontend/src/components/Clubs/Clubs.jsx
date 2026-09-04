@@ -90,6 +90,16 @@ export default function MainContent() {
         <title>AIT Pune Clubs | NEXUS</title>
         <meta name="description" content="Explore student clubs and communities at Army Institute of Technology Pune through NEXUS." />
         <link rel="canonical" href="https://aitnexus.in/clubs" />
+        <meta property="og:title" content="AIT Pune Clubs | NEXUS" />
+        <meta property="og:description" content="Explore student clubs and communities at Army Institute of Technology Pune through NEXUS." />
+        <meta property="og:url" content="https://aitnexus.in/clubs" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://aitnexus.in/image.png" />
+        <meta property="og:site_name" content="NEXUS" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="AIT Pune Clubs | NEXUS" />
+        <meta name="twitter:description" content="Explore student clubs and communities at Army Institute of Technology Pune through NEXUS." />
+        <meta name="twitter:image" content="https://aitnexus.in/image.png" />
       </Helmet>
       <section className="w-full flex justify-center flex-col items-center" id="clubs" aria-label="Clubs list">
         <div className="w-full max-w-[1200px] flex items-center justify-start mt-6 mb-4 px-6 sm:px-8">
