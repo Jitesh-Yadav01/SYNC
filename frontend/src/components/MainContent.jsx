@@ -12,14 +12,14 @@ export default function MainContent() {
         <title>NEXUS — AIT Pune Student Community</title>
         <meta name="description" content="NEXUS is the digital platform for AIT Pune clubs, events, student activities, and campus communities." />
         <link rel="canonical" href="https://aitnexus.in/" />
-        <meta property="og:title" content="NEXUS — AIT Pune Student Community" />
+        <meta property="og:title" content="AIT NEXUS" />
         <meta property="og:description" content="NEXUS is the digital platform for AIT Pune clubs, events, student activities, and campus communities." />
         <meta property="og:url" content="https://aitnexus.in/" />
         <meta property="og:type" content="website" />
         <meta property="og:image" content="https://aitnexus.in/image.png" />
-        <meta property="og:site_name" content="NEXUS" />
+        <meta property="og:site_name" content="AIT NEXUS" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="NEXUS — AIT Pune Student Community" />
+        <meta name="twitter:title" content="AIT NEXUS" />
         <meta name="twitter:description" content="NEXUS is the digital platform for AIT Pune clubs, events, student activities, and campus communities." />
         <meta name="twitter:image" content="https://aitnexus.in/image.png" />
         <script type="application/ld+json">
@@ -27,7 +27,7 @@ export default function MainContent() {
             {
               "@context": "https://schema.org",
               "@type": "Organization",
-              "name": "NEXUS",
+              "name": "AIT NEXUS",
               "url": "https://aitnexus.in/",
               "logo": "https://aitnexus.in/image.png",
               "description": "NEXUS is the digital platform for AIT Pune clubs, events, student activities, and campus communities."
@@ -35,7 +35,7 @@ export default function MainContent() {
             {
               "@context": "https://schema.org",
               "@type": "WebSite",
-              "name": "NEXUS",
+              "name": "AIT NEXUS",
               "url": "https://aitnexus.in/"
             }
           ])}
